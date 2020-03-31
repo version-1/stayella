@@ -1,4 +1,4 @@
-package group1.stayella.Guest;
+package group1.stayella.Model;
 
 public class CreditCard {
     private int cardNumber;

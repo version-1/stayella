@@ -1,6 +1,6 @@
-package group1.stayella.Hotel;
+package group1.stayella.Model;
 
-import group1.stayella.HotelFacility.HotelFacility;
+import group1.stayella.Model.HotelFacility.HotelFacility;
 import java.util.ArrayList;
 
 public class Hotel {

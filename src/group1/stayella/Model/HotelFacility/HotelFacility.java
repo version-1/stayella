@@ -1,4 +1,4 @@
-package group1.stayella.HotelFacility;
+package group1.stayella.Model.HotelFacility;
 
 public abstract class HotelFacility {
     private int id;
