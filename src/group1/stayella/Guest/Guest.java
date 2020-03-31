@@ -4,7 +4,7 @@ public class Guest {
     private int id;
     private String name;
     private int age;
-    //    private String image;
+//         private String image;
     private String phoneNumber;
     private String email;
     private String idNumber;
