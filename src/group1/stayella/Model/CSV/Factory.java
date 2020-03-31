@@ -1,15 +1,11 @@
 package group1.stayella.Model.CSV;
 
-import java.io.BufferedReader;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 public class Factory {
-  private final static String CSV_DATA_PATH = "./Data/";
+  private final static String CSV_DATA_PATH = "src/group1/stayella/Data/";
   private final static String CHARGE_PATH = CSV_DATA_PATH + "charge.csv";
   private final static String HOTEL_FACILITY_PATH = CSV_DATA_PATH + "hotel_facility.csv";
   private final static String HOTEL_PATH = CSV_DATA_PATH + "hotel.csv";
@@ -21,7 +17,7 @@ public class Factory {
   public static void getCharges() {
     // TODO: inmplement process to load from csv and create instance list
     try {
-      List<HashMap<String, String>> csv = new Main(CHARGE_PATH).load();
+      List<HashMap<String, String>> csv = new Core(CHARGE_PATH).load();
     } catch (IOException e) {
       // TODO Auto-generated catch block
       e.printStackTrace();
@@ -31,7 +27,7 @@ public class Factory {
   public static void getHotelFacilities() {
     // TODO: inmplement process to load from csv and create instance list
     try {
-      List<HashMap<String, String>> csv = new Main(HOTEL_FACILITY_PATH).load();
+      List<HashMap<String, String>> csv = new Core(HOTEL_FACILITY_PATH).load();
     } catch (IOException e) {
       // TODO Auto-generated catch block
       e.printStackTrace();
@@ -41,7 +37,7 @@ public class Factory {
   public static void getHotels() {
     // TODO: inmplement process to load from csv and create instance list
     try {
-      List<HashMap<String, String>> csv = new Main(HOTEL_PATH).load();
+      List<HashMap<String, String>> csv = new Core(HOTEL_PATH).load();
     } catch (IOException e) {
       // TODO Auto-generated catch block
       e.printStackTrace();
@@ -51,7 +47,7 @@ public class Factory {
   public static void getReservations() {
     // TODO: inmplement process to load from csv and create instance list
     try {
-      List<HashMap<String, String>> csv = new Main(RESERVATION_PATH).load();
+      List<HashMap<String, String>> csv = new Core(RESERVATION_PATH).load();
     } catch (IOException e) {
       // TODO Auto-generated catch block
       e.printStackTrace();
@@ -61,7 +57,7 @@ public class Factory {
   public static void getCreditCards() {
     // TODO: inmplement process to load from csv and create instance list
     try {
-      List<HashMap<String, String>> csv = new Main(CREDIT_CARD_PATH).load();
+      List<HashMap<String, String>> csv = new Core(CREDIT_CARD_PATH).load();
     } catch (IOException e) {
       // TODO Auto-generated catch block
       e.printStackTrace();
@@ -71,7 +67,7 @@ public class Factory {
   public static void getGuests() {
     // TODO: inmplement process to load from csv and create instance list
     try {
-      List<HashMap<String, String>> csv = new Main(GUEST_PATH).load();
+      List<HashMap<String, String>> csv = new Core(GUEST_PATH).load();
     } catch (IOException e) {
       // TODO Auto-generated catch block
       e.printStackTrace();
@@ -81,7 +77,7 @@ public class Factory {
   public static void getVacancies() {
     // TODO: inmplement process to load from csv and create instance list
     try {
-      List<HashMap<String, String>> csv = new Main(VACANCY_PATH).load();
+      List<HashMap<String, String>> csv = new Core(VACANCY_PATH).load();
     } catch (IOException e) {
       // TODO Auto-generated catch block
       e.printStackTrace();

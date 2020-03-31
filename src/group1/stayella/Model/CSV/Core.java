@@ -1,17 +1,19 @@
 package group1.stayella.Model.CSV;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class Main {
+public class Core {
   private String path;
 
-  public Main(String path) {
+  public Core(String path) {
     this.path = path;
   }
 
@@ -20,7 +22,7 @@ public class Main {
     BufferedReader buffReader = null;
     List<HashMap<String, String>> list = new ArrayList<HashMap<String, String>>();
 
-    FileInputStream fileInput = new FileInputStream(this.path);
+    InputStream fileInput =  new FileInputStream(new File(this.path));
     InputStreamReader inputStream = new InputStreamReader(fileInput);
     buffReader = new BufferedReader(inputStream);
 
@@ -35,6 +37,7 @@ public class Main {
         record.put(header[i], cols[i]);
       }
       list.add(record);
+    rowData = buffReader.readLine();
     }
 
     buffReader.close();
