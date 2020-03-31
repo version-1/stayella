@@ -1,5 +1,8 @@
 package group1.stayella.Hotel;
 
+import group1.stayella.HotelFacility.HotelFacility;
+import java.util.ArrayList;
+
 public class Hotel {
     private int id;
     private String name;
@@ -10,10 +13,12 @@ public class Hotel {
     private int deposit;
     private int parkingCapacity;
 //    private Room[] rooms;
+    private ArrayList<HotelFacility> facilities;
 
     public Hotel() {
     }
 
+// initialize the 2 Arraylists
 
     public Hotel(int id, String name, String address, String phoneNumber, String email, String url, int deposit, int parkingCapacity) {
         this.id = id;
