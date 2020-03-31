@@ -1,13 +1,15 @@
 package group1.stayella.Model;
 
+import java.util.Date;
+
 public class CreditCard {
     private int cardNumber;
     private String cardHolderName;
     private int cardSecurityNumber;
-    private date expired;
+    private Date expired;
 
 
-    public CreditCard(int cardNumber, String cardHolderName, String cardCompany, int cardSecurityNumber, boolean expired) {
+    public CreditCard(int cardNumber, String cardHolderName, int cardSecurityNumber, Date expired) {
         this.cardNumber = cardNumber;
         this.cardHolderName = cardHolderName;
         this.cardSecurityNumber = cardSecurityNumber;
@@ -28,7 +30,7 @@ public class CreditCard {
         this.cardSecurityNumber = cardSecurityNumber;
     }
 
-    public void setExpired(boolean expired) {
+    public void setExpired(Date expired) {
         this.expired = expired;
     }
 
@@ -37,7 +39,7 @@ public class CreditCard {
         return cardNumber;
     }
 
-    public String getcardHolderName() {
+    public String getCardHolderName() {
         return cardHolderName;
     }
 
@@ -45,7 +47,7 @@ public class CreditCard {
         return cardSecurityNumber;
     }
 
-    public boolean getExpired() {
+    public Date getExpired() {
         return expired;
     }
 }
