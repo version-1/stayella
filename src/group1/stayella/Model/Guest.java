@@ -1,23 +1,26 @@
 package group1.stayella.Model;
 
+import java.awt.*;
+
 public class Guest {
     private int id;
     private String name;
     private int age;
-//         private String image;
+    private Image image;
     private String phoneNumber;
     private String email;
     private String idNumber;
     private CreditCard paymentMethod;
     private String language;
-    public Guest() {
 
+    public Guest() {
     }
 
-    public Guest(int id, String name, int age, String phoneNumber, String email, String idNumber, CreditCard paymentMethod, String language) {
+    public Guest(int id, String name, int age, String file, String phoneNumber, String email, String idNumber, CreditCard paymentMethod, String language) {
         this.id = id;
         this.name = name;
         this.age = age;
+//        this.image = new Image(file);
         this.phoneNumber = phoneNumber;
         this.email = email;
         this.idNumber = idNumber;
@@ -38,6 +41,10 @@ public class Guest {
         this.age = age;
     }
 
+    public void setImage(Image image) {
+        this.image = image;
+    }
+
     public void setEmail(String email) {
         this.email = email;
     }
@@ -50,6 +57,11 @@ public class Guest {
         this.idNumber = idNumber;
     }
 
+    public void setPaymentMethod(CreditCard paymentMethod) {
+        if(nameCheck(paymentMethod.getCardHolderName())) {
+            this.paymentMethod = paymentMethod;
+        }
+    }
 
     public void setLanguage(String language) {
         this.language = language;
@@ -86,5 +98,22 @@ public class Guest {
         return language;
     }
 
+
+    public CreditCard getPaymentMethod() {
+        return paymentMethod;
+    }
+
+    public Image getImage() {
+        return image;
+    }
+
+    // name check
+    private boolean nameCheck(String name){
+        if( this.name.toUpperCase() == name.toUpperCase()){
+            return true;
+        } else {
+            return false;
+        }
+    }
 
 }

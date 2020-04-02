@@ -13,15 +13,13 @@ public class Hotel {
     private String url;
     private int deposit;
     private int parkingCapacity;
-//    private Room[] rooms;
+    private ArrayList<Room> rooms;
     private ArrayList<HotelFacility> facilities;
 
     public Hotel() {
     }
 
-// initialize the 2 Arraylists
-
-    public Hotel(int id, String name, String address, String phoneNumber, String email, String url, int deposit, int parkingCapacity) {
+    public Hotel(int id, String name, String address, String phoneNumber, String email, String url, int deposit, int numberOfRooms, int parkingCapacity) {
         this.id = id;
         this.name = name;
         this.address = address;
@@ -30,6 +28,8 @@ public class Hotel {
         this.url = url;
         this.deposit = deposit;
         this.parkingCapacity = parkingCapacity;
+        this.rooms = new ArrayList<>();
+        this.facilities = new ArrayList<>();
     }
 
     // setter
@@ -62,8 +62,6 @@ public class Hotel {
     }
 
     // getter
-
-
     public int getID() {
         return id;
     }
@@ -94,5 +92,22 @@ public class Hotel {
 
     public int getParkingCapacity() {
         return parkingCapacity;
+    }
+
+
+    public ArrayList<HotelFacility> getFacilities() {
+        return facilities;
+    }
+
+    public void setFacilities(ArrayList<HotelFacility> facilities) {
+        this.facilities = facilities;
+    }
+
+    public ArrayList<Room> getRooms() {
+        return rooms;
+    }
+
+    public void setRooms(ArrayList<Room> rooms) {
+        this.rooms = rooms;
     }
 }
