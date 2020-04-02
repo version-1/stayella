@@ -5,13 +5,13 @@ import java.util.Date;
 public class CreditCard {
     private int id;
     private int guestId;
-    private int cardNumber;
+    private String cardNumber;
     private String cardHolderName;
-    private int cardSecurityNumber;
+    private String cardSecurityNumber;
     private Date expired;
 
-    public CreditCard(int id, int guestId, int cardNumber, String cardHolderName, String cardCompany,
-            int cardSecurityNumber, Date expired) {
+    public CreditCard(int id, int guestId, String cardNumber, String cardHolderName, String cardCompany,
+            String cardSecurityNumber, Date expired) {
         this.id = id;
         this.guestId = guestId;
         this.cardNumber = cardNumber;
@@ -25,11 +25,11 @@ public class CreditCard {
         this.cardHolderName = cardName;
     }
 
-    public void setCardNumber(int cardNumber) {
+    public void setCardNumber(String cardNumber) {
         this.cardNumber = cardNumber;
     }
 
-    public void setCardSecurityNumber(int cardSecurityNumber) {
+    public void setCardSecurityNumber(String cardSecurityNumber) {
         this.cardSecurityNumber = cardSecurityNumber;
     }
 
@@ -46,7 +46,7 @@ public class CreditCard {
         return guestId;
     }
 
-    public int getCardNumber() {
+    public String getCardNumber() {
         return cardNumber;
     }
 
@@ -54,7 +54,7 @@ public class CreditCard {
         return cardHolderName;
     }
 
-    public int getCardSecurityNumber() {
+    public String getCardSecurityNumber() {
         return cardSecurityNumber;
     }
 

@@ -99,7 +99,6 @@ public class Factory {
   }
 
   public static List<CreditCard> getCreditCards() {
-    // List<Resorvation> reservations = new ArrayList<Resorvation>();
     try {
       List<HashMap<String, String>> csv = new Core(CREDIT_CARD_PATH).load();
       List<CreditCard> list = new ArrayList<CreditCard>();
@@ -144,7 +143,6 @@ public class Factory {
       }
       return list;
     } catch (IOException e) {
-      // TODO Auto-generated catch block
       e.printStackTrace();
     }
     return null;
