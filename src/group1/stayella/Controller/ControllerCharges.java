@@ -11,55 +11,46 @@ import java.util.ResourceBundle;
 
 public class ControllerCharges implements Initializable {
     @FXML
-    public Button btn0;
+    public static Button btn0;
     @FXML
-    public Button btn1;
+    public static Button btn1;
     @FXML
-    public Button btn2;
+    public static Button btn2;
     @FXML
-    public Button btn3;
+    public static Button btn3;
     @FXML
-    public Button btn4;
+    public static Button btn4;
     @FXML
-    public Button btn5;
+    public static Button btn5;
     @FXML
-    public Button btn6;
+    public static Button btn6;
 
     @FXML
-    public Label price;
+    public static Label price;
     @FXML
-    public Label parking;
+    public static Label parking;
     @FXML
-    public Label pet;
+    public static Label pet;
     @FXML
-    public Label gymAccess;
+    public static Label gymAccess;
     @FXML
-    public Label luggage;
+    public static Label luggage;
     @FXML
-    public Label food;
+    public static Label food;
     @FXML
     public Label extraBed;
     @FXML
     public Label washingRoom;
 
-    private Charges charges;
-    private Button[] buttons;
+    private static Charges charges;
+    private static Button[] buttons;
 
-    @Override
+
     public void initialize(URL location, ResourceBundle resources) {
-        this.buttons = new Button[]{btn0, btn1, btn2, btn3, btn4, btn5, btn6};
+        buttons = new Button[]{btn0, btn1, btn2, btn3, btn4, btn5, btn6};
         charges = new Charges();
         charges.markedCharges(buttons);
         price.setText("Total: $" + charges.getChargesTotal());
-
-        pet.setText("Pet: $30");
-        gymAccess.setText("Gym access: $20");
-        luggage.setText("Store the luggage: $10");
-        food.setText("Food amenities: $10");
-        extraBed.setText("Extra bed: $25");
-        washingRoom.setText("Access to washing room: $10");
-        parking.setText("Parking: $30");
-
     }
 
     @FXML
