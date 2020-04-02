@@ -1,8 +1,12 @@
 package group1.stayella.Model.CSV;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import group1.stayella.Data.Enum.ChargeType;
+import group1.stayella.Model.*;
 
 public class Factory {
   private final static String CSV_DATA_PATH = "src/group1/stayella/Data/";
@@ -14,14 +18,24 @@ public class Factory {
   private final static String GUEST_PATH = CSV_DATA_PATH + "guest.csv";
   private final static String VACANCY_PATH = CSV_DATA_PATH + "vacancy.csv";
 
-  public static void getCharges() {
-    // TODO: inmplement process to load from csv and create instance list
+  public static List<Charge> getCharges() {
     try {
       List<HashMap<String, String>> csv = new Core(CHARGE_PATH).load();
+      List<Charge> list = new ArrayList<Charge>();
+      for (HashMap<String, String> row: csv) {
+        ChargeType type = ChargeType.valueOf(row.get("KEY"));
+        Charge charge = new Charge(
+          type.name(),
+          type.getLabel(),
+          type.getPrice()
+        );
+        list.add(charge);
+      }
+      return list;
     } catch (IOException e) {
-      // TODO Auto-generated catch block
       e.printStackTrace();
     }
+    return null;
   }
 
   public static void getHotelFacilities() {

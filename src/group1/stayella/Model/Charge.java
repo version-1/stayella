@@ -2,10 +2,31 @@ package group1.stayella.Model;
 
 import javafx.scene.control.Button;
 
-public class Charges {
+public class Charge {
+    private String key;
+    private String label;
+    private double price;
     private int chargesTotal;
 
-    public Charges() {}
+
+    public Charge() {}
+    public Charge(String key, String label, double price) {
+        this.key = key;
+        this.label = label;
+        this.price = price;
+    }
+
+    public String getKey() {
+        return this.key;
+    }
+
+    public String getLabel() {
+        return this.label;
+    }
+
+    public double getPrice() {
+        return this.price;
+    }
 
     public void markedCharges(Button[] board) {
         // Parking for one night
