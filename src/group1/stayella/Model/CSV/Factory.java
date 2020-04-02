@@ -20,6 +20,8 @@ public class Factory {
   private final static String CREDIT_CARD_PATH = CSV_DATA_PATH + "credit_card.csv";
   private final static String GUEST_PATH = CSV_DATA_PATH + "guest.csv";
   private final static String VACANCY_PATH = CSV_DATA_PATH + "vacancy.csv";
+  private final static String ROOM_PATH = CSV_DATA_PATH + "vacancy.csv";
+  private final static String ROOM_FACILITY_PATH = CSV_DATA_PATH + "room_facility.csv";
 
   public static List<Charge> getCharges() {
     try {
@@ -117,7 +119,6 @@ public class Factory {
       }
       return list;
     } catch (IOException e) {
-      // TODO Auto-generated catch block
       e.printStackTrace();
     }
     return null;
@@ -152,6 +153,39 @@ public class Factory {
     // TODO: inmplement process to load from csv and create instance list
     try {
       List<HashMap<String, String>> csv = new Core(VACANCY_PATH).load();
+    } catch (IOException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
+  }
+
+  public static List<Room> getRooms() {
+    try {
+      List<HashMap<String, String>> csv = new Core(ROOM_PATH).load();
+      List<Room> list = new ArrayList<Room>();
+      for(HashMap<String, String> row: csv){
+        Room room = new Room(
+          toInt(row.get("ID")),
+          toInt(row.get("HOTEL_ID")),
+          row.get("NO"),
+          toInt(row.get("CAPACITY")),
+          toInt(row.get("PRICE")),
+          row.get("BED_TYPE"),
+          toInt(row.get("NUMBER_OF_BEDS")),
+          toInt(row.get("STATUS"))
+        );
+        list.add(room);
+      }
+      return list;
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+    return null;
+  }
+
+  public static void getRoomFacilities() {
+    try {
+      List<HashMap<String, String>> csv = new Core(ROOM_FACILITY_PATH).load();
     } catch (IOException e) {
       // TODO Auto-generated catch block
       e.printStackTrace();
