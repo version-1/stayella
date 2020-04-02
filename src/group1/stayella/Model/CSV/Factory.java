@@ -183,13 +183,24 @@ public class Factory {
     return null;
   }
 
-  public static void getRoomFacilities() {
+  public static List<RoomFacility> getRoomFacilities() {
     try {
       List<HashMap<String, String>> csv = new Core(ROOM_FACILITY_PATH).load();
+      List<RoomFacility> list = new ArrayList<RoomFacility>();
+      for(HashMap<String, String> row: csv){
+        RoomFacility facility = new RoomFacility(
+          toInt(row.get("ID")),
+          toInt(row.get("ROOM_ID")),
+          row.get("KEY"),
+          row.get("LABEL")
+        );
+        list.add(facility);
+      }
+      return list;
     } catch (IOException e) {
-      // TODO Auto-generated catch block
       e.printStackTrace();
     }
+    return null;
   }
 
   private static int toInt(String str) {
