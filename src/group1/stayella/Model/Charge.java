@@ -3,6 +3,8 @@ package group1.stayella.Model;
 import javafx.scene.control.Button;
 
 public class Charge {
+    private int id;
+    private int reservationId;
     private String key;
     private String label;
     private double price;
@@ -10,7 +12,7 @@ public class Charge {
 
 
     public Charge() {}
-    public Charge(String key, String label, double price) {
+    public Charge(int id, int  reservationId, String key, String label, double price) {
         this.key = key;
         this.label = label;
         this.price = price;
@@ -26,6 +28,14 @@ public class Charge {
 
     public double getPrice() {
         return this.price;
+    }
+
+    public int getId() {
+        return this.id;
+    }
+
+    public int getReservationId() {
+        return this.reservationId;
     }
 
     public void markedCharges(Button[] board) {

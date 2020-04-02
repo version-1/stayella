@@ -1,2 +1,2 @@
-ID,KEY,LABEL,VALUE
-1,parking,Parking,1
+ID,RESORVATION_ID,KEY
+1,1,parking

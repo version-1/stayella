@@ -2,6 +2,7 @@ package group1.stayella.Model;
 
 public class Guest {
     private int id;
+    private int reservationId;
     private String name;
     private int age;
 //         private String image;
@@ -14,8 +15,9 @@ public class Guest {
 
     }
 
-    public Guest(int id, String name, int age, String phoneNumber, String email, String idNumber, CreditCard paymentMethod, String language) {
+    public Guest(int id, int resrvationId, String name, int age, String phoneNumber, String email, String idNumber, CreditCard paymentMethod, String language) {
         this.id = id;
+        this.reservationId = reservationId;
         this.name = name;
         this.age = age;
         this.phoneNumber = phoneNumber;
@@ -59,6 +61,10 @@ public class Guest {
     // getter
     public int getId() {
         return id;
+    }
+
+    public int getReservationId() {
+        return reservationId;
     }
 
     public String getName() {
