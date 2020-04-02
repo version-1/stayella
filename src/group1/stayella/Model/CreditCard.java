@@ -4,14 +4,14 @@ public class CreditCard {
     private int cardNumber;
     private String cardHolderName;
     private int cardSecurityNumber;
-    private date expired;
+
 
 
     public CreditCard(int cardNumber, String cardHolderName, String cardCompany, int cardSecurityNumber, boolean expired) {
         this.cardNumber = cardNumber;
         this.cardHolderName = cardHolderName;
         this.cardSecurityNumber = cardSecurityNumber;
-        this.expired = expired;
+
     }
 
 
@@ -28,9 +28,6 @@ public class CreditCard {
         this.cardSecurityNumber = cardSecurityNumber;
     }
 
-    public void setExpired(boolean expired) {
-        this.expired = expired;
-    }
 
     //getter
     public int getCardNumber() {
@@ -45,7 +42,4 @@ public class CreditCard {
         return cardSecurityNumber;
     }
 
-    public boolean getExpired() {
-        return expired;
-    }
 }

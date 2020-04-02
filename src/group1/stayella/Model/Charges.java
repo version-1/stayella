@@ -7,7 +7,7 @@ public class Charges {
 
     public Charges() {}
 
-    public void markedCharges(Button[] board) {
+    public int markedCharges(Button[] board) {
         // Parking for one night
         // Pet
         // Gym access
@@ -37,6 +37,7 @@ public class Charges {
         if (board[6].getText().equals("✓")) {
             this.chargesTotal += 10;
         }
+        return chargesTotal;
     }
 
     public int getChargesTotal() {
