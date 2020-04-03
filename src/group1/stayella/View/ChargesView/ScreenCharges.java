@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -15,29 +16,29 @@ public class ScreenCharges {
     public ScreenCharges() {
     }
     @FXML
-    public static Button btn0 = new Button();
+    public static Button btn0 = new Button("Pet: $30");
     @FXML
-    public static Button btn1 = new Button();
+    public static Button btn1 = new Button("Gym access: $20");
     @FXML
-    public static Button btn2 = new Button();
+    public static Button btn2 = new Button("Store the luggage: $10");
     @FXML
-    public static Button btn3 = new Button();
+    public static Button btn3 = new Button("Food amenities: $10");
     @FXML
-    public static Button btn4 = new Button();
+    public static Button btn4 = new Button("Extra bed: $25");
     @FXML
-        public static Button btn5 = new Button();
-        public static Button btn6 = new Button();
-        public static Label price = new Label();
-        public static Label parking = new Label();
-        public static Label pet = new Label();
-        public static Label gymAccess = new Label();
-        public static Label luggage = new Label();
-        public static Label food = new Label();
-        public static Label extraBed = new Label();
-        public static Label washingRoom = new Label();
-        public static Charges charges;
-        public static Button[] buttons;
-        public static Label[] charge;
+    public static Button btn5 = new Button("Access to washing room: $10");
+    public static Button btn6 = new Button("Parking: $30");
+    public static Label price = new Label();
+    public static Label parking = new Label();
+    public static Label pet = new Label();
+    public static Label gymAccess = new Label();
+    public static Label luggage = new Label();
+    public static Label food = new Label();
+    public static Label extraBed = new Label();
+    public static Label washingRoom = new Label();
+    public static Charges charges;
+    public static Button[] buttons;
+    public static Label[] charge;
 
 
     public static void display(String title, String message) {
@@ -45,15 +46,6 @@ public class ScreenCharges {
         charges = new Charges();
         charge = new Label[]{price, pet, gymAccess, luggage, food, extraBed, washingRoom, parking};
         charges.markedCharges(buttons);
-
-        pet.setText("Pet: $30");
-        gymAccess.setText("Gym access: $20");
-        luggage.setText("Store the luggage: $10");
-        food.setText("Food amenities: $10");
-        extraBed.setText("Extra bed: $25");
-        washingRoom.setText("Access to washing room: $10");
-        parking.setText("Parking: $30");
-
 
         Stage window = new Stage();
         window.initModality(Modality.APPLICATION_MODAL);
@@ -66,16 +58,15 @@ public class ScreenCharges {
 
         //Button addButton = new Button();
         //addButton.setText("ADD CHARGES");
-        // addButton.setOnAction(e -> window.close());
+        //addButton.setOnAction(e -> window.close());
 
 
         layout.getChildren().add(messageLabel);
         layout.getChildren().addAll(buttons);
-        layout.getChildren().addAll(charge);
         //layout.setAlignment(Pos.CENTER);
 
 
-        Scene scene = new Scene(layout, 400, 800);
+        Scene scene = new Scene(layout, 400, 600);
         scene.getStylesheets().add("sample/View/css/popup.css");
         window.setScene(scene);
         window.showAndWait();

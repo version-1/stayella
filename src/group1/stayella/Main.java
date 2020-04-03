@@ -24,7 +24,7 @@ public class Main extends Application {
     Scene chargesScene = new Scene(chargesRoot, 300, 400);
 
     Parent reservationRoot = FXMLLoader.load(getClass().getResource("View/ReservationView/index.fxml"));
-    Scene reservationScene = new Scene(reservationRoot, 750, 1000);
+    Scene reservationScene = new Scene(reservationRoot, 720, 1000);
 
     primaryStage.setScene(reservationScene);
     primaryStage.show();

@@ -11,39 +11,23 @@ import java.util.ResourceBundle;
 
 public class ControllerCharges implements Initializable {
     @FXML
-    public static Button btn0;
+    public Button btn0;
     @FXML
-    public static Button btn1;
+    public Button btn1;
     @FXML
-    public static Button btn2;
+    public Button btn2;
     @FXML
-    public static Button btn3;
+    public Button btn3;
     @FXML
-    public static Button btn4;
+    public Button btn4;
     @FXML
-    public static Button btn5;
+    public Button btn5;
     @FXML
-    public static Button btn6;
-
+    public Button btn6;
     @FXML
-    public static Label price;
-    @FXML
-    public static Label parking;
-    @FXML
-    public static Label pet;
-    @FXML
-    public static Label gymAccess;
-    @FXML
-    public static Label luggage;
-    @FXML
-    public static Label food;
-    @FXML
-    public Label extraBed;
-    @FXML
-    public Label washingRoom;
-
-    private static Charges charges;
-    private static Button[] buttons;
+    public Label price;
+    private Charges charges;
+    private Button[] buttons;
 
 
     public void initialize(URL location, ResourceBundle resources) {
