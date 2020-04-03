@@ -16,6 +16,7 @@ public class Reservation {
     private Date checkInTime;
     private Date checkOutTime;
     private int status;
+    // e.g 0: cancel 1:unconfirmed 2:
 
     public  Reservation(){}
 

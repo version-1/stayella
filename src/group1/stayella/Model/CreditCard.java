@@ -3,13 +3,17 @@ package group1.stayella.Model;
 import java.util.Date;
 
 public class CreditCard {
+    private int id;
+    private int guestId;
     private int cardNumber;
     private String cardHolderName;
     private int cardSecurityNumber;
     private Date expired;
 
 
-    public CreditCard(int cardNumber, String cardHolderName, int cardSecurityNumber, Date expired) {
+    public CreditCard(int id, int guestId, int cardNumber, String cardHolderName, int cardSecurityNumber, Date expired) {
+        this.id = id;
+        this.guestId = id;
         this.cardNumber = cardNumber;
         this.cardHolderName = cardHolderName;
         this.cardSecurityNumber = cardSecurityNumber;
@@ -93,6 +97,22 @@ public class CreditCard {
         } else {
             return true;
         }
+    }
+
+    public int getGuestId() {
+        return guestId;
+    }
+
+    public void setGuestId(int guestId) {
+        this.guestId = guestId;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
 //    //check whether the card holder is the guest or not.

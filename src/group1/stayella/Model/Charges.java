@@ -3,9 +3,22 @@ package group1.stayella.Model;
 import javafx.scene.control.Button;
 
 public class Charges {
-    private int chargesTotal;
+    private static int chargesTotal;
+    private int id;
+    private int reservationId;
+    private String key;
+    private String label;
+    private Double price;
 
     public Charges() {}
+
+    public Charges(int id, int reservationId, String key, String label, Double price){
+        this.id = id;
+        this.reservationId = reservationId;
+        this.key = key;
+        this.label = label;
+        this.price = price;
+    }
 
     public void markedCharges(Button[] board) {
         // Parking for one night

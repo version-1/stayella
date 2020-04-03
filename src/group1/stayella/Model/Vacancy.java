@@ -4,18 +4,19 @@ import java.util.Date;
 
 public class Vacancy {
     private int id;
-    private String RoomNumber;
+    private String roomNumber;
     private Reservation reservation;
     private Date startTime;
     private Date endTime;
 
     public  Vacancy() {}
 
-    public Vacancy(int id, String RoomNumber, Reservation reservation, Date startTime, Date endTime) {
+    public Vacancy(int id, String roomNumber, Reservation reservation, Date startTime, Date endTime) {
         this.id = id;
+        this.roomNumber = roomNumber;
         this.reservation = reservation;
-        this.startTime = reservation.getCheckInTime();
-        this.endTime = reservation.getCheckOutTime();
+        this.startTime = startTime;
+        this.endTime = endTime;
     }
 
 
@@ -24,7 +25,7 @@ public class Vacancy {
     }
 
     public String getRoomNumber() {
-        return RoomNumber;
+        return roomNumber;
     }
     public Reservation getReservation() {
         return reservation;
@@ -45,7 +46,7 @@ public class Vacancy {
     }
 
     public void setRoomNumber(String roomNumber) {
-        RoomNumber = roomNumber;
+        this.roomNumber = roomNumber;
     }
 
     public void setReservation(Reservation reservation) {

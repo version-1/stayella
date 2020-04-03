@@ -4,13 +4,13 @@ public abstract class HotelFacility {
     private int id;
     private String key;
     private String label;
-    private boolean value;
+    private double price;
 
-    public HotelFacility(int id, String key, String label, boolean value){
+    public HotelFacility(int id, String key, String label, double price){
         this.id = id;
         this.key = key;
         this.label = label;
-        this.value = value;
+        this.price = price;
     }
 
     public int getId() {
@@ -24,8 +24,8 @@ public abstract class HotelFacility {
     public String getLabel() {
         return label;
     }
-    public boolean getValue() {
-        return value;
+    public double getPrice() {
+        return price;
     }
 
 
@@ -41,7 +41,7 @@ public abstract class HotelFacility {
         this.label = label;
     }
 
-    public void setValue(boolean value) {
-        this.value = value;
+    public void setPrice( double price) {
+        this.price = price;
     }
 }
