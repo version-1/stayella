@@ -20,13 +20,14 @@ public class Factory {
   private final static String CREDIT_CARD_PATH = CSV_DATA_PATH + "credit_card.csv";
   private final static String GUEST_PATH = CSV_DATA_PATH + "guest.csv";
   private final static String VACANCY_PATH = CSV_DATA_PATH + "vacancy.csv";
-  private final static String ROOM_PATH = CSV_DATA_PATH + "vacancy.csv";
+  private final static String ROOM_PATH = CSV_DATA_PATH + "room.csv";
   private final static String ROOM_FACILITY_PATH = CSV_DATA_PATH + "room_facility.csv";
 
   public static List<Hotel> initialize() {
     List<Hotel> hotels = getHotels();
     for (Hotel hotel: hotels) {
       hotel.setFacilities(getHotelFacilities(hotel.getID()));
+      hotel.setRooms(getRooms(hotel.getID()));
     }
 
     return hotels;
@@ -79,22 +80,24 @@ public class Factory {
     return null;
   }
 
-  public static List<Room> getRooms() {
+  public static List<Room> getRooms(int id) {
     try {
       List<HashMap<String, String>> csv = new Core(ROOM_PATH).load();
       List<Room> list = new ArrayList<Room>();
       for(HashMap<String, String> row: csv){
-        Room room = new Room(
-          toInt(row.get("ID")),
-          toInt(row.get("HOTEL_ID")),
-          row.get("NO"),
-          toInt(row.get("CAPACITY")),
-          toInt(row.get("PRICE")),
-          row.get("BED_TYPE"),
-          toInt(row.get("NUMBER_OF_BEDS")),
-          toInt(row.get("STATUS"))
-        );
-        list.add(room);
+        if (toInt(row.get("HOTEL_ID")) == id) {
+          Room room = new Room(
+            toInt(row.get("ID")),
+            toInt(row.get("HOTEL_ID")),
+            row.get("NO"),
+            toInt(row.get("CAPACITY")),
+            toInt(row.get("PRICE")),
+            row.get("BED_TYPE"),
+            toInt(row.get("NUMBER_OF_BEDS")),
+            toInt(row.get("STATUS"))
+          );
+          list.add(room);
+        }
       }
       return list;
     } catch (IOException e) {
