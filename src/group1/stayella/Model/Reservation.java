@@ -2,17 +2,16 @@ package group1.stayella.Model;
 
 import group1.stayella.Model.HotelFacility.HotelFacility;
 
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Date;
 
 
 public class Reservation {
     private int id;
     private String reservationNo;
-    private Charges charges;
+    private List<Charge> charges;
     private Guest mainGuest;
     private int numberOfGuest;
-    private ArrayList<HotelFacility> hotelFacilities;
     private Date checkInTime;
     private Date checkOutTime;
     private int status;
@@ -20,13 +19,11 @@ public class Reservation {
 
     public  Reservation(){}
 
-    public Reservation(int id, String reservationNo, Charges charges, Guest guest, int numberOfGuest, Date checkInTime, Date checkOutTime, int status) {
+    public Reservation(int id, String reservationNo, Guest guest, int numberOfGuest, Date checkInTime, Date checkOutTime, int status) {
         this.id = id;
         this.reservationNo = reservationNo;
-        this.charges = charges;
         this.mainGuest = guest;
         this.numberOfGuest = numberOfGuest;
-        this.hotelFacilities = new ArrayList<>();
         this.checkInTime = checkInTime;
         this.checkOutTime = checkOutTime;
         this.status = status;
@@ -36,7 +33,7 @@ public class Reservation {
         return id;
     }
 
-    public Charges getCharges() {
+    public List<Charge> getCharges() {
         return charges;
     }
 
@@ -60,15 +57,11 @@ public class Reservation {
         return reservationNo;
     }
 
-    public ArrayList<HotelFacility> getHotelFacilities() {
-        return hotelFacilities;
-    }
-
     public void setId(int id) {
         this.id = id;
     }
 
-    public void setCharges(Charges charges) {
+    public void setCharges(List<Charge> charges) {
         this.charges = charges;
     }
 
@@ -87,10 +80,6 @@ public class Reservation {
         this.mainGuest = guest;
     }
 
-    public void setHotelFacilities(ArrayList<HotelFacility> hotelFacilities) {
-        this.hotelFacilities = hotelFacilities;
-    }
-
     public void setReservationNo(String reservationNo) {
         this.reservationNo = reservationNo;
     }
@@ -98,7 +87,6 @@ public class Reservation {
     public void setStatus(int status) {
         this.status = status;
     }
-
 
     public int getNumberOfGuest() {
         return numberOfGuest;

@@ -8,18 +8,9 @@ public abstract class RoomFacility implements Facility {
     private String label;
     private double price;
 
-    public RoomFacility(int id, String key, String label, double price){
+    public RoomFacility(int id, double price){
         this.id = id;
-        this.key = key;
-        this.label = label;
         this.price = price;
-    }
-
-    public RoomFacility(int id, String key, String label){
-        this.id = id;
-        this.key = key;
-        this.label = label;
-        this.price = 0.0;
     }
 
     public void setId(int id) {
@@ -50,7 +41,7 @@ public abstract class RoomFacility implements Facility {
         return label;
     }
 
-    public Double getPrice() {
+    public double getPrice() {
         return price;
     }
 }

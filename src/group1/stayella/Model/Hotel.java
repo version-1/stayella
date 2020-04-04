@@ -96,7 +96,7 @@ public class Hotel {
     }
 
 
-    public ArrayList<HotelFacility> getFacilities() {
+    public List<HotelFacility> getFacilities() {
         return facilities;
     }
 
@@ -104,7 +104,7 @@ public class Hotel {
         this.facilities = facilities;
     }
 
-    public ArrayList<Room> getRooms() {
+    public List<Room> getRooms() {
         return rooms;
     }
 

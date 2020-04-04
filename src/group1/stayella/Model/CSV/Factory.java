@@ -9,6 +9,7 @@ import java.util.List;
 import group1.stayella.Data.Enum.ChargeType;
 import group1.stayella.Model.*;
 import group1.stayella.Model.HotelFacility.*;
+import group1.stayella.Model.RoomFacility.RoomFacility;
 
 public class Factory {
   private final static String CSV_DATA_PATH = "src/group1/stayella/Data/";
@@ -22,12 +23,13 @@ public class Factory {
   private final static String ROOM_PATH = CSV_DATA_PATH + "vacancy.csv";
   private final static String ROOM_FACILITY_PATH = CSV_DATA_PATH + "room_facility.csv";
 
-  public static void initialize() {
+  public static List<Hotel> initialize() {
     List<Hotel> hotels = getHotels();
     for (Hotel hotel: hotels) {
       hotel.setFacilities(getHotelFacilities(hotel.getID()));
-
     }
+
+    return hotels;
   }
 
   public static List<HotelFacility> getHotelFacilities(int id) {
@@ -35,9 +37,13 @@ public class Factory {
       List<HashMap<String, String>> csv = new Core(HOTEL_FACILITY_PATH).load();
       List<HotelFacility> list = new ArrayList<HotelFacility>();
       for (HashMap<String, String> row: csv) {
-        ChargeType type = ChargeType.valueOf(row.get("KEY"));
         if (toInt(row.get("ID")) == id) {
-          HotelFacility hotelFacility = HotelFacility.getInstance(row.get("KEY"), row.get("PRICE"), row.get("PRICE"));
+          HotelFacility hotelFacility = HotelFacility.getInstance(
+            row.get("KEY"),
+            toInt(row.get("ID")),
+            toInt(row.get("PRICE")),
+            toInt(row.get("TOTAL_NUMBER"))
+            );
           list.add(hotelFacility);
         }
       }
@@ -46,6 +52,7 @@ public class Factory {
       // TODO Auto-generated catch block
       e.printStackTrace();
     }
+    return null;
   }
 
   public static List<Hotel> getHotels() {
@@ -100,13 +107,13 @@ public class Factory {
       List<HashMap<String, String>> csv = new Core(ROOM_FACILITY_PATH).load();
       List<RoomFacility> list = new ArrayList<RoomFacility>();
       for(HashMap<String, String> row: csv){
-        RoomFacility facility = new RoomFacility(
-          toInt(row.get("ID")),
-          toInt(row.get("ROOM_ID")),
-          row.get("KEY"),
-          row.get("LABEL")
-        );
-        list.add(facility);
+        // RoomFacility facility = new RoomFacility(
+        //   toInt(row.get("ID")),
+        //   toInt(row.get("ROOM_ID")),
+        //   row.get("KEY"),
+        //   row.get("LABEL")
+        // );
+        // list.add(facility);
       }
       return list;
     } catch (IOException e) {
@@ -173,27 +180,27 @@ public class Factory {
   }
 
   public static List<Guest> getGuests() {
-    try {
-      List<HashMap<String, String>> csv = new Core(GUEST_PATH).load();
-      List<Guest> list = new ArrayList<Guest>();
-      for(HashMap<String, String> row: csv){
-        Guest guest = new Guest(
-          toInt(row.get("ID")),
-          toInt(row.get("RESERVAITON_ID")),
-          row.get("NAME"),
-          toInt(row.get("AGE")),
-          row.get("PHONE_NUMBER"),
-          row.get("EMAIL"),
-          row.get("ID_NUMBER"),
-          null,
-          row.get("LANGUAGE")
-        );
-        list.add(guest);
-      }
-      return list;
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
+    // try {
+    //   List<HashMap<String, String>> csv = new Core(GUEST_PATH).load();
+    //   List<Guest> list = new ArrayList<Guest>();
+    //   for(HashMap<String, String> row: csv){
+    //     Guest guest = new Guest(
+    //       toInt(row.get("ID")),
+    //       toInt(row.get("RESERVAITON_ID")),
+    //       row.get("NAME"),
+    //       toInt(row.get("AGE")),
+    //       row.get("PHONE_NUMBER"),
+    //       row.get("EMAIL"),
+    //       row.get("ID_NUMBER"),
+    //       null,
+    //       row.get("LANGUAGE")
+    //     );
+    //     list.add(guest);
+    //   }
+    //   return list;
+    // } catch (IOException e) {
+    //   e.printStackTrace();
+    // }
     return null;
   }
 

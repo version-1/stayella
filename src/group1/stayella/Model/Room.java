@@ -1,6 +1,8 @@
 package group1.stayella.Model;
 
-import java.util.ArrayList;
+import java.util.List;
+
+import group1.stayella.Model.RoomFacility.RoomFacility;
 
 public class Room {
     private final static int VACANT = 0;
@@ -15,8 +17,8 @@ public class Room {
     private int status;
     private int numberOfBeds;
     private String bedType;
-    private ArrayList<Vacancy> vacancies;
-    private ArrayList<RoomFacility> facilities;
+    private List<Vacancy> vacancies;
+    private List<RoomFacility> facilities;
 
 
     public Room(int id, int hotelId, String number, int capacity, double price, String bedType, int numberOfBeds, int status) {
@@ -38,7 +40,7 @@ public class Room {
         this.roomPrice = roomPrice;
     }
 
-    public void setVacancies(ArrayList<Vacancy> vacancies) {
+    public void setVacancies(List<Vacancy> vacancies) {
         this.vacancies = vacancies;
     }
 
@@ -63,15 +65,15 @@ public class Room {
         return numberOfBeds;
     }
 
-    public ArrayList<Vacancy> getVacancies() {
+    public List<Vacancy> getVacancies() {
         return vacancies;
     }
 
-    public ArrayList<RoomFacility> getFacilities() {
+    public List<RoomFacility> getFacilities() {
         return facilities;
     }
 
-    public void setFacilities(ArrayList<RoomFacility> facilities) {
+    public void setFacilities(List<RoomFacility> facilities) {
         this.facilities = facilities;
     }
 
