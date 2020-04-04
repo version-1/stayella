@@ -3,13 +3,12 @@ package group1.stayella.Controller;
 import group1.stayella.Model.Charge;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class ControllerCharges implements Initializable {
+public class ControllerCharges extends ApplicationController {
     @FXML
     public Button btn0;
     @FXML
