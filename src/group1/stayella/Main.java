@@ -24,17 +24,10 @@ public class Main extends Application {
     Parent homeRoot = FXMLLoader.load(getClass().getResource("View/index.fxml"));
     Scene homeScene = new Scene(homeRoot, 235,150);
 
-
-    Parent chargesRoot = FXMLLoader.load(getClass().getResource("View/ChargesView/index.fxml"));
-    Scene chargesScene = new Scene(chargesRoot, 300, 400);
-
     Parent reservationRoot = FXMLLoader.load(getClass().getResource("View/ReservationView/index.fxml"));
-    Scene reservationScene = new Scene(reservationRoot, 750, 1000);
+    Scene reservationScene = new Scene(reservationRoot, 720, 1000);
 
     primaryStage.setScene(reservationScene);
     primaryStage.show();
-
-    //StackPane homeWindow = new StackPane();
-    //homeWindow.getChildren().add(homeRoot);
   }
 }
