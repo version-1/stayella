@@ -1,12 +1,18 @@
 package group1.stayella.Controller;
 
-import group1.stayella.View.ChargesView.ScreenCharges;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -25,6 +31,8 @@ public class ReservationController implements Initializable {
 
     @FXML
     Button buttonCard;
+    @FXML
+    Label cardNumberLabel;
     @FXML
     Image imageCard;
     @FXML
@@ -56,7 +64,6 @@ public class ReservationController implements Initializable {
         imageCardView.setFitWidth(120);
         imageCardView.setPreserveRatio(true);
         buttonCard.setGraphic(imageCardView);
-        buttonCard.setOnAction(e -> ScreenCharges.display("Additions", "Additions"));
 
         imageAdditions = new Image("https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRz2AEfespdhCgKtTN2R-o6maiMq1_SuKR7q9drWDi6NGJqxkhQ&usqp=CAU");
         imageAdditionsView = new ImageView();
@@ -65,6 +72,29 @@ public class ReservationController implements Initializable {
         imageAdditionsView.setFitWidth(30);
         imageAdditionsView.setPreserveRatio(true);
         buttonAdditions.setGraphic(imageAdditionsView);
-        buttonAdditions.setOnAction(e -> ScreenCharges.display("Additions", "Additions"));
+    }
+
+    public void showCCInfo(String text) {
+        this.cardNumberLabel.setText("XXXX-XXXX-" + text.substring(10));
+    }
+
+
+    public void openNewStage(ActionEvent actionEvent) {
+        try {
+            FXMLLoader loaderPayment = new FXMLLoader(getClass().getResource("/group1/stayella/View/Paymentview/index.fxml"));
+            Parent rootPayment = loaderPayment.load();
+            FXMLLoader loaderAdditions = new FXMLLoader(getClass().getResource("/group1/stayella/View/ChargesView/index.fxml"));
+            Parent rootAdditions = loaderAdditions.load();
+            Stage stage = new Stage();
+
+            if (actionEvent.getSource() == buttonAdditions) {
+                stage.setScene(new Scene(rootAdditions, 300, 400));
+            } else if (actionEvent.getSource() == buttonCard) {
+                stage.setScene(new Scene(rootPayment, 280, 140));
+            }
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -8,10 +8,11 @@
 <GridPane fx:id="gridlayout" alignment="TOP_LEFT" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="group1.stayella.Controller.ReservationController">
    <ImageView fx:id="imageView" scaleX="1.2" scaleY="1.2" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="2" GridPane.rowSpan="5" />
    <Button fx:id="buttonEdit" GridPane.columnIndex="9" GridPane.rowIndex="1" />
-   <Button fx:id="buttonCard" GridPane.columnIndex="8" GridPane.columnSpan="5" GridPane.rowIndex="2" GridPane.rowSpan="6" />
-   <Button fx:id="buttonAdditions" GridPane.columnIndex="7" GridPane.columnSpan="2" GridPane.rowIndex="12" />
+   <Button fx:id="buttonCard" onAction="#openNewStage" GridPane.columnIndex="8" GridPane.columnSpan="5" GridPane.rowIndex="2" GridPane.rowSpan="6" />
+   <Button fx:id="buttonAdditions" onAction="#openNewStage" GridPane.columnIndex="7" GridPane.columnSpan="2" GridPane.rowIndex="12" />
    <Button prefHeight="27.0" prefWidth="178.0" text="CONFIRMED" textAlignment="CENTER" GridPane.columnIndex="6" GridPane.columnSpan="2" GridPane.rowIndex="15" />
    <Button prefHeight="27.0" prefWidth="189.0" text="UNCONFIRMED" GridPane.columnIndex="8" GridPane.columnSpan="3" GridPane.rowIndex="15" />
+   <Label fx:id="cardNumberLabel" alignment="CENTER" prefHeight="17.0" prefWidth="196.0" text="XXXX-XXXX-XXXX" textFill="darkgreen" GridPane.columnIndex="6" GridPane.columnSpan="2" GridPane.rowIndex="27" />
    <Label text="Credit Card Information" GridPane.columnIndex="8" GridPane.rowIndex="2" />
    <Label text="Contact" GridPane.columnIndex="1" GridPane.rowIndex="7" />
    <Label text="E-mail:" GridPane.columnIndex="1" GridPane.rowIndex="8" />
@@ -42,7 +43,9 @@
    <Label alignment="CENTER" prefHeight="17.0" prefWidth="127.0" text="Time / Date:" GridPane.columnIndex="6" GridPane.columnSpan="2" GridPane.rowIndex="17" />
    <Label text="ROOM:" textFill="sienna" GridPane.columnIndex="1" GridPane.rowIndex="26" />
    <Label text="Total Price:" textFill="sienna" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="28" />
-   <Label alignment="CENTER" prefHeight="17.0" prefWidth="116.0" text="Deposit" textFill="sienna" GridPane.columnIndex="6" GridPane.columnSpan="2" GridPane.rowIndex="28" />
+   <Label text="[$] 00.00" GridPane.columnIndex="4" GridPane.rowIndex="28" />
+   <Label alignment="CENTER" prefHeight="17.0" prefWidth="121.0" text="Deposit" textFill="sienna" GridPane.columnIndex="6" GridPane.columnSpan="2" GridPane.rowIndex="28" />
+   <Label prefHeight="17.0" prefWidth="116.0" text="[$]00.00" GridPane.columnIndex="8" GridPane.rowIndex="28" />
 
    <TextField alignment="TOP_RIGHT" promptText="Enter Guest's Full name" scaleY="0.8" GridPane.columnIndex="6" GridPane.rowIndex="2" />
    <TextField alignment="TOP_RIGHT" promptText="Enter Guest's ID Number" scaleY="0.8" GridPane.columnIndex="6" GridPane.rowIndex="3" />
