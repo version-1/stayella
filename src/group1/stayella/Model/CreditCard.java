@@ -17,7 +17,7 @@ public class CreditCard {
         this.cardNumber = cardNumber;
         this.cardHolderName = cardHolderName;
         this.cardSecurityNumber = cardSecurityNumber;
-        this.expired = expired;
+
     }
 
     // setter
