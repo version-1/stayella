@@ -1,27 +1,30 @@
 package group1.stayella.Model;
 
+import java.awt.*;
+
 public class Guest {
     private int id;
     private int reservationId;
     private String name;
     private int age;
-//         private String image;
+    private Image photo;
     private String phoneNumber;
-    private String email;
+    private String emailAddress;
     private String idNumber;
     private CreditCard paymentMethod;
     private String language;
-    public Guest() {
 
+    public Guest() {
     }
 
-    public Guest(int id, int resrvationId, String name, int age, String phoneNumber, String email, String idNumber, CreditCard paymentMethod, String language) {
+    public Guest(int id, int reservationId, String name, int age, String file, String phoneNumber, String emailAddress, String idNumber, CreditCard paymentMethod, String language) {
         this.id = id;
         this.reservationId = reservationId;
         this.name = name;
         this.age = age;
+//        this.photo = new Image(file);
         this.phoneNumber = phoneNumber;
-        this.email = email;
+        this.emailAddress = emailAddress;
         this.idNumber = idNumber;
         this.paymentMethod = paymentMethod;
         this.language = language;
@@ -40,8 +43,12 @@ public class Guest {
         this.age = age;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setImage(Image photo) {
+        this.photo = photo;
+    }
+
+    public void setEmailAddress(String emailAddress) {
+        this.emailAddress = emailAddress;
     }
 
     public void setPhoneNumber(String phoneNumber) {
@@ -52,6 +59,11 @@ public class Guest {
         this.idNumber = idNumber;
     }
 
+    public void setPaymentMethod(CreditCard paymentMethod) {
+        if(nameCheck(paymentMethod.getCardHolderName())) {
+            this.paymentMethod = paymentMethod;
+        }
+    }
 
     public void setLanguage(String language) {
         this.language = language;
@@ -63,10 +75,6 @@ public class Guest {
         return id;
     }
 
-    public int getReservationId() {
-        return reservationId;
-    }
-
     public String getName() {
         return name;
     }
@@ -75,8 +83,8 @@ public class Guest {
         return age;
     }
 
-    public String getEmail() {
-        return email;
+    public String getEmailAddress() {
+        return emailAddress;
     }
 
     public String getPhoneNumber() {
@@ -93,4 +101,28 @@ public class Guest {
     }
 
 
+    public CreditCard getPaymentMethod() {
+        return paymentMethod;
+    }
+
+    public Image getImage() {
+        return photo;
+    }
+
+    // name check
+    private boolean nameCheck(String name){
+        if( this.name.toUpperCase() == name.toUpperCase()){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public int getReservationId() {
+        return reservationId;
+    }
+
+    public void setReservationId(int reservationId) {
+        this.reservationId = reservationId;
+    }
 }
