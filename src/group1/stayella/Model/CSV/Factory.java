@@ -37,7 +37,7 @@ public class Factory {
       List<HashMap<String, String>> csv = new Core(HOTEL_FACILITY_PATH).load();
       List<HotelFacility> list = new ArrayList<HotelFacility>();
       for (HashMap<String, String> row: csv) {
-        if (toInt(row.get("ID")) == id) {
+        if (toInt(row.get("HOTEL_ID")) == id) {
           HotelFacility hotelFacility = HotelFacility.getInstance(
             row.get("KEY"),
             toInt(row.get("ID")),
@@ -72,6 +72,7 @@ public class Factory {
         );
         hotels.add(hotel);
       }
+      return hotels;
     } catch (IOException e) {
       e.printStackTrace();
     }
