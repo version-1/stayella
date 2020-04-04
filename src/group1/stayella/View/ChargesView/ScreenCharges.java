@@ -1,6 +1,6 @@
 package group1.stayella.View.ChargesView;
 
-import group1.stayella.Model.Charges;
+import group1.stayella.Model.Charge;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
@@ -35,16 +35,16 @@ public class ScreenCharges {
         public static Label food = new Label();
         public static Label extraBed = new Label();
         public static Label washingRoom = new Label();
-        public static Charges charges;
+        public static Charge charges;
         public static Button[] buttons;
         public static Label[] charge;
 
 
     public static void display(String title, String message) {
         buttons = new Button[]{btn0, btn1, btn2, btn3, btn4, btn5, btn6};
-        charges = new Charges();
+        charges = new Charge();
         charge = new Label[]{price, pet, gymAccess, luggage, food, extraBed, washingRoom, parking};
-        charges.markedCharges(buttons);
+        // charges.markedCharges(buttons);
 
         pet.setText("Pet: $30");
         gymAccess.setText("Gym access: $20");
@@ -90,7 +90,7 @@ public class ScreenCharges {
         } else {
             btnClicked.setText("");
         }
-        charges.markedCharges(buttons);
-        price.setText("Total: $" + charges.getChargesTotal());
+        // charges.markedCharges(buttons);
+        // price.setText("Total: $" + charges.getChargesTotal());
     }
 }

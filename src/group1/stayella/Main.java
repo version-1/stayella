@@ -1,5 +1,9 @@
 package group1.stayella;
 
+import java.util.List;
+
+import group1.stayella.Model.Hotel;
+import group1.stayella.Model.CSV.Factory;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -10,6 +14,7 @@ import javafx.stage.Stage;
 public class Main extends Application {
 
   public static void main(String[] args) {
+    List<Hotel> hotel = Factory.initialize();
     launch(args);
   }
 

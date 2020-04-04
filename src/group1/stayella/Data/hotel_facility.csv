@@ -1,2 +1,7 @@
-ID,KEY,LABEL,VALUE
-1,parking,Parking,1
+ID,HOTEL_ID,KEY,PRICE,TOTAL_NUMBER
+1,1,gym,100,1
+2,1,luggage,100,50
+4,1,extraBed,100,5
+5,1,foodService,100,-1
+6,1,washingRoom,100,1
+7,1,parking,100,1

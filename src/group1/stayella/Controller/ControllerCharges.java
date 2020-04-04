@@ -1,6 +1,6 @@
 package group1.stayella.Controller;
 
-import group1.stayella.Model.Charges;
+import group1.stayella.Model.Charge;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -11,46 +11,55 @@ import java.util.ResourceBundle;
 
 public class ControllerCharges implements Initializable {
     @FXML
-    public static Button btn0;
+    public Button btn0;
     @FXML
-    public static Button btn1;
+    public Button btn1;
     @FXML
-    public static Button btn2;
+    public Button btn2;
     @FXML
-    public static Button btn3;
+    public Button btn3;
     @FXML
-    public static Button btn4;
+    public Button btn4;
     @FXML
-    public static Button btn5;
+    public Button btn5;
     @FXML
-    public static Button btn6;
+    public Button btn6;
 
     @FXML
-    public static Label price;
+    public Label price;
     @FXML
-    public static Label parking;
+    public Label parking;
     @FXML
-    public static Label pet;
+    public Label pet;
     @FXML
-    public static Label gymAccess;
+    public Label gymAccess;
     @FXML
-    public static Label luggage;
+    public Label luggage;
     @FXML
-    public static Label food;
+    public Label food;
     @FXML
     public Label extraBed;
     @FXML
     public Label washingRoom;
 
-    private static Charges charges;
-    private static Button[] buttons;
+    private Charge charge;
+    private Button[] buttons;
 
-
+    @Override
     public void initialize(URL location, ResourceBundle resources) {
-        buttons = new Button[]{btn0, btn1, btn2, btn3, btn4, btn5, btn6};
-        charges = new Charges();
-        charges.markedCharges(buttons);
-        price.setText("Total: $" + charges.getChargesTotal());
+        this.buttons = new Button[]{btn0, btn1, btn2, btn3, btn4, btn5, btn6};
+        // charge = new Charge();
+        // charges.markedCharges(buttons);
+        // price.setText("Total: $" + charges.getChargesTotal());
+
+        pet.setText("Pet: $30");
+        gymAccess.setText("Gym access: $20");
+        luggage.setText("Store the luggage: $10");
+        food.setText("Food amenities: $10");
+        extraBed.setText("Extra bed: $25");
+        washingRoom.setText("Access to washing room: $10");
+        parking.setText("Parking: $30");
+
     }
 
     @FXML
@@ -61,8 +70,8 @@ public class ControllerCharges implements Initializable {
         } else {
             btnClicked.setText("");
         }
-        charges.markedCharges(buttons);
-        price.setText("Total: $" + charges.getChargesTotal());
+        // charge.markedCharges(buttons);
+        // price.setText("Total: $" + charge.getChargesTotal());
     }
 
     public void reset() {
