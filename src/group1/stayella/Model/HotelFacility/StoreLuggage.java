@@ -1,19 +1,11 @@
 package group1.stayella.Model.HotelFacility;
 
 public class StoreLuggage extends HotelFacility {
-    private int capacityOfLuggage;
+    private String key = "storeLagguage";
+    private String label = "Store Luggage";
 
-    public StoreLuggage(int id, String key, String label, double price, int capacityOfLuggage) {
-        super(id, key, label, price);
-        this.capacityOfLuggage = capacityOfLuggage;
+    public StoreLuggage(int id, double price, double capcity) {
+        super(id, price, capcity);
     }
 
-
-    public int getCapacityOfLuggage() {
-        return capacityOfLuggage;
-    }
-
-    public void setCapacityOfLuggage(int capacityOfLuggage) {
-        this.capacityOfLuggage = capacityOfLuggage;
-    }
 }

@@ -1,7 +1,11 @@
 package group1.stayella.Model.HotelFacility;
 
 public class Gym extends HotelFacility {
-    public Gym(int id, String key, String label, double price) {
-        super(id, key, label, price);
+    private String key = "gym";
+    private String label = "Gym";
+
+    public Gym(int id, double price, double capcity) {
+        super(id, price, capcity);
     }
+
 }
