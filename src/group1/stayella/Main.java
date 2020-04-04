@@ -12,7 +12,6 @@ import javafx.stage.Stage;
 public class Main extends Application {
 
   public static void main(String[] args) {
-    // List<Hotel> hotel = Factory.initialize();
     launch(args);
   }
 

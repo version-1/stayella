@@ -1,10 +1,9 @@
 package group1.stayella.Controller;
 
-import javafx.fxml.Initializable;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class CalendarController implements Initializable {
+public class CalendarController extends ApplicationController {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {

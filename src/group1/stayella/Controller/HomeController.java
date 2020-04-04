@@ -3,7 +3,6 @@ package group1.stayella.Controller;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -19,7 +18,7 @@ import java.util.ResourceBundle;
 import group1.stayella.Model.Hotel;
 import group1.stayella.Model.CSV.Factory;
 
-public class HomeController implements Initializable {
+public class HomeController extends ApplicationController {
     @FXML
     public Button reservation;
     @FXML
@@ -27,12 +26,10 @@ public class HomeController implements Initializable {
     @FXML
     public Label label;
 
-    public Hotel hotel;
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         List<Hotel> hotels = Factory.initialize();
-        hotel = hotels.get(0);
+        setHotel(hotels.get(0));
 
         label.setText("STAYELLA\nVersion: 1.0");
     }
@@ -51,14 +48,6 @@ public class HomeController implements Initializable {
 
     @FXML
     public void transitToCalendar(ActionEvent actionEvent) throws IOException {
-
-        Node node = (Node) actionEvent.getSource();
-        Stage stage = (Stage) node.getScene().getWindow();
-        URL url = getClass().getClassLoader().getResource("group1/stayella/View/CalendarView/index.fxml");
-        Parent page = FXMLLoader.load(url);
-
-        Scene newPage = new Scene(page, 500, 500);
-
-        stage.setScene(newPage);
+        transitTo(actionEvent, "CalendarView/index.fxml");
     }
 }
