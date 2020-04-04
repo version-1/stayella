@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class Room {
     private final static int VACANT = 0;
     private final static int OCCUPIED = 100;
-    private final static int DURTY = 200;
+    private final static int DIRTY = 200;
 
     private int id;
     private int hotelId;

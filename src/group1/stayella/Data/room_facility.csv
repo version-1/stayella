@@ -1,2 +1,8 @@
-ID,ROOM_ID,KEY,LABEL,VALUE
-1,1,pet,Pet,1
+ID,ROOM_ID,KEY,PRICE
+1,1,pet,100
+1,1,bath,100
+1,1,balcony,100
+1,1,refregerator,100
+1,1,accessibleForDisabilities,0
+1,1,smorking,100
+1,1,kitchen,100
