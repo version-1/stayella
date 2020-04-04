@@ -1,6 +1,8 @@
 package group1.stayella.Model.RoomFacility;
 
-public abstract class RoomFacility {
+import group1.stayella.Model.Facility;
+
+public abstract class RoomFacility implements Facility {
     private int id;
     private String key;
     private String label;
