@@ -8,4 +8,7 @@ public class WashingRoom extends HotelFacility{
     private String key = "washingRoom";
     private String label = "Washing Room";
 
+    public String getLabel() {
+        return label;
+    }
 }

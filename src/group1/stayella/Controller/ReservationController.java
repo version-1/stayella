@@ -123,4 +123,9 @@ public class ReservationController extends ApplicationController {
             e.printStackTrace();
         }
     }
+
+    @FXML
+    public void popupToCharge(ActionEvent actionEvent) throws IOException {
+        popUpTo("ChargesView/index.fxml",500,800);
+    }
 }

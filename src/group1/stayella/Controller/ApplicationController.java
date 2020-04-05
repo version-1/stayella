@@ -57,6 +57,11 @@ public class ApplicationController implements Initializable {
         return transit(event, fxml, 500, 500);
     }
 
+    public Stage popUpTo(String fxml, Integer with, Integer height) throws IOException {
+        return popup(fxml, with, height);
+    }
+
+
     private Stage transit(ActionEvent event, String fxml, Integer width, Integer height) throws IOException {
         Node node = (Node) event.getSource();
         Scene scene = node.getScene();
@@ -75,4 +80,18 @@ public class ApplicationController implements Initializable {
         return stage;
     }
 
+    private Stage popup(String fxml, Integer width, Integer height) throws IOException {
+        Stage stage = new Stage();
+        URL url = getClass().getClassLoader().getResource("group1/stayella/View/" + fxml);
+        FXMLLoader loader = new FXMLLoader(url);
+        Parent page = loader.load();
+
+        ApplicationController controller = loader.getController();
+        controller.setHotel(getHotel());
+
+        Scene newPage = new Scene(page, width, height);
+
+        stage.setScene(newPage);
+        return stage;
+    }
 }

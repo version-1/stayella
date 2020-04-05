@@ -17,14 +17,12 @@ import javafx.stage.Window;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.ResourceBundle;
 
 
 public class ControllerCharges extends ApplicationController {
-
-
     private List<HotelFacility> hotelFacilities;
     private Gym gym = new Gym(15, 100, 999999);
     private ExtraBed extraBed = new ExtraBed(10, 100, 50);
@@ -32,6 +30,7 @@ public class ControllerCharges extends ApplicationController {
     private StoreLuggage storeLuggage = new StoreLuggage(10, 100, 50);
     private WashingRoom washingRoom = new WashingRoom(10, 100, 50);
     private FoodService foodService = new FoodService(10, 100, 50);
+
     private double chargeTotal;
     private Charge charge;
 
@@ -62,6 +61,7 @@ public class ControllerCharges extends ApplicationController {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         chargeTotal = 0;
+        hotelFacilities = getHotel().getFacilities();
         checkBoxes = new CheckBox[]{gymCheck, luggageCheck, extraBedCheck, foodServiceCheck, parkingCheck, washingRoomCheck};
         setClassToId();
     }
@@ -110,7 +110,7 @@ public class ControllerCharges extends ApplicationController {
     public void onCloseAction(ActionEvent actionEvent) {
         Scene scene = ((Node) actionEvent.getSource()).getScene();
         Window window = scene.getWindow();
-        window.hide();
+        window.hide();  //→ Closeする
     }
 
     @FXML
@@ -156,7 +156,6 @@ public class ControllerCharges extends ApplicationController {
             HotelFacility pair = checkPairOfId(id);
             id.setText(pair.getLabel() + "  $" + Double.toString(pair.getPrice()));
         }
-
     }
 
 

@@ -5,7 +5,7 @@ import group1.stayella.Model.Facility;
 public abstract class HotelFacility implements Facility {
     private int id;
     private String key;
-    private String label;
+
     private int capacity;
     private double price;
 
@@ -52,9 +52,6 @@ public abstract class HotelFacility implements Facility {
         return key;
     }
 
-    public String getLabel() {
-        return label;
-    }
 
     public double getPrice() {
         return price;
@@ -72,9 +69,6 @@ public abstract class HotelFacility implements Facility {
         this.key = key;
     }
 
-    public void setLabel(String label) {
-        this.label = label;
-    }
 
     public void setPrice( double price) {
         this.price = price;
