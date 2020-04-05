@@ -5,29 +5,58 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 
-<GridPane fx:id="gridlayout" alignment="TOP_LEFT" hgap="15" vgap="15" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.172-ea" fx:controller="group1.stayella.Controller.ControllerCharges">
-    <Button fx:id="btn0" onAction="#markCharge" text="" GridPane.rowIndex="1"/>
-    <Button fx:id="btn1" onAction="#markCharge" text="" GridPane.rowIndex="2"/>
-    <Button fx:id="btn2" onAction="#markCharge" text="" GridPane.rowIndex="3"/>
-    <Button fx:id="btn3" onAction="#markCharge" text="" GridPane.rowIndex="4"/>
-    <Button fx:id="btn4" onAction="#markCharge" text="" GridPane.rowIndex="5"/>
-    <Button fx:id="btn5" onAction="#markCharge" text="" GridPane.rowIndex="6"/>
-    <Button fx:id="btn6" onAction="#markCharge" text="" GridPane.rowIndex="7"/>
+<?import javafx.scene.control.CheckBox?>
+<GridPane fx:id="gridlayout" fx:controller="group1.stayella.Controller.ControllerCharges"
+          xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.172-ea"
+          hgap="50" vgap="15">
+    <CheckBox fx:id="gymCheck" text=""
+              GridPane.columnIndex="1"
+              GridPane.rowIndex="3"
+              onAction="#onSelectedAction"
 
-    <Label text="Parking: $30" GridPane.rowIndex="1" GridPane.columnIndex="2"/>
-    <Label text="Pet: $30" GridPane.rowIndex="2" GridPane.columnIndex="2"/>
-    <Label text="Gym access: $20" GridPane.rowIndex="3" GridPane.columnIndex="2"/>
-    <Label text="Store the luggage: $10" GridPane.rowIndex="4" GridPane.columnIndex="2"/>
-    <Label text="Food amenities: $1" GridPane.rowIndex="5" GridPane.columnIndex="2"/>
-    <Label text="Extra bed: $25" GridPane.rowIndex="6" GridPane.columnIndex="2"/>
-    <Label text="Access to washing room: $10" GridPane.rowIndex="7" GridPane.columnIndex="2"/>
-    <Label fx:id="price" GridPane.rowIndex="8" GridPane.columnIndex="2" textFill="sienna"/>
-    <columnConstraints>
-        <ColumnConstraints />
-        <ColumnConstraints />
-        <ColumnConstraints />
-        <ColumnConstraints />
-        <ColumnConstraints />
-    </columnConstraints>
+    />
+    <CheckBox fx:id="luggageCheck"
+              text=""
+              GridPane.columnIndex="1"
+              GridPane.rowIndex="4"
+              onAction="#onSelectedAction"
+    />
+    <CheckBox fx:id="extraBedCheck" text=""
+              GridPane.columnIndex="1"
+              GridPane.rowIndex="5"
+              onAction="#onSelectedAction"
+    />
+    <CheckBox fx:id="foodServiceCheck"
+              text=""
+              GridPane.columnIndex="1"
+              GridPane.rowIndex="6"
+              onAction="#onSelectedAction"
+
+    />
+    <CheckBox fx:id="parkingCheck" text=""
+              GridPane.columnIndex="1"
+              GridPane.rowIndex="7"
+              onAction="#onSelectedAction"
+
+    />
+    <CheckBox fx:id="washingRoomCheck"
+              text=""
+              GridPane.columnIndex="1"
+              GridPane.rowIndex="8"
+              onAction="#onSelectedAction"
+
+    />
+
+    <Label fx:id="sumOfCharge" text="Total : $ 0"
+           GridPane.columnIndex="2"
+           GridPane.rowIndex="11"/>
+    <Button fx:id="submit" GridPane.columnIndex="1"
+            GridPane.rowIndex="12" text="Submit" onAction="#onSubmitAction"/>
+
+    <Button fx:id="reset" GridPane.columnIndex="2"
+            GridPane.rowIndex="13" text="Reset" onAction="#onResetAction"/>
+    <Button fx:id="close" GridPane.columnIndex="1"
+            GridPane.rowIndex="13" text="Reset" onAction="#onCloseAction"/>
+
 </GridPane>
 
