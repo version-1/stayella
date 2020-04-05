@@ -35,12 +35,8 @@ public class PaymentController extends ApplicationController {
             Parent root = (Parent) loader.load();
             ReservationController reservationController = loader.getController();
             reservationController.showCCInfo(cardNumber.getText());
-//            Stage stage = new Stage();
-//            stage.setScene(new Scene(root));
-//            stage.show();
             Stage thisStage = (Stage) ok.getScene().getWindow();
             thisStage.close();
-
         } catch (IOException e) {
             e.printStackTrace();
         }
