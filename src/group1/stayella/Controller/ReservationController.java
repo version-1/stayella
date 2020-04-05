@@ -1,9 +1,9 @@
 package group1.stayella.Controller;
+import group1.stayella.View.Paymentview.PopPayment;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -96,13 +96,16 @@ public class ReservationController extends ApplicationController {
             confirmed.setStyle("-fx-border-color: #ee0000; -fx-border-width: 1px;");
         });
 
+        buttonCard.setOnAction(e -> {
+            showCCInfo(PopPayment.display("Credit Card Information"));
+        });
     }
 
     public void showCCInfo(String text) {
         if (text.length() != 14) {
             this.cardNumberLabel.setText("INVALID!");
         }
-        this.cardNumberLabel.setText("Credit Card Number:\nXXXX-XXXX-" + text.substring(10));
+        this.cardNumberLabel.setText("XXXX-XXXX-" + text.substring(8));
     }
 
 
@@ -116,11 +119,14 @@ public class ReservationController extends ApplicationController {
             if (actionEvent.getSource() == buttonAdditions) {
                 //stage.setScene(new Scene(rootAdditions, 300, 400));
             } else if (actionEvent.getSource() == buttonCard) {
-                stage.setScene(new Scene(rootPayment, 280, 140));
+                //stage.setScene(new Scene(rootPayment, 280, 140));
             }
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+    public void transitToPayment(ActionEvent actionEvent) throws IOException {
+        transitTo(actionEvent, "Paymentview/index.fxml");
     }
 }

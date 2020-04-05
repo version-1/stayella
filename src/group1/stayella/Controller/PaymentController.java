@@ -1,6 +1,7 @@
 package group1.stayella.Controller;
 
 import group1.stayella.Model.CreditCard;
+import group1.stayella.View.Paymentview.PopPayment;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -14,31 +15,22 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class PaymentController extends ApplicationController {
-    @FXML
-    Button ok;
-    @FXML
-    TextField cardNumber;
-    @FXML
-    TextField cardHolderName;
-    @FXML
-    TextField securityCode;
 
     private CreditCard creditCard;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        PopPayment.display("Insert CC Info");
     }
 
+    @FXML
     public void passData(ActionEvent actionEvent) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/group1/stayella/View/ReservationView/index.fxml"));
-            Parent root = (Parent) loader.load();
-            ReservationController reservationController = loader.getController();
-            reservationController.showCCInfo(cardNumber.getText());
-            Stage thisStage = (Stage) ok.getScene().getWindow();
-            thisStage.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+            //FXMLLoader loader = new FXMLLoader(getClass().getResource("/group1/stayella/View/ReservationView/index.fxml"));
+            //Parent root = (Parent) loader.load();
+            //ReservationController reservationController = loader.getController();
+            //reservationController.showCCInfo(cardNumber.getText());
+            //PopPayment.display("Insert CC Info");
+            //Stage thisStage = (Stage) ok.getScene().getWindow();
+            //thisStage.close();
     }
 }
