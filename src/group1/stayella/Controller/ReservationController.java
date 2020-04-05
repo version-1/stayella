@@ -110,11 +110,11 @@ public class ReservationController extends ApplicationController {
         try {
             FXMLLoader loaderPayment = new FXMLLoader(getClass().getResource("/group1/stayella/View/Paymentview/index.fxml"));
             Parent rootPayment = loaderPayment.load();
-            //FXMLLoader loaderAdditions = new FXMLLoader(getClass().getResource("/group1/stayella/View/ChargesView/index.fxml"));
-            //Parent rootAdditions = loaderAdditions.load();
+            FXMLLoader loaderAdditions = new FXMLLoader(getClass().getResource("/group1/stayella/View/ChargesView/index.fxml"));
+            Parent rootAdditions = loaderAdditions.load();
             Stage stage = new Stage();
             if (actionEvent.getSource() == buttonAdditions) {
-                //stage.setScene(new Scene(rootAdditions, 300, 400));
+                stage.setScene(new Scene(rootAdditions, 300, 400));
             } else if (actionEvent.getSource() == buttonCard) {
                 stage.setScene(new Scene(rootPayment, 280, 140));
             }

@@ -74,4 +74,5 @@ public class ApplicationController implements Initializable {
         stage.setScene(newPage);
         return stage;
     }
+
 }

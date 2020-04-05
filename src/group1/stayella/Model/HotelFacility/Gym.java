@@ -8,4 +8,9 @@ public class Gym extends HotelFacility {
         super(id, price, capcity);
     }
 
+
+    @Override
+    public String getLabel() {
+        return label;
+    }
 }
