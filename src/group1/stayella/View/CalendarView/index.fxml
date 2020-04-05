@@ -8,10 +8,40 @@
 <GridPane fx:id="gridlayout" alignment="TOP_LEFT" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="group1.stayella.Controller.CalendarController">
     <Label text="Calender Screen" GridPane.rowIndex="1" GridPane.columnIndex="2"/>
     <Button
+      fx:id="vacancies"
+      onAction="#onClickVacancy"
+      text="vacancies"
+      GridPane.columnIndex="1"
+      GridPane.rowIndex="3"
+      alignment="CENTER_LEFT"
+      />
+    <Button
+      fx:id="occupied"
+      onAction="#onClickOccupied"
+      text="occupied"
+      GridPane.columnIndex="2"
+      GridPane.rowIndex="3"
+      alignment="CENTER_LEFT"
+      />
+    <Button
+      fx:id="search"
+      text="search"
+      GridPane.columnIndex="3"
+      GridPane.rowIndex="3"
+      alignment="CENTER_LEFT"
+      />
+    <Button
+      fx:id="reload"
+      text="reload"
+      GridPane.columnIndex="4"
+      GridPane.rowIndex="3"
+      alignment="CENTER_LEFT"
+      />
+    <Button
       fx:id="goBack"
       onAction="#goBack"
       text="go back"
-      GridPane.columnIndex="1"
+      GridPane.columnIndex="5"
       GridPane.rowIndex="3"
       alignment="CENTER_LEFT"
       />
