@@ -75,4 +75,23 @@ public class ApplicationController implements Initializable {
         return stage;
     }
 
+    private Stage popup(String fxml, Integer width, Integer height) throws IOException {
+        Stage stage = new Stage();
+        URL url = getClass().getClassLoader().getResource("group1/stayella/View/" + fxml);
+        FXMLLoader loader = new FXMLLoader(url);
+        Parent page = loader.load();
+        ApplicationController controller = loader.getController();
+        controller.setHotel(getHotel());
+        Scene newPage = new Scene(page, width, height);
+        stage.setScene(newPage);
+        return stage;
+    }
+
+    public Stage popupAs(String fxml) throws IOException {
+        return popup(fxml, 500, 500);
+    }
+
+    public Stage popupAs(String fxml, Integer width, Integer height) throws IOException {
+        return popup(fxml, width, height);
+    }
 }
