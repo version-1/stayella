@@ -1,5 +1,4 @@
 package group1.stayella.Controller;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -44,6 +43,19 @@ public class ReservationController extends ApplicationController {
     @FXML
     ImageView imageAdditionsView;
 
+    @FXML
+    Button confirmed;
+    @FXML
+    Button unconfirmed;
+    @FXML
+    Button checkIn;
+    @FXML
+    Button checkOut;
+    @FXML
+    Button cancel;
+    @FXML
+    Button reservation;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         image = new Image("https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTqWGB5YLwdAKCrHNiw9_I5jXeWHDlGHh83anl58WuJ4WwhzslJ&usqp=CAU");
@@ -71,10 +83,26 @@ public class ReservationController extends ApplicationController {
         imageAdditionsView.setFitWidth(30);
         imageAdditionsView.setPreserveRatio(true);
         buttonAdditions.setGraphic(imageAdditionsView);
+
+        confirmed.setOnAction(e -> {
+            confirmed.isFocused();
+            confirmed.setStyle("-fx-border-color: #00ee00; -fx-border-width: 3px;");
+            unconfirmed.setStyle("-fx-border-color: #ee0000; -fx-border-width: 1px;");
+        });
+
+        unconfirmed.setOnAction(e -> {
+            unconfirmed.isFocused();
+            unconfirmed.setStyle("-fx-border-color: #00ee00; -fx-border-width: 3px;");
+            confirmed.setStyle("-fx-border-color: #ee0000; -fx-border-width: 1px;");
+        });
+
     }
 
     public void showCCInfo(String text) {
-        this.cardNumberLabel.setText("XXXX-XXXX-" + text.substring(10));
+        if (text.length() != 14) {
+            this.cardNumberLabel.setText("INVALID!");
+        }
+        this.cardNumberLabel.setText("Credit Card Number:\nXXXX-XXXX-" + text.substring(10));
     }
 
 
@@ -85,7 +113,6 @@ public class ReservationController extends ApplicationController {
             //FXMLLoader loaderAdditions = new FXMLLoader(getClass().getResource("/group1/stayella/View/ChargesView/index.fxml"));
             //Parent rootAdditions = loaderAdditions.load();
             Stage stage = new Stage();
-
             if (actionEvent.getSource() == buttonAdditions) {
                 //stage.setScene(new Scene(rootAdditions, 300, 400));
             } else if (actionEvent.getSource() == buttonCard) {
