@@ -68,14 +68,6 @@ public class Reservation {
         return reservationNo;
     }
 
-    public double getTotalPrice() {
-        return totalPrice;
-    }
-
-    public ArrayList<HotelFacility> getHotelFacilities() {
-        return (ArrayList) hotelFacilities;
-    }
-
     public void setId(int id) {
         this.id = id;
     }
@@ -146,7 +138,7 @@ public class Reservation {
             }
         }
         assignReservationNo();
-
+        return true;
     }
 
     // check the input
