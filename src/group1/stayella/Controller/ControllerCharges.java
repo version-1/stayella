@@ -11,6 +11,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
+import javafx.stage.Stage;
 import javafx.stage.Window;
 
 import java.io.IOException;
@@ -20,7 +21,7 @@ import java.util.ResourceBundle;
 
 
 public class ControllerCharges extends ApplicationController {
-    private List<HotelFacility> hotelFacilities;
+//    private List<HotelFacility> hotelFacilities;
     private Gym gym = new Gym(15, 100, 999999);
     private ExtraBed extraBed = new ExtraBed(10, 100, 50);
     private Parking parking = new Parking(10, 100, 50);
@@ -58,7 +59,7 @@ public class ControllerCharges extends ApplicationController {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         chargeTotal = 0;
-        hotelFacilities = getHotel().getFacilities();
+//        hotelFacilities = getHotel().getFacilities();
         checkBoxes = new CheckBox[]{gymCheck, luggageCheck, extraBedCheck, foodServiceCheck, parkingCheck, washingRoomCheck};
         setClassToId();
     }
@@ -103,17 +104,11 @@ public class ControllerCharges extends ApplicationController {
         reflectSumOfCharge();
     }
 
-    @FXML
-    public void onCloseAction(ActionEvent actionEvent) {
-        Scene scene = ((Node) actionEvent.getSource()).getScene();
-        Window window = scene.getWindow();
-        window.hide();  //→ Closeする
-    }
 
     @FXML
     public void onSubmitAction(ActionEvent actionEvent) {
         leadSceneAndSendData();
-        onCloseAction(actionEvent);
+        closeAction(actionEvent);
     }
 
     private void leadSceneAndSendData() {

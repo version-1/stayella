@@ -6,6 +6,7 @@
 <?import javafx.scene.layout.GridPane?>
 
 <?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.layout.TilePane?>
 <GridPane fx:id="gridlayout" fx:controller="group1.stayella.Controller.ControllerCharges"
           xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.172-ea"
           hgap="50" vgap="15">
@@ -52,11 +53,11 @@
            GridPane.rowIndex="11"/>
     <Button fx:id="submit" GridPane.columnIndex="1"
             GridPane.rowIndex="12" text="Submit" onAction="#onSubmitAction"/>
-
+    <Button fx:id="close" GridPane.columnIndex="1"
+            GridPane.rowIndex="13" text="close" onAction="#closeAction"/>
     <Button fx:id="reset" GridPane.columnIndex="2"
             GridPane.rowIndex="13" text="Reset" onAction="#onResetAction"/>
-    <Button fx:id="close" GridPane.columnIndex="1"
-            GridPane.rowIndex="13" text="Reset" onAction="#onCloseAction"/>
+
 
 </GridPane>
 
