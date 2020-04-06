@@ -5,21 +5,21 @@
 <?import javafx.scene.layout.GridPane?>
 
 <GridPane fx:id="container" fx:controller="group1.stayella.Controller.ControllerCharges"
-          xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.172-ea" hgap="50" vgap="15">
+          xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.172-ea" hgap="20" vgap="15" stylesheets="@../css/styles.css">
 
 <Label fx:id="total" text="Total :"
            GridPane.columnIndex="1"
-           GridPane.rowIndex="11"
-            alignment="CENTER_RIGHT"/>
-<Label fx:id="sumOfCharge" text="$ 0.0"
+           GridPane.rowIndex="12"
+       GridPane.halignment="RIGHT"/>
+<Label fx:id="sumOfCharge" text=""
        GridPane.columnIndex="2"
-       GridPane.rowIndex="11"/>
+       GridPane.rowIndex="12" styleClass="tic-button" />
     <Button fx:id="submit" GridPane.columnIndex="2"
-            GridPane.rowIndex="12" text="Submit" onAction="#onSubmitAction"/>
+            GridPane.rowIndex="13" text="Submit" onAction="#onSubmitAction"/>
     <Button fx:id="close" GridPane.columnIndex="1"
-            GridPane.rowIndex="13" text="close" onAction="#closeAction"/>
+            GridPane.rowIndex="14" text="close" onAction="#closeAction"/>
     <Button fx:id="reset" GridPane.columnIndex="2"
-            GridPane.rowIndex="13" text="Reset" onAction="#onResetAction"/>
+            GridPane.rowIndex="14" text="Reset" onAction="#onResetAction"/>
 
 
 </GridPane>

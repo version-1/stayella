@@ -59,6 +59,7 @@ public class ControllerCharges extends ApplicationController {
         checkBoxes = new CheckBox[hotelFacilities.size()];
         hotelFacilitiesForReservation = new ArrayList<HotelFacility>();
         addFlowPane();
+        reflectSumOfCharge();
     }
 
     /** extra
@@ -131,13 +132,13 @@ public class ControllerCharges extends ApplicationController {
     }
 
     private void reflectSumOfCharge() {
-        sumOfCharge.setText("Total : $ " + Double.toString(chargeTotal));
+        sumOfCharge.setText("$ " + Double.toString(chargeTotal));
     }
 
 
     // flow pain
     public void  addFlowPane() {
-        Integer row = 1;
+        Integer row = 2;
         for(int i = 0; i < hotelFacilities.size(); i++) {
             HotelFacility facility = hotelFacilities.get(i);
             checkBoxes[i] = new CheckBox();
@@ -146,7 +147,7 @@ public class ControllerCharges extends ApplicationController {
             checkBoxes[i].setOnAction(this::onSelectedAction);
             container.add(checkBoxes[i], 1, row);
             Label label = new Label();
-            label.setText("$" + Double.toString(facility.getPrice()));
+            label.setText("$ " + Double.toString(facility.getPrice()));
             container.add(label, 2, row++);
         }
     }

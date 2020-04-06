@@ -107,7 +107,7 @@ public class ApplicationController implements Initializable {
     public void closeAction(ActionEvent actionEvent) {
         Scene scene = ((Node) actionEvent.getSource()).getScene();
         Stage stage =  (Stage) scene.getWindow();
-        stage.close();  //→ Closeする
+        stage.close();
     }
 
 }
