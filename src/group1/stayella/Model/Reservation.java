@@ -1,38 +1,43 @@
 package group1.stayella.Model;
 
-import group1.stayella.Model.HotelFacility.HotelFacility;
-
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 
 public class Reservation {
+    private final static int CANCEL = 0;
+    private final static int UNCONFIRMED = 0;
+    private final static int CONFIRMED = 0;
+
+    private static int index = 1;
     private int id;
     private String reservationNo;
-    private List<Charge> charges;
+    private List<Charge> charges = new ArrayList<Charge>();
+    private List<Vacancy> vacancies = new ArrayList<Vacancy>();
     private Guest mainGuest;
     private int numberOfGuest;
     private Date checkInTime;
     private Date checkOutTime;
     private int status;
-    private double totalPrice;
-    private List<HotelFacility> hotelFacilities;
-    // e.g 0: cancel 1:unconfirmed 2:
 
-    public  Reservation(){}
+    // e.g 0: cancel 1:unconfirmed 2: confirmed
 
-    public Reservation(int id, String reservationNo, Guest guest, int numberOfGuest, Date checkInTime, Date checkOutTime, int status, double price) {
-        this.id = id;
-        this.reservationNo = reservationNo;
+
+    public  Reservation(){
+       index++;
+    }
+
+
+    public Reservation(Guest guest, int numberOfGuest, int status) {
+        this.id = index;
         this.mainGuest = guest;
         this.numberOfGuest = numberOfGuest;
-        this.checkInTime = checkInTime;
-        this.checkOutTime = checkOutTime;
         this.status = status;
-        this.totalPrice = price;
-        this.hotelFacilities = new ArrayList<HotelFacility>();
+
+        index++;
+
     }
 
     public int getId() {
@@ -94,8 +99,12 @@ public class Reservation {
         this.mainGuest = guest;
     }
 
-    public void setReservationNo(String reservationNo) {
-        this.reservationNo = reservationNo;
+    public void assignReservationNo() {
+        if (reservationNo != null || vacancies.size() == 0) {
+            return;
+        }
+        Vacancy vacancy = vacancies.get(0);
+        reservationNo = String.format("%s0000%06d", vacancy.getRoomNumber(), id);
     }
 
     public void setStatus(int status) {
@@ -110,12 +119,34 @@ public class Reservation {
         this.numberOfGuest = numberOfGuest;
     }
 
-    public void setTotalPrice(double totalPrice) {
-        this.totalPrice = totalPrice;
+
+
+    public boolean isLocked() {
+        return status != CANCEL;
     }
 
-    public void setHotelFacilities(List<HotelFacility> hotelFacilities) {
-        this.hotelFacilities = hotelFacilities;
+    // make the reservation
+    public boolean make(List<Vacancy> vacancies, Date start, int lengthOfStay) {
+        if (vacancies.size() == 0) {
+            return false;
+        }
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(start);
+        calendar.add(Calendar.DATE, lengthOfStay);
+        Date end = calendar.getTime();
+        for (Vacancy vacancy: vacancies) {
+            boolean isInclude = start.compareTo(vacancy.getEndTime()) <= 0 &&
+                end.compareTo(vacancy.getStartTime()) >= 0;
+            if (isInclude) {
+                if (vacancy.isOccupied()) {
+                    return false;
+                }
+                vacancy.setReservation(this);
+                this.vacancies.add(vacancy);
+            }
+        }
+        assignReservationNo();
+
     }
 
     // check the input
@@ -127,4 +158,5 @@ public class Reservation {
             return true;
         }
     }
+
 }

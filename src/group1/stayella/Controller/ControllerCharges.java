@@ -1,6 +1,7 @@
 package group1.stayella.Controller;
 
 
+import group1.stayella.Model.Charge;
 import group1.stayella.Model.HotelFacility.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

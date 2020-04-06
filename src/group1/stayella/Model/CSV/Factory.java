@@ -2,11 +2,11 @@ package group1.stayella.Model.CSV;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
-import group1.stayella.Data.Enum.ChargeType;
 import group1.stayella.Model.*;
 import group1.stayella.Model.HotelFacility.*;
 import group1.stayella.Model.RoomFacility.RoomFacility;
@@ -27,7 +27,19 @@ public class Factory {
     List<Hotel> hotels = getHotels();
     for (Hotel hotel: hotels) {
       hotel.setFacilities(getHotelFacilities(hotel.getID()));
-      hotel.setRooms(getRooms(hotel.getID()));
+      List<Room> rooms = getRooms(hotel.getID());
+      for (Room room: rooms) {
+        List<RoomFacility> facilities = getRoomFacilities(room.getID());
+        List<Vacancy> vacancies = getVacancies(room.getID());
+        room.setFacilities(facilities);
+        room.setVacancies(vacancies);
+      }
+      hotel.setRooms(rooms);
+      List<Guest> guests = getGuests();
+      for (Guest guest: guests) {
+         Room room = rooms.get(getRandomInt(0, rooms.size() - 1));
+         makeReservations(guest, room);
+      }
     }
 
     return hotels;
@@ -50,7 +62,6 @@ public class Factory {
       }
       return list;
     } catch (IOException e) {
-      // TODO Auto-generated catch block
       e.printStackTrace();
     }
     return null;
@@ -106,18 +117,19 @@ public class Factory {
     return null;
   }
 
-  public static List<RoomFacility> getRoomFacilities() {
+  public static List<RoomFacility> getRoomFacilities(int id) {
     try {
       List<HashMap<String, String>> csv = new Core(ROOM_FACILITY_PATH).load();
       List<RoomFacility> list = new ArrayList<RoomFacility>();
       for(HashMap<String, String> row: csv){
-        // RoomFacility facility = new RoomFacility(
-        //   toInt(row.get("ID")),
-        //   toInt(row.get("ROOM_ID")),
-        //   row.get("KEY"),
-        //   row.get("LABEL")
-        // );
-        // list.add(facility);
+        if (toInt(row.get("ROOM_ID")) == id) {
+          RoomFacility facility = RoomFacility.getInstance(
+            row.get("KEY"),
+            toInt(row.get("ID")),
+            toDouble(row.get("PRICE"))
+          );
+          list.add(facility);
+        }
       }
       return list;
     } catch (IOException e) {
@@ -126,37 +138,40 @@ public class Factory {
     return null;
   }
 
-
-  public static List<Charge> getCharges() {
-    // try {
-    //   List<HashMap<String, String>> csv = new Core(CHARGE_PATH).load();
-    //   List<Charge> list = new ArrayList<Charge>();
-    //   for (HashMap<String, String> row: csv) {
-    //     ChargeType type = ChargeType.valueOf(row.get("KEY"));
-    //     Charge charge = new Charge(
-    //       toInt(row.get("ID")),
-    //       toInt(row.get("RESRVATION_ID")),
-    //       type.name(),
-    //       type.getLabel(),
-    //       type.getPrice()
-    //     );
-    //     list.add(charge);
-    //   }
-    //   return list;
-    // } catch (IOException e) {
-    //   e.printStackTrace();
-    // }
-    return null;
-  }
-
-  public static void getReservations() {
+  public static List<Vacancy> getVacancies(int id) {
     try {
-      List<HashMap<String, String>> csv = new Core(RESERVATION_PATH).load();
-      // List<Resorvation> reservations = new ArrayList<Resorvation>();
-      // TODO: implement after Resrvation class is created
+      List<HashMap<String, String>> csv = new Core(VACANCY_PATH).load();
+      List<Vacancy> list = new ArrayList<Vacancy>();
+      for(HashMap<String, String> row: csv){
+        if (toInt(row.get("ROOM_ID")) == id) {
+          Vacancy vacancy = new Vacancy(
+            toInt(row.get("ID")),
+            row.get("ROOM_NUMBER"),
+            null,
+            toDate(row.get("START_TIME")),
+            toDate(row.get("END_TIME"))
+          );
+          list.add(vacancy);
+        }
+      }
+      return list;
     } catch (IOException e) {
       e.printStackTrace();
     }
+    return null;
+  }
+
+  public static void makeReservations(Guest guest, Room room) {
+    Calendar cal = Calendar.getInstance();
+    cal.add(Calendar.DATE, getRandomInt(0, 7));
+    Date start = cal.getTime();
+
+    Reservation reservation = new Reservation(
+      guest,
+      1,
+      getRandomInt(0, 2) // uncofirmed or confirm
+    );
+    reservation.make(room.getVacancies(), start, getRandomInt(2, 5));
   }
 
   public static List<CreditCard> getCreditCards() {
@@ -184,45 +199,43 @@ public class Factory {
   }
 
   public static List<Guest> getGuests() {
-    // try {
-    //   List<HashMap<String, String>> csv = new Core(GUEST_PATH).load();
-    //   List<Guest> list = new ArrayList<Guest>();
-    //   for(HashMap<String, String> row: csv){
-    //     Guest guest = new Guest(
-    //       toInt(row.get("ID")),
-    //       toInt(row.get("RESERVAITON_ID")),
-    //       row.get("NAME"),
-    //       toInt(row.get("AGE")),
-    //       row.get("PHONE_NUMBER"),
-    //       row.get("EMAIL"),
-    //       row.get("ID_NUMBER"),
-    //       null,
-    //       row.get("LANGUAGE")
-    //     );
-    //     list.add(guest);
-    //   }
-    //   return list;
-    // } catch (IOException e) {
-    //   e.printStackTrace();
-    // }
+    try {
+      List<HashMap<String, String>> csv = new Core(GUEST_PATH).load();
+      List<Guest> list = new ArrayList<Guest>();
+      for(HashMap<String, String> row: csv){
+        Guest guest = new Guest(
+          toInt(row.get("ID")),
+          row.get("NAME"),
+          toInt(row.get("AGE")),
+          "",
+          row.get("PHONE_NUMBER"),
+          row.get("EMAIL"),
+          row.get("ID_NUMBER"),
+          null,
+          row.get("LANGUAGE")
+        );
+        list.add(guest);
+      }
+      return list;
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
     return null;
   }
 
-  public static void getVacancies() {
-    // TODO: inmplement process to load from csv and create instance list
-    try {
-      List<HashMap<String, String>> csv = new Core(VACANCY_PATH).load();
-    } catch (IOException e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
-    }
-  }
 
   private static int toInt(String str) {
     return Integer.parseInt(str);
   }
 
+  private static double toDouble(String str) {
+    return Double.parseDouble(str);
+  }
   private static Date toDate(String str) {
     return new Date(str);
+  }
+
+  private static int getRandomInt(int max, int min) {
+    return (int)(Math.random() * ((max - min) + 1)) + min;
   }
 }

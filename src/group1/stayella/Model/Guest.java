@@ -4,7 +4,6 @@ import java.awt.*;
 
 public class Guest {
     private int id;
-    private int reservationId;
     private String name;
     private int age;
     private Image photo;
@@ -17,9 +16,8 @@ public class Guest {
     public Guest() {
     }
 
-    public Guest(int id, int reservationId, String name, int age, String file, String phoneNumber, String emailAddress, String idNumber, CreditCard paymentMethod, String language) {
+    public Guest(int id, String name, int age, String file, String phoneNumber, String emailAddress, String idNumber, CreditCard paymentMethod, String language) {
         this.id = id;
-        this.reservationId = reservationId;
         this.name = name;
         this.age = age;
 //        this.photo = new Image(file);
@@ -116,13 +114,5 @@ public class Guest {
         } else {
             return false;
         }
-    }
-
-    public int getReservationId() {
-        return reservationId;
-    }
-
-    public void setReservationId(int reservationId) {
-        this.reservationId = reservationId;
     }
 }
