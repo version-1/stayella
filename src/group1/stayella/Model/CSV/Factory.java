@@ -2,6 +2,7 @@ package group1.stayella.Model.CSV;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -34,6 +35,11 @@ public class Factory {
         room.setVacancies(vacancies);
       }
       hotel.setRooms(rooms);
+      List<Guest> guests = getGuests();
+      for (Guest guest: guests) {
+         Room room = rooms.get(getRandomInt(0, rooms.size() - 1));
+         makeReservations(guest, room);
+      }
     }
 
     return hotels;
@@ -150,21 +156,22 @@ public class Factory {
       }
       return list;
     } catch (IOException e) {
-      // TODO Auto-generated catch block
       e.printStackTrace();
     }
     return null;
   }
 
+  public static void makeReservations(Guest guest, Room room) {
+    Calendar cal = Calendar.getInstance();
+    cal.add(Calendar.DATE, getRandomInt(0, 7));
+    Date start = cal.getTime();
 
-  public static void getReservations() {
-    try {
-      List<HashMap<String, String>> csv = new Core(RESERVATION_PATH).load();
-      // List<Resorvation> reservations = new ArrayList<Resorvation>();
-      // TODO: implement after Resrvation class is created
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
+    Reservation reservation = new Reservation(
+      guest,
+      1,
+      getRandomInt(0, 2) // uncofirmed or confirm
+    );
+    reservation.make(room.getVacancies(), start, getRandomInt(2, 5));
   }
 
   public static List<CreditCard> getCreditCards() {
@@ -192,27 +199,27 @@ public class Factory {
   }
 
   public static List<Guest> getGuests() {
-    // try {
-    //   List<HashMap<String, String>> csv = new Core(GUEST_PATH).load();
-    //   List<Guest> list = new ArrayList<Guest>();
-    //   for(HashMap<String, String> row: csv){
-    //     Guest guest = new Guest(
-    //       toInt(row.get("ID")),
-    //       toInt(row.get("RESERVAITON_ID")),
-    //       row.get("NAME"),
-    //       toInt(row.get("AGE")),
-    //       row.get("PHONE_NUMBER"),
-    //       row.get("EMAIL"),
-    //       row.get("ID_NUMBER"),
-    //       null,
-    //       row.get("LANGUAGE")
-    //     );
-    //     list.add(guest);
-    //   }
-    //   return list;
-    // } catch (IOException e) {
-    //   e.printStackTrace();
-    // }
+    try {
+      List<HashMap<String, String>> csv = new Core(GUEST_PATH).load();
+      List<Guest> list = new ArrayList<Guest>();
+      for(HashMap<String, String> row: csv){
+        Guest guest = new Guest(
+          toInt(row.get("ID")),
+          row.get("NAME"),
+          toInt(row.get("AGE")),
+          "",
+          row.get("PHONE_NUMBER"),
+          row.get("EMAIL"),
+          row.get("ID_NUMBER"),
+          null,
+          row.get("LANGUAGE")
+        );
+        list.add(guest);
+      }
+      return list;
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
     return null;
   }
 
@@ -226,5 +233,9 @@ public class Factory {
   }
   private static Date toDate(String str) {
     return new Date(str);
+  }
+
+  private static int getRandomInt(int max, int min) {
+    return (int)(Math.random() * ((max - min) + 1)) + min;
   }
 }
