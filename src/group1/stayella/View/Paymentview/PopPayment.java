@@ -11,10 +11,12 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-public class PopPayment extends ApplicationController implements Initializable {
-    static String cardNumber;
+import java.util.ArrayList;
 
-    public static String display(String title) {
+public class PopPayment extends ApplicationController implements Initializable {
+    static ArrayList<String> creditCard;
+
+    public static ArrayList<String> display(String title) {
         TextField fieldCardNumber = new TextField();
         TextField fieldCardHolderName = new TextField();
         TextField fieldSecurityCode = new TextField();
@@ -40,9 +42,11 @@ public class PopPayment extends ApplicationController implements Initializable {
         window.setTitle(title);
 
         submit.setOnAction(e ->  {
-            cardNumber = fieldCardNumber.getText();
-            String regex = "[0-9]+";
-            if (cardNumber.matches(regex) && cardNumber.length() == 12) {
+            if (fieldCardNumber.getText().length() == 12 && fieldSecurityCode.getText() .length() == 3 && !fieldCardHolderName.getText().isEmpty()) {
+            creditCard = new ArrayList<>(3);
+            creditCard.add(0, fieldCardNumber.getText());
+            creditCard.add(1, fieldCardHolderName.getText());
+            creditCard.add(2, fieldSecurityCode.getText());
                 window.close();
             } else {
                 Alert alert = new Alert(Alert.AlertType.WARNING);
@@ -51,7 +55,6 @@ public class PopPayment extends ApplicationController implements Initializable {
                 alert.showAndWait();
             }
         });
-
         VBox layout = new VBox(5);
         Label messageLabel = new Label();
         messageLabel.setStyle("-fx-text-fill: blue; -fx-font-size: 20;");
@@ -64,6 +67,6 @@ public class PopPayment extends ApplicationController implements Initializable {
         scene.getStylesheets().add("/group1/stayella/View/css/popup.css");
         window.setScene(scene);
         window.showAndWait();
-        return cardNumber;
+        return creditCard;
     }
 }
