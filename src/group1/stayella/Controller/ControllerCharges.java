@@ -1,55 +1,51 @@
 package group1.stayella.Controller;
 
-import group1.stayella.Model.Charge;
+
 import group1.stayella.Model.HotelFacility.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.Node;
+
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
-import javafx.stage.Stage;
-import javafx.stage.Window;
+import javafx.scene.layout.GridPane;
 
-import java.io.IOException;
-import java.lang.reflect.Array;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 
 public class ControllerCharges extends ApplicationController {
+
+    /** extra
+     * 読み込めるようになったら消す
+     *
+     */
     private Gym gym = new Gym(15, 100, 999999);
     private ExtraBed extraBed = new ExtraBed(10, 100, 50);
     private Parking parking = new Parking(10, 100, 50);
     private StoreLuggage storeLuggage = new StoreLuggage(10, 100, 50);
     private WashingRoom washingRoom = new WashingRoom(10, 100, 50);
     private FoodService foodService = new FoodService(10, 100, 50);
-    private ArrayList<HotelFacility> hotelFacilities;
+    private ArrayList<HotelFacility> hotelFacilities = new ArrayList<HotelFacility>();
+    /** extra
+     * ここまで
+     *
+     */
 
+    private List<HotelFacility> hotelFacilitiesForReservation;
     private double chargeTotal;
+    @FXML
+    private GridPane container;
 
     @FXML
     private CheckBox[] checkBoxes;
+
     @FXML
-    public CheckBox gymCheck;
-    @FXML
-    public CheckBox luggageCheck;
-    @FXML
-    public CheckBox extraBedCheck;
-    @FXML
-    public CheckBox foodServiceCheck;
-    @FXML
-    public CheckBox parkingCheck;
-    @FXML
-    public CheckBox washingRoomCheck;
-    @FXML
-//    public CheckBox disabilityCheck;
-//    @FXML
     public Label sumOfCharge;
+    public Label total;
+
     @FXML
     public Button reset;
     @FXML
@@ -59,37 +55,35 @@ public class ControllerCharges extends ApplicationController {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         chargeTotal = 0;
-        checkBoxes = new CheckBox[]{gymCheck, luggageCheck, extraBedCheck, foodServiceCheck, parkingCheck, washingRoomCheck};
-//        hotelFacilities = (ArrayList<HotelFacility>) getHotel().getFacilities();
-        setClassToId();
+        addHotelFacilities(hotelFacilities);
+        checkBoxes = new CheckBox[hotelFacilities.size()];
+        hotelFacilitiesForReservation = new ArrayList<HotelFacility>();
+        addFlowPane();
+    }
+
+    /** extra
+     * 読み込めるようになったら消す
+     * @param list
+     */
+    private void addHotelFacilities(ArrayList<HotelFacility> list){
+        list.add(gym);
+        list.add(extraBed);
+        list.add(parking);
+        list.add(storeLuggage);
+        list.add(washingRoom);
+        list.add(foodService);
     }
 
 
-    private HotelFacility checkPairOfId(CheckBox id) {
-        HotelFacility pair;
-        switch (id.getId()) {
-            case "gymCheck":
-                pair = gym;
-                break;
-            case "extraBedCheck":
-                pair = extraBed;
-                break;
-            case "luggageCheck":
-                pair = storeLuggage;
-                break;
-            case "foodServiceCheck":
-                pair = foodService;
-                break;
-            case "parkingCheck":
-                pair = parking;
-                break;
-            case "washingRoomCheck":
-                pair = washingRoom;
-                break;
-            default:
-                pair = null;
+    private HotelFacility checkPairOfId(CheckBox checkBox) {
+        for (HotelFacility facility: hotelFacilities
+             ) {
+
+            if(facility.getKey() == checkBox.getId()) {
+                return facility;
+            }
         }
-        return pair;
+        return null;
     }
 
 
@@ -107,24 +101,22 @@ public class ControllerCharges extends ApplicationController {
 
     @FXML
     public void onSubmitAction(ActionEvent actionEvent) {
-        leadSceneAndSendData();
+        setChargesToReservation(makeListForChecked());
         closeAction(actionEvent);
     }
 
-    private void leadSceneAndSendData() {
-        try {
-            //Load second scene
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/group1/stayella/View/ReservationView/index.fxml"));
-            Parent root = loader.load();
+    private void setChargesToReservation(List<HotelFacility> hotelFacilitiesForReservation) {
+        this.hotelFacilitiesForReservation.addAll(hotelFacilitiesForReservation);
+    }
 
-            //Get next controller
-            ReservationController reservationController = loader.getController();
-            // Pass data
-//            reservationController.transferMessage(reflectSumOfCharge());
-
-        } catch (IOException e) {
-            e.printStackTrace();
+    private List<HotelFacility> makeListForChecked(){
+        List<HotelFacility> list = new ArrayList<>();
+        for (int i = 0; i < checkBoxes.length; i++) {
+            if(checkBoxes[i].isSelected()) {
+                list.add(checkPairOfId(checkBoxes[i]));
+            }
         }
+        return list;
     }
 
     public void onSelectedAction(ActionEvent actionEvent) {
@@ -142,13 +134,20 @@ public class ControllerCharges extends ApplicationController {
         sumOfCharge.setText("Total : $ " + Double.toString(chargeTotal));
     }
 
-    private void setClassToId() {
-        for (CheckBox id : checkBoxes
-        ) {
-            HotelFacility pair = checkPairOfId(id);
-            id.setText(pair.getLabel() + "  $" + Double.toString(pair.getPrice()));
+
+    // flow pain
+    public void  addFlowPane() {
+        Integer row = 1;
+        for(int i = 0; i < hotelFacilities.size(); i++) {
+            HotelFacility facility = hotelFacilities.get(i);
+            checkBoxes[i] = new CheckBox();
+            checkBoxes[i].setId(facility.getKey());
+            checkBoxes[i].setText(facility.getLabel());
+            checkBoxes[i].setOnAction(this::onSelectedAction);
+            container.add(checkBoxes[i], 1, row);
+            Label label = new Label();
+            label.setText("$" + Double.toString(facility.getPrice()));
+            container.add(label, 2, row++);
         }
     }
-
-
 }

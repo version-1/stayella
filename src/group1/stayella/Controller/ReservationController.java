@@ -126,6 +126,6 @@ public class ReservationController extends ApplicationController {
 
     @FXML
     public void popupAsCharge(ActionEvent actionEvent) throws IOException {
-        popUpAs(actionEvent,"ChargesView/index.fxml",500,400);
+        popUpAs(actionEvent,"ChargesView/index.fxml",330,400);
     }
 }
