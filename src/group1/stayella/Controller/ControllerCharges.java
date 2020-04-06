@@ -15,22 +15,22 @@ import javafx.stage.Stage;
 import javafx.stage.Window;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.net.URL;
-import java.util.List;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 
 public class ControllerCharges extends ApplicationController {
-//    private List<HotelFacility> hotelFacilities;
     private Gym gym = new Gym(15, 100, 999999);
     private ExtraBed extraBed = new ExtraBed(10, 100, 50);
     private Parking parking = new Parking(10, 100, 50);
     private StoreLuggage storeLuggage = new StoreLuggage(10, 100, 50);
     private WashingRoom washingRoom = new WashingRoom(10, 100, 50);
     private FoodService foodService = new FoodService(10, 100, 50);
+    private ArrayList<HotelFacility> hotelFacilities;
 
     private double chargeTotal;
-    private Charge charge;
 
     @FXML
     private CheckBox[] checkBoxes;
@@ -47,8 +47,8 @@ public class ControllerCharges extends ApplicationController {
     @FXML
     public CheckBox washingRoomCheck;
     @FXML
-    public CheckBox disabilityCheck;
-    @FXML
+//    public CheckBox disabilityCheck;
+//    @FXML
     public Label sumOfCharge;
     @FXML
     public Button reset;
@@ -59,8 +59,8 @@ public class ControllerCharges extends ApplicationController {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         chargeTotal = 0;
-//        hotelFacilities = getHotel().getFacilities();
         checkBoxes = new CheckBox[]{gymCheck, luggageCheck, extraBedCheck, foodServiceCheck, parkingCheck, washingRoomCheck};
+//        hotelFacilities = (ArrayList<HotelFacility>) getHotel().getFacilities();
         setClassToId();
     }
 
