@@ -1,6 +1,5 @@
 package group1.stayella.Controller;
 
-import com.sun.tools.javac.comp.Check;
 import group1.stayella.Model.Charge;
 import group1.stayella.Model.HotelFacility.*;
 import group1.stayella.Model.RoomFacility.RoomFacility;

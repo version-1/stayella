@@ -6,7 +6,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
-import group1.stayella.Data.Enum.ChargeType;
 import group1.stayella.Model.*;
 import group1.stayella.Model.HotelFacility.*;
 import group1.stayella.Model.RoomFacility.RoomFacility;
@@ -143,8 +142,8 @@ public class Factory {
             toInt(row.get("ID")),
             row.get("ROOM_NUMBER"),
             null,
-            null,
-            null
+            toDate(row.get("START_TIME")),
+            toDate(row.get("END_TIME"))
           );
           list.add(vacancy);
         }
@@ -157,28 +156,6 @@ public class Factory {
     return null;
   }
 
-
-  public static List<Charge> getCharges() {
-    // try {
-    //   List<HashMap<String, String>> csv = new Core(CHARGE_PATH).load();
-    //   List<Charge> list = new ArrayList<Charge>();
-    //   for (HashMap<String, String> row: csv) {
-    //     ChargeType type = ChargeType.valueOf(row.get("KEY"));
-    //     Charge charge = new Charge(
-    //       toInt(row.get("ID")),
-    //       toInt(row.get("RESRVATION_ID")),
-    //       type.name(),
-    //       type.getLabel(),
-    //       type.getPrice()
-    //     );
-    //     list.add(charge);
-    //   }
-    //   return list;
-    // } catch (IOException e) {
-    //   e.printStackTrace();
-    // }
-    return null;
-  }
 
   public static void getReservations() {
     try {
