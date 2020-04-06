@@ -7,4 +7,8 @@ public class ExtraBed extends HotelFacility {
 
     private String key = "extraBed";
     private String label = "Extra Bed";
+
+    public String getLabel() {
+        return label;
+    }
 }

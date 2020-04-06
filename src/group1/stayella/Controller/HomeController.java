@@ -22,6 +22,8 @@ public class HomeController extends ApplicationController {
     public Button calendar;
     @FXML
     public Label label;
+    @FXML
+    public Button roomAdd;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -42,4 +44,5 @@ public class HomeController extends ApplicationController {
         Scene scene = stage.getScene();
         scene.getStylesheets().add("group1/stayella/View/css/calendar/layout.css");
     }
+
 }

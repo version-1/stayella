@@ -8,4 +8,7 @@ public class Parking extends HotelFacility {
     super(id, price, capcity);
   }
 
+  public String getLabel() {
+    return label;
+  }
 }

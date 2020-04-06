@@ -75,8 +75,7 @@ public abstract class HotelFacility implements Facility {
     public void setLabel(String label) {
         this.label = label;
     }
-
-    public void setPrice( double price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 

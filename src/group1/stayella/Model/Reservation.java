@@ -21,11 +21,14 @@ public class Reservation {
     private Date checkInTime;
     private Date checkOutTime;
     private int status;
+
     // e.g 0: cancel 1:unconfirmed 2: confirmed
+
 
     public  Reservation(){
        index++;
     }
+
 
     public Reservation(Guest guest, int numberOfGuest, int status) {
         this.id = index;
@@ -34,6 +37,7 @@ public class Reservation {
         this.status = status;
 
         index++;
+
     }
 
     public int getId() {
@@ -62,6 +66,14 @@ public class Reservation {
 
     public String getReservationNo() {
         return reservationNo;
+    }
+
+    public double getTotalPrice() {
+        return totalPrice;
+    }
+
+    public ArrayList<HotelFacility> getHotelFacilities() {
+        return (ArrayList) hotelFacilities;
     }
 
     public void setId(int id) {
@@ -107,6 +119,8 @@ public class Reservation {
         this.numberOfGuest = numberOfGuest;
     }
 
+
+
     public boolean isLocked() {
         return status != CANCEL;
     }
@@ -132,7 +146,7 @@ public class Reservation {
             }
         }
         assignReservationNo();
-        return true;
+
     }
 
     // check the input
