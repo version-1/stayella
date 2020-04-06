@@ -5,20 +5,27 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<GridPane fx:id="gridlayout" alignment="TOP_LEFT" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="group1.stayella.Controller.CalendarController">
-    <Label text="Calender Screen" GridPane.rowIndex="1" GridPane.columnIndex="2"/>
-    <Button
-      fx:id="goBack"
-      onAction="#goBack"
-      text="go back"
-      GridPane.columnIndex="1"
-      GridPane.rowIndex="3"
-      alignment="CENTER_LEFT"
-      />
-   <columnConstraints>
-      <ColumnConstraints />
+<GridPane fx:id="gridlayout" prefHeight="500" prefWidth="500" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="group1.stayella.Controller.CalendarController">
+    <columnConstraints>
+      <ColumnConstraints percentWidth="30.0" />
+      <ColumnConstraints percentWidth="70.0" />
    </columnConstraints>
    <rowConstraints>
-      <RowConstraints />
+      <RowConstraints vgrow="ALWAYS" />
    </rowConstraints>
+   <children>
+      <VBox styleClass="sidebar" GridPane.columnIndex="0">
+         <Label text="Sidebar"/>
+      </VBox>
+      <VBox styleClass="main" GridPane.columnIndex="1">
+         <Label text="Calender Screen"/>
+         <Button
+         fx:id="goBack"
+         onAction="#goBack"
+         text="go back"
+         GridPane.columnIndex="1"
+         GridPane.rowIndex="3"
+         />
+      </VBox>
+    </children>
 </GridPane>

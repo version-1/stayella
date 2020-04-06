@@ -1,0 +1,9 @@
+.sidebar {
+  -fx-font: 30px "Serif";
+  -fx-background-color: lightblue;
+}
+
+.main {
+  -fx-background-color: red;
+
+}
