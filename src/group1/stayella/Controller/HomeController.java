@@ -20,6 +20,8 @@ public class HomeController extends ApplicationController {
     public Button calendar;
     @FXML
     public Label label;
+    @FXML
+    public Button roomAdd;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -38,4 +40,5 @@ public class HomeController extends ApplicationController {
     public void transitToCalendar(ActionEvent actionEvent) throws IOException {
         transitTo(actionEvent, "CalendarView/index.fxml");
     }
+
 }

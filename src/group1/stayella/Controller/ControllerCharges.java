@@ -1,9 +1,7 @@
 package group1.stayella.Controller;
 
-import com.sun.tools.javac.comp.Check;
 import group1.stayella.Model.Charge;
 import group1.stayella.Model.HotelFacility.*;
-import group1.stayella.Model.RoomFacility.RoomFacility;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -17,7 +15,6 @@ import javafx.stage.Window;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 

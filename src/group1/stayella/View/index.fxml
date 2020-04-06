@@ -22,6 +22,9 @@
       GridPane.rowIndex="3"
       alignment="CENTER_RIGHT"
       />
+
+
+
     <Label fx:id="label" text="STAYELLA\nVersion: 1.0" GridPane.columnIndex="2" GridPane.rowIndex="1" alignment="CENTER"/>
     <columnConstraints>
         <ColumnConstraints />

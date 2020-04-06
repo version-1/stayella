@@ -7,6 +7,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -57,8 +58,9 @@ public class ApplicationController implements Initializable {
         return transit(event, fxml, 500, 500);
     }
 
-    public Stage popUpTo(String fxml, Integer with, Integer height) throws IOException {
-        return popup(fxml, with, height);
+    public void popUpAs(ActionEvent event, String fxml, Integer with, Integer height) throws IOException {
+        Stage newPopup =  popup(event, fxml, with, height);
+        newPopup.show();
     }
 
 
@@ -80,8 +82,15 @@ public class ApplicationController implements Initializable {
         return stage;
     }
 
-    private Stage popup(String fxml, Integer width, Integer height) throws IOException {
-        Stage stage = new Stage();
+    private Stage popup(ActionEvent event, String fxml, Integer width, Integer height) throws IOException {
+        Node node = (Node) event.getSource();
+        Scene scene = node.getScene();
+        Stage stage = (Stage) scene.getWindow();
+
+        Stage newStage = new Stage();
+        newStage.initModality(Modality.APPLICATION_MODAL);
+        newStage.initOwner(stage);
+
         URL url = getClass().getClassLoader().getResource("group1/stayella/View/" + fxml);
         FXMLLoader loader = new FXMLLoader(url);
         Parent page = loader.load();
@@ -91,7 +100,7 @@ public class ApplicationController implements Initializable {
 
         Scene newPage = new Scene(page, width, height);
 
-        stage.setScene(newPage);
-        return stage;
+        newStage.setScene(newPage);
+        return newStage;
     }
 }
