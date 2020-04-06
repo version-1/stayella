@@ -30,7 +30,9 @@ public class Factory {
       List<Room> rooms = getRooms(hotel.getID());
       for (Room room: rooms) {
         List<RoomFacility> facilities = getRoomFacilities(room.getID());
+        List<Vacancy> vacancies = getVacancies(room.getID());
         room.setFacilities(facilities);
+        room.setVacancies(vacancies);
       }
       hotel.setRooms(rooms);
     }
@@ -131,6 +133,30 @@ public class Factory {
     return null;
   }
 
+  public static List<Vacancy> getVacancies(int id) {
+    try {
+      List<HashMap<String, String>> csv = new Core(VACANCY_PATH).load();
+      List<Vacancy> list = new ArrayList<Vacancy>();
+      for(HashMap<String, String> row: csv){
+        if (toInt(row.get("ROOM_ID")) == id) {
+          Vacancy vacancy = new Vacancy(
+            toInt(row.get("ID")),
+            row.get("ROOM_NUMBER"),
+            null,
+            null,
+            null
+          );
+          list.add(vacancy);
+        }
+      }
+      return list;
+    } catch (IOException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
+    return null;
+  }
+
 
   public static List<Charge> getCharges() {
     // try {
@@ -213,15 +239,6 @@ public class Factory {
     return null;
   }
 
-  public static void getVacancies() {
-    // TODO: inmplement process to load from csv and create instance list
-    try {
-      List<HashMap<String, String>> csv = new Core(VACANCY_PATH).load();
-    } catch (IOException e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
-    }
-  }
 
   private static int toInt(String str) {
     return Integer.parseInt(str);
