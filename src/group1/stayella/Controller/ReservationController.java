@@ -167,7 +167,14 @@ public class ReservationController extends ApplicationController {
         }
     }
 
+
+    @FXML
+    public void popupAsCharge(ActionEvent actionEvent) throws IOException {
+        popUpAs(actionEvent,"ChargesView/index.fxml",330,400);
+    }
+      
     public void setCreditCard(String cardNumber, String name, String cvv) {
         creditCard = new CreditCard(0,0, cardNumber, name, null, cvv, null);
+   
     }
 }

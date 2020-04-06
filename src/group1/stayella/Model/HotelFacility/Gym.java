@@ -9,7 +9,6 @@ public class Gym extends HotelFacility {
     }
 
 
-    @Override
     public String getLabel() {
         return label;
     }

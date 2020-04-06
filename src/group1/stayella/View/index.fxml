@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 
-<GridPane fx:id="gridlayout"  hgap="5" vgap="5" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.172-ea" fx:controller="group1.stayella.Controller.HomeController">
+<GridPane fx:id="gridlayout" stylesheets="@css/styles.css" styleClass="home-root" hgap="5" vgap="5" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.172-ea" fx:controller="group1.stayella.Controller.HomeController">
     <Button
       fx:id="reservation"
       onAction="#transitToReservaiton"
@@ -13,6 +13,7 @@
       GridPane.columnIndex="1"
       GridPane.rowIndex="3"
       alignment="CENTER_LEFT"
+      styleClass="button-flat"
       />
     <Button
       fx:id="calendar"
@@ -21,8 +22,12 @@
       GridPane.columnIndex="3"
       GridPane.rowIndex="3"
       alignment="CENTER_RIGHT"
-      />
-    <Label fx:id="label" text="STAYELLA\nVersion: 1.0" GridPane.columnIndex="2" GridPane.rowIndex="1" alignment="CENTER"/>
+      styleClass="button-3d"
+    />
+
+
+
+    <Label fx:id="label" styleClass="home-label-title" text="STAYELLA\nVersion: 1.0" GridPane.columnIndex="2" GridPane.rowIndex="1" alignment="CENTER"/>
     <columnConstraints>
         <ColumnConstraints />
         <ColumnConstraints />
