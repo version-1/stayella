@@ -19,6 +19,12 @@ public class Vacancy {
         this.endTime = endTime;
     }
 
+    public boolean isOccupied() {
+        if (reservation == null) {
+            return false;
+        }
+        return reservation.isLocked();
+    }
 
     public int getId() {
         return id;
