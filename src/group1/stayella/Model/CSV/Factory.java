@@ -27,7 +27,12 @@ public class Factory {
     List<Hotel> hotels = getHotels();
     for (Hotel hotel: hotels) {
       hotel.setFacilities(getHotelFacilities(hotel.getID()));
-      hotel.setRooms(getRooms(hotel.getID()));
+      List<Room> rooms = getRooms(hotel.getID());
+      for (Room room: rooms) {
+        List<RoomFacility> facilities = getRoomFacilities(room.getID());
+        room.setFacilities(facilities);
+      }
+      hotel.setRooms(rooms);
     }
 
     return hotels;
@@ -50,7 +55,6 @@ public class Factory {
       }
       return list;
     } catch (IOException e) {
-      // TODO Auto-generated catch block
       e.printStackTrace();
     }
     return null;
@@ -106,18 +110,19 @@ public class Factory {
     return null;
   }
 
-  public static List<RoomFacility> getRoomFacilities() {
+  public static List<RoomFacility> getRoomFacilities(int id) {
     try {
       List<HashMap<String, String>> csv = new Core(ROOM_FACILITY_PATH).load();
       List<RoomFacility> list = new ArrayList<RoomFacility>();
       for(HashMap<String, String> row: csv){
-        // RoomFacility facility = new RoomFacility(
-        //   toInt(row.get("ID")),
-        //   toInt(row.get("ROOM_ID")),
-        //   row.get("KEY"),
-        //   row.get("LABEL")
-        // );
-        // list.add(facility);
+        if (toInt(row.get("ROOM_ID")) == id) {
+          RoomFacility facility = RoomFacility.getInstance(
+            row.get("KEY"),
+            toInt(row.get("ID")),
+            toDouble(row.get("PRICE"))
+          );
+          list.add(facility);
+        }
       }
       return list;
     } catch (IOException e) {
@@ -222,6 +227,9 @@ public class Factory {
     return Integer.parseInt(str);
   }
 
+  private static double toDouble(String str) {
+    return Double.parseDouble(str);
+  }
   private static Date toDate(String str) {
     return new Date(str);
   }

@@ -44,6 +44,10 @@ public class Room {
         this.vacancies = vacancies;
     }
 
+    public int getID() {
+        return id;
+    }
+
     public String getRoomNumber() {
         return roomNumber;
     }

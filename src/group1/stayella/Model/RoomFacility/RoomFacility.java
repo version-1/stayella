@@ -8,6 +8,41 @@ public abstract class RoomFacility implements Facility {
     private String label;
     private double price;
 
+    public static RoomFacility getInstance(String key, int id, double price) {
+        RoomFacility res;
+        switch(key) {
+            case "pet":
+              res = new Pet(id, price);
+              break;
+            case "kitchen":
+              res = new Kitchen(id, price);
+              break;
+            case "accecibleForDisabilities":
+              res = new AccessibleForDisabilities(id, price);
+              break;
+            case "balcony":
+              res = new Balcony(id, price);
+              break;
+            case "bath":
+              res = new Bath(id, price);
+              break;
+            case "refrigerator":
+              res = new Refrigerator(id, price);
+              break;
+            case "smorking":
+              res = new Smorking(id, price);
+              break;
+            case "view":
+              res = new Smorking(id, price);
+              break;
+            default:
+              // code block
+              throw new Error("can't resolved RoomFacility key");
+          }
+        return res;
+    }
+
+
     public RoomFacility(int id, double price){
         this.id = id;
         this.price = price;
