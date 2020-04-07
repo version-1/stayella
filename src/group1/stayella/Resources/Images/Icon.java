@@ -17,20 +17,13 @@ public class Icon {
   public final static String PEOPLE = BASE_PATH + "edit-dark.png";
   public final static String PET = BASE_PATH + "pet-dark.png";
   public final static String PET_LIGHT = BASE_PATH + "pet-light.png";
-  public final static String RELOAD = BASE_PATH + "reload.png";
-
-  private static HashMap<String, ImageView> cache = new HashMap<String, ImageView>();
+  public final static String RELOAD = BASE_PATH + "reload-dark.png";
 
   public static ImageView get(String path) {
-    String[] basenameArray = path.split("/");
-    String basename = basenameArray[basenameArray.length - 1];
-    if (cache.get(basename) != null) {
-      return cache.get(basename);
-    }
     ImageView imageView = new ImageView();
     imageView.setImage(new Image(path));
-    cache.put(basename, imageView);
     return imageView;
+
   }
   public static ImageView getWithLayout(String path, int width, int height)  {
     ImageView view = get(path);

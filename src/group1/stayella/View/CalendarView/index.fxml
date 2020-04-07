@@ -97,7 +97,7 @@
                   >
                      <image>
                         <Image
-                        url="group1/stayella/Resources/Images/Icons/reload.png"
+                        url="group1/stayella/Resources/Images/Icons/reload-dark.png"
                         backgroundLoading="true"
                         />
                      </image>

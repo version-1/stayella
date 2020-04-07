@@ -9,6 +9,8 @@ import javax.security.auth.callback.Callback;
 import group1.stayella.Model.Room;
 import group1.stayella.Model.Vacancy;
 import group1.stayella.Resources.Images.Icon;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
@@ -46,15 +48,18 @@ public class CalendarController extends ApplicationController {
         col3.setGraphic(people);
         col3.setCellValueFactory(new PropertyValueFactory<>("roomCapacity"));
 
-        TableColumn<Room, ?> col4 = new TableColumn<>();
+        TableColumn<Room, ImageView> col4 = new TableColumn<Room, ImageView>();
+        col4.setCellValueFactory(new PropertyValueFactory<>("cigarette"));
         ImageView cigarette = Icon.getWithLayout(Icon.CIGARETTE, 29, 23);
         col4.setGraphic(cigarette);
 
-        TableColumn<Room, ?> col5 = new TableColumn<>();
+        TableColumn<Room, ImageView> col5 = new TableColumn<>();
+        col5.setCellValueFactory(new PropertyValueFactory<>("pet"));
         ImageView pet = Icon.getWithLayout(Icon.PET, 24, 22);
         col5.setGraphic(pet);
 
-        TableColumn<Room, ?> col6 = new TableColumn<>();
+        TableColumn<Room, ImageView> col6 = new TableColumn<>();
+        col6.setCellValueFactory(new PropertyValueFactory<>("clean"));
         ImageView clean = Icon.getWithLayout(Icon.CLEAN, 30, 23);
         col6.setGraphic(clean);
 
@@ -65,8 +70,7 @@ public class CalendarController extends ApplicationController {
         calendar.getColumns().add(col5);
         calendar.getColumns().add(col6);
 
-        for (Room room : getRooms()) {
-            calendar.getItems().add(room);
-        }
+        ObservableList<Room> rooms = FXCollections.observableArrayList(getRooms());
+        calendar.setItems(rooms);
     }
 }
