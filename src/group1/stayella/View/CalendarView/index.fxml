@@ -19,6 +19,7 @@
       </VBox>
       <VBox styleClass="main" GridPane.columnIndex="1">
          <Label text="Calender Screen"/>
+         <TableView fx:id="calendar"/>
          <Button
          fx:id="goBack"
          onAction="#goBack"

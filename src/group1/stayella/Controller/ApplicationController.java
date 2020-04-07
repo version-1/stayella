@@ -12,10 +12,12 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Stack;
 
 import group1.stayella.Model.Hotel;
+import group1.stayella.Model.Room;
 
 public class ApplicationController implements Initializable {
     private Hotel hotel;
@@ -48,6 +50,13 @@ public class ApplicationController implements Initializable {
 
     public Hotel getHotel() {
         return hotel;
+    }
+
+    public List<Room> getRooms() {
+        if(hotel == null) {
+            return null;
+        }
+        return hotel.getRooms();
     }
 
     @FXML
