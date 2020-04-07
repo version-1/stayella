@@ -1,5 +1,6 @@
 package group1.stayella.Controller;
 
+import group1.stayella.Model.Charge;
 import group1.stayella.Model.CreditCard;
 import group1.stayella.Vallidation.NumberTextField;
 import group1.stayella.Vallidation.TextTextField;
@@ -19,9 +20,11 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class ReservationController extends ApplicationController {
+
     @FXML
     Image image;
     @FXML
@@ -75,6 +78,13 @@ public class ReservationController extends ApplicationController {
 
     private ArrayList<String> creditCardInfo;
     private CreditCard creditCard;
+
+    private List<Charge> charges = new ArrayList<Charge>();
+
+    @FXML
+    public Label totalPrice;
+
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         image = new Image("https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTqWGB5YLwdAKCrHNiw9_I5jXeWHDlGHh83anl58WuJ4WwhzslJ&usqp=CAU");
@@ -176,5 +186,27 @@ public class ReservationController extends ApplicationController {
     public void setCreditCard(String cardNumber, String name, String cvv) {
         creditCard = new CreditCard(0,0, cardNumber, name, null, cvv, null);
    
+    }
+
+
+    public void setCharges(List<Charge> charges){
+        this.charges = charges;
+        for (Charge charge: this.charges
+             ) {
+        }
+
+    }
+
+    public void setTotalPriceToLabel() {
+        double total = 0;
+        if(!charges.isEmpty()) {
+            for (Charge charge : charges
+            ) {
+                System.out.println(charge.getFacility().getLabel());
+                total += charge.getFacility().getPrice();
+            }
+        }
+        System.out.println("[$] " + Double.toString(total));
+        totalPrice.setText("[$] " + Double.toString(total));
     }
 }

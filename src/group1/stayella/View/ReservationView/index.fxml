@@ -57,7 +57,7 @@
    <Label prefHeight="17.0" prefWidth="219.0" text="Comments and special requests:" GridPane.columnIndex="1" GridPane.columnSpan="4" GridPane.rowIndex="18" />
    <Label text="ROOM:" textFill="sienna" GridPane.columnIndex="1" GridPane.rowIndex="26" />
    <Label text="Total Price:" textFill="sienna" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="28" />
-   <Label text="[$] 00.00" GridPane.columnIndex="4" GridPane.rowIndex="28" />
+   <Label fx:id="totalPrice" text="[$] 00.00" GridPane.columnIndex="4" GridPane.rowIndex="28" />
    <Label alignment="CENTER" prefHeight="17.0" prefWidth="121.0" text="Deposit" textFill="sienna" GridPane.columnIndex="6" GridPane.columnSpan="2" GridPane.rowIndex="28" />
    <Label prefHeight="17.0" prefWidth="116.0" text="[$]00.00" GridPane.columnIndex="8" GridPane.rowIndex="28" />
 
