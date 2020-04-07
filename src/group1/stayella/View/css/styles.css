@@ -1,61 +1,78 @@
 .root {
     -fx-font-size: 13px;
-     -fx-font-family: "Roboto";
+    -fx-font-family: "Arial";
     -fx-text-fill: #666666;
     -fx-background-color: #fbfbfb;
+    -fx-padding: 0px;
+
+    turquoise-dark-blule: #34727D;
+    turquoise-blule: #40B5C9;
+    light-blue: #69BBC9;
+    light-brown: #C9732C;
+    brown: #7D5534;
+    deep-blue:  #1D5162;
+
+}
+
+.gridpane {
+    -fx-padding: 0px;
 }
 
 .button {
-    -fx-font-weight: 800;
-    -fx-padding: 5px 8px;
-    -fx-border-style: solid;
-    -fx-border-width: 3px;
-    -fx-border-color: #666666;
-    -fx-min-width: 100px;
+    -fx-padding: 4px 12px;
+    -fx-min-width: 120px;
     -fx-alignment: center;
+    -fx-font-weight: 800;
+    -fx-text-fill: #000;
 }
 
 .button:hover {
 }
 
-.common-label-title {
-    -fx-font-weight: bold;
-    }
-
-
-.button-flat {
-    -fx-border-color: #666666;
-    -fx-background-color: #fbfbfb;
-}
-
-.button-flat:hover {
-    -fx-background-color: #FFD15B;
-}
-
-.button-3d{
-    -fx-font-weight: 800;
-    -fx-border-radius: 30px;
-    -fx-border-color: #34717c;
+.button-3d {
+    -fx-padding: 8px 16px;
     -fx-border-style: solid;
+    -fx-border-color: #61a2b1;
     -fx-border-width: 3px;
-    -fx-background-color: linear-gradient(#ffffff, #34717c);
+    -fx-border-radius: 30px;
+    -fx-background-color: linear-gradient(#ffffff, #a7caca, deep-blue);
+    -fx-background-radius: 30px;
 }
 
 .button-3d:hover {
-    -fx-background-color: linear-gradient(#2A5058, #61a2b1);
+    -fx-background-color: linear-gradient(#2A5058, #69BBC9);
+    -fx-border-color: #3D7A85;
 }
 
+
+.label-title {
+    -fx-font-weight: bold;
+    }
+
 .home-label-title {
-    -fx-font-size: 50px;
+    -fx-font-size: 40px;
     -fx-font-weight: bold;
     -fx-text-fill: #ffffff;
     }
 
 
-.home-root {
-    -fx-background-color: #1D5162;
+.primary-background-color {
+    -fx-background-color: deep-blue;
 }
 
+
+.reservation-sec-title {
+    -fx-text-fill: #C9732C;
+    -fx-font-size: 16px;
+    -fx-font-family: "Arial Black";
+}
+
+.reservation-footer {
+    -fx-margin: 0px;
+    -fx-background-color: deep-blue;
+    -fx-padding: 8px 32px;
+    -fx-spacing: 8px;
+}
 
 
 /* (45, 45) (255, 255) */

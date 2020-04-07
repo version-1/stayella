@@ -6,123 +6,158 @@
 <?import javafx.scene.text.*?>
 <?import group1.stayella.Vallidation.*?>
 
-<GridPane fx:id="gridlayout" alignment="TOP_LEFT" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="group1.stayella.Controller.ReservationController">
-   <ImageView fx:id="imageView" scaleX="1.2" scaleY="1.2" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="2" GridPane.rowSpan="5" />
+<GridPane fx:id="gridlayout" stylesheets="@../css/styles.css" alignment="TOP_LEFT" hgap="10" vgap="10"
+          xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1"
+          fx:controller="group1.stayella.Controller.ReservationController">
+    <ImageView fx:id="imageView" scaleX="1.2" scaleY="1.2" GridPane.columnIndex="1" GridPane.columnSpan="2"
+               GridPane.rowIndex="2" GridPane.rowSpan="5"/>
 
-   <Button fx:id="buttonEdit" alignment="TOP_RIGHT" contentDisplay="GRAPHIC_ONLY" prefHeight="26.0" prefWidth="177.0" GridPane.columnIndex="9" GridPane.columnSpan="2" GridPane.rowIndex="1" />
-   <Button fx:id="buttonCard" onAction="#openNewStage" GridPane.columnIndex="8" GridPane.columnSpan="5" GridPane.rowIndex="2" GridPane.rowSpan="6" />
-   <Button fx:id="buttonAdditions" onAction="#popupAsCharge" GridPane.columnIndex="7" GridPane.columnSpan="2" GridPane.rowIndex="12" />
-
-   <Button fx:id="confirmed" prefHeight="27.0" prefWidth="178.0" text="Confirmed" textAlignment="CENTER" GridPane.columnIndex="6" GridPane.columnSpan="2" GridPane.rowIndex="15" />
-   <Button fx:id="unconfirmed" prefHeight="27.0" prefWidth="189.0" text="Unconfirmed" GridPane.columnIndex="8" GridPane.columnSpan="3" GridPane.rowIndex="15" />
-   <HBox prefHeight="27.0" prefWidth="607.0" spacing="2" GridPane.columnIndex="1" GridPane.columnSpan="10" GridPane.rowIndex="30">
-      <Button fx:id="reservation" onAction="#submit" prefHeight="27.0" prefWidth="136.0" text="RESERVE" />
-      <Button fx:id="cancel" prefHeight="27.0" prefWidth="136.0" text="CANCEL" />
-      <Button fx:id="checkIn" prefHeight="27.0" prefWidth="136.0" text="CHECK IN" />
-      <Button fx:id="checkOut" prefHeight="27.0" prefWidth="136.0" text="CHECK OUT" />
-      <Button fx:id="close" onAction="#goBack" prefHeight="27.0" prefWidth="136.0" text="CLOSE" />
-   </HBox>
-   <HBox prefHeight="27.0" prefWidth="607.0" spacing="38" GridPane.columnIndex="1" GridPane.columnSpan="10" GridPane.rowIndex="17">
-      <Label prefHeight="17.0" prefWidth="100.0" text="Time / Date:" />
-      <DatePicker prefHeight="27.0" prefWidth="140" showWeekNumbers="true" />
-      <Label prefHeight="17.0" prefWidth="100" text="Time / Date:" />
-      <DatePicker prefHeight="27.0" prefWidth="140" />
-   </HBox>
-   <Label alignment="CENTER" prefHeight="17.0" prefWidth="181.0" text="Credit Card Number:" textFill="darkgreen" GridPane.columnIndex="6" GridPane.columnSpan="2" GridPane.rowIndex="26" />
-   <Label fx:id="cardNumberLabel" alignment="CENTER" prefHeight="17.0" prefWidth="181.0" text="XXXX-XXXX-XXXX" textFill="darkgreen" GridPane.columnIndex="6" GridPane.columnSpan="2" GridPane.rowIndex="27" />
-   <Label text="Credit Card Information" GridPane.columnIndex="8" GridPane.rowIndex="2" />
-   <Label text="Contact" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-   <Label text="E-mail:" GridPane.columnIndex="1" GridPane.rowIndex="8" />
-   <Label text="Phone:" GridPane.columnIndex="1" GridPane.rowIndex="9" />
-   <Label text="Home Address:" GridPane.columnIndex="6" GridPane.rowIndex="8" />
-   <Label text="GUEST INFO" textFill="sienna" GridPane.columnIndex="4" GridPane.rowIndex="1" />
-   <Label text="Full Name:" GridPane.columnIndex="4" GridPane.rowIndex="2" />
-   <Label text="ID Number:" GridPane.columnIndex="4" GridPane.rowIndex="3" />
-   <Label alignment="CENTER" text="Age:" GridPane.columnIndex="4" GridPane.rowIndex="4" />
-   <Label alignment="CENTER" text="Language:" GridPane.columnIndex="4" GridPane.rowIndex="5" />
-   <Label alignment="CENTER" prefHeight="18.0" prefWidth="635.0" text="RESERVATION" textFill="sienna" GridPane.columnIndex="1" GridPane.columnSpan="9" GridPane.rowIndex="11">
-      <font>
-         <Font name="System Bold" size="14.0" />
-      </font></Label>
-   <Label alignment="CENTER" prefHeight="18.0" prefWidth="709.0" text="CHECK IN   |   CHECK OUT" textFill="sienna" GridPane.columnIndex="1" GridPane.columnSpan="9" GridPane.rowIndex="16">
-      <font>
-         <Font name="System Bold" size="14.0" />
-      </font></Label>
-   <Label text="Reservation Number:" GridPane.columnIndex="1" GridPane.columnSpan="4" GridPane.rowIndex="12" />
-   <Label text="[Check In] - [Check Out]:" GridPane.columnIndex="1" GridPane.columnSpan="4" GridPane.rowIndex="13" />
-   <Label text="Number of Guests:" GridPane.columnIndex="1" GridPane.columnSpan="4" GridPane.rowIndex="14" />
-   <Label text="Room Category:" GridPane.columnIndex="1" GridPane.columnSpan="4" GridPane.rowIndex="15" />
-   <Label alignment="CENTER" prefHeight="17.0" prefWidth="155.0" text="Room Additions:" GridPane.columnIndex="6" GridPane.rowIndex="12" />
-   <Label alignment="TOP_LEFT" prefHeight="17.0" prefWidth="338.0" text="STATUS" GridPane.columnIndex="7" GridPane.columnSpan="3" GridPane.rowIndex="14" />
-   <Label prefHeight="17.0" prefWidth="219.0" text="Comments and special requests:" GridPane.columnIndex="1" GridPane.columnSpan="4" GridPane.rowIndex="18" />
-   <Label text="ROOM:" textFill="sienna" GridPane.columnIndex="1" GridPane.rowIndex="26" />
-   <Label text="Total Price:" textFill="sienna" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="28" />
-   <Label fx:id="totalPrice" text="[$] 00.00" GridPane.columnIndex="4" GridPane.rowIndex="28" />
-   <Label alignment="CENTER" prefHeight="17.0" prefWidth="121.0" text="Deposit" textFill="sienna" GridPane.columnIndex="6" GridPane.columnSpan="2" GridPane.rowIndex="28" />
-   <Label prefHeight="17.0" prefWidth="116.0" text="[$]00.00" GridPane.columnIndex="8" GridPane.rowIndex="28" />
-
-   <DatePicker prefHeight="27.0" prefWidth="120.0" GridPane.columnIndex="4" GridPane.columnSpan="2" GridPane.rowIndex="13" />
-   <DatePicker prefHeight="27.0" prefWidth="120.0" GridPane.columnIndex="6" GridPane.columnSpan="2" GridPane.rowIndex="13" />
-
-   <TextTextField fx:id="guestName" alignment="TOP_RIGHT" promptText="Enter Guest's Full name" scaleY="0.8" GridPane.columnIndex="6" GridPane.rowIndex="2" />
-   <NumberTextField fx:id="guestID" alignment="TOP_RIGHT" promptText="Enter Guest's ID Number" scaleY="0.8" GridPane.columnIndex="6" GridPane.rowIndex="3" />
-   <NumberTextField fx:id="guestAge" alignment="TOP_RIGHT" promptText="Enter Guest's Age" scaleY="0.8" GridPane.columnIndex="6" GridPane.rowIndex="4" />
-   <TextTextField alignment="TOP_RIGHT" promptText="Enter Guest's Language" scaleY="0.8" GridPane.columnIndex="6" GridPane.rowIndex="5" />
-   <TextTextField fx:id="guestEmail" alignment="TOP_RIGHT" promptText="Enter Guest's E-mail" scaleY="0.8" GridPane.columnIndex="2" GridPane.columnSpan="3" GridPane.rowIndex="8" />
-   <NumberTextField fx:id="guestPhone" alignment="TOP_RIGHT" promptText="Enter Guest's Phone" scaleY="0.8" GridPane.columnIndex="2" GridPane.columnSpan="3" GridPane.rowIndex="9" />
-   <TextField alignment="TOP_RIGHT" promptText="Reservation Number" scaleY="0.8" GridPane.columnIndex="4" GridPane.columnSpan="2" GridPane.rowIndex="12" />
-   <NumberTextField alignment="TOP_RIGHT" promptText="Number of Guests" scaleY="0.8" GridPane.columnIndex="4" GridPane.columnSpan="2" GridPane.rowIndex="14" />
-   <TextField alignment="TOP_RIGHT" promptText="Room Category" scaleY="0.8" GridPane.columnIndex="4" GridPane.columnSpan="2" GridPane.rowIndex="15" />
-   <TextArea prefHeight="2" prefWidth="2" promptText="Enter Guest's Address" GridPane.columnIndex="7" GridPane.columnSpan="3" GridPane.rowIndex="8" GridPane.rowSpan="2" />
-   <TextArea maxHeight="1.7976931348623157E308" prefHeight="54.0" prefWidth="220.0" GridPane.columnIndex="1" GridPane.columnSpan="4" GridPane.rowIndex="19" GridPane.rowSpan="4" />
+    <Button fx:id="buttonEdit" alignment="TOP_RIGHT" contentDisplay="GRAPHIC_ONLY" prefHeight="26.0" prefWidth="177.0"
+            GridPane.columnIndex="9" GridPane.columnSpan="2" GridPane.rowIndex="1"/>
+    <Button fx:id="buttonCard" onAction="#openNewStage" GridPane.columnIndex="8" GridPane.columnSpan="5"
+            GridPane.rowIndex="2" GridPane.rowSpan="6"/>
+    <Button fx:id="buttonAdditions" onAction="#popupAsCharge" GridPane.columnIndex="7" GridPane.columnSpan="2"
+            GridPane.rowIndex="12"/>
 
 
-   <columnConstraints>
-      <ColumnConstraints />
-      <ColumnConstraints maxWidth="50.0" minWidth="50.0" prefWidth="50.0" />
-      <ColumnConstraints maxWidth="0.0" minWidth="0.0" prefWidth="0.0" />
-      <ColumnConstraints maxWidth="70.0" minWidth="0.0" prefWidth="66.0" />
-      <ColumnConstraints maxWidth="148.0" prefWidth="74.0" />
-      <ColumnConstraints maxWidth="55.0" minWidth="0.0" prefWidth="0.0" />
-      <ColumnConstraints maxWidth="177.5" minWidth="145.5" prefWidth="152.5" />
-      <ColumnConstraints maxWidth="32.0" minWidth="4.0" prefWidth="18.0" />
-      <ColumnConstraints maxWidth="146.5" minWidth="96.5" prefWidth="132.5" />
-      <ColumnConstraints maxWidth="14.0" minWidth="0.0" prefWidth="8.0" />
-      <ColumnConstraints maxWidth="0.0" minWidth="0.0" prefWidth="0.0" />
-      <ColumnConstraints />
-      <ColumnConstraints />
-   </columnConstraints>
-   <rowConstraints>
-      <RowConstraints maxHeight="27.0" minHeight="27.0" prefHeight="27.0" />
-      <RowConstraints maxHeight="27.0" minHeight="27.0" prefHeight="27.0" />
-      <RowConstraints />
-      <RowConstraints />
-      <RowConstraints />
-      <RowConstraints />
-      <RowConstraints />
-      <RowConstraints />
-      <RowConstraints />
-      <RowConstraints />
-      <RowConstraints maxHeight="0.0" minHeight="0.0" prefHeight="0.0" />
-      <RowConstraints maxHeight="25.0" minHeight="18.0" prefHeight="22.0" />
-      <RowConstraints maxHeight="27.0" minHeight="17.0" prefHeight="22.0" />
-      <RowConstraints maxHeight="27.0" minHeight="19.0" prefHeight="23.0" />
-      <RowConstraints maxHeight="27.0" minHeight="20.0" prefHeight="24.0" />
-      <RowConstraints maxHeight="32.0" minHeight="24.0" prefHeight="25.0" />
-      <RowConstraints />
-      <RowConstraints />
-      <RowConstraints />
-      <RowConstraints />
-      <RowConstraints />
-      <RowConstraints />
-      <RowConstraints />
-      <RowConstraints />
-      <RowConstraints />
-      <RowConstraints />
-      <RowConstraints />
-      <RowConstraints />
-      <RowConstraints maxHeight="17.0" minHeight="17.0" prefHeight="17.0" />
-      <RowConstraints maxHeight="0.0" minHeight="0.0" prefHeight="0.0" />
-      <RowConstraints maxHeight="0.0" minHeight="0.0" prefHeight="0.0" />
-   </rowConstraints>
+    <Button fx:id="confirmed" styleClass="button-3d" prefHeight="27.0" prefWidth="178.0" text="Confirmed" textAlignment="CENTER"
+            GridPane.columnIndex="6" GridPane.columnSpan="2" GridPane.rowIndex="15"/>
+    <Button fx:id="unconfirmed" styleClass="button-3d" prefHeight="27.0" prefWidth="189.0" text="Unconfirmed" GridPane.columnIndex="8"
+            GridPane.columnSpan="3" GridPane.rowIndex="15"/>
+    <HBox styleClass="reservation-footer" prefHeight="27.0" prefWidth="607.0" spacing="2" GridPane.columnIndex="1" GridPane.columnSpan="10"
+          GridPane.rowIndex="30">
+        <Button fx:id="reservation" styleClass="button-3d" onAction="#submit" prefHeight="27.0" prefWidth="136.0" text="RESERVE"/>
+        <Button fx:id="cancel"  styleClass="button-3d" prefHeight="27.0" prefWidth="136.0" text="CANCEL"/>
+        <Button fx:id="checkIn"  styleClass="button-3d" prefHeight="27.0" prefWidth="136.0" text="CHECK IN"/>
+        <Button fx:id="checkOut" styleClass="button-3d" prefHeight="27.0" prefWidth="136.0" text="CHECK OUT"/>
+        <Button fx:id="close" styleClass="button-3d" onAction="#goBack" prefHeight="27.0" prefWidth="136.0" text="CLOSE"/>
+    </HBox>
+    <HBox prefHeight="27.0" prefWidth="607.0" spacing="38" GridPane.columnIndex="1" GridPane.columnSpan="10"
+          GridPane.rowIndex="17">
+        <Label prefHeight="17.0" prefWidth="100.0" text="Time / Date:" styleClass="label-title" />
+        <DatePicker prefHeight="27.0" prefWidth="140" showWeekNumbers="true"/>
+        <Label prefHeight="17.0" prefWidth="100" text="Time / Date:" styleClass="label-title" />
+        <DatePicker prefHeight="27.0" prefWidth="140"/>
+    </HBox>
+    <Label alignment="CENTER" prefHeight="17.0" prefWidth="181.0" text="Credit Card Number:" styleClass="label-title" textFill="darkgreen"
+           GridPane.columnIndex="6" GridPane.columnSpan="2" GridPane.rowIndex="26"/>
+    <Label fx:id="cardNumberLabel" alignment="CENTER" prefHeight="17.0" prefWidth="181.0" text="XXXX-XXXX-XXXX"
+           textFill="darkgreen" GridPane.columnIndex="6" GridPane.columnSpan="2" GridPane.rowIndex="27"/>
+    <Label text="Credit Card Information" styleClass="label-title" GridPane.columnIndex="8" GridPane.rowIndex="2"/>
+    <Label text="Contact" styleClass="label-title" GridPane.columnIndex="1" GridPane.rowIndex="7"/>
+    <Label text="E-mail:" styleClass="label-title" GridPane.columnIndex="1" GridPane.rowIndex="8"/>
+    <Label text="Phone:" styleClass="label-title" GridPane.columnIndex="1" GridPane.rowIndex="9"/>
+    <Label text="Home Address:" styleClass="label-title" GridPane.columnIndex="6" GridPane.rowIndex="8"/>
+    <Label text="GUEST INFO" styleClass="reservation-sec-title" GridPane.columnIndex="4" GridPane.rowIndex="1"/>
+    <Label text="Full Name:" styleClass="label-title" GridPane.columnIndex="4" GridPane.rowIndex="2"/>
+    <Label text="ID Number:" styleClass="label-title" GridPane.columnIndex="4" GridPane.rowIndex="3"/>
+    <Label alignment="CENTER" text="Age:" styleClass="label-title" GridPane.columnIndex="4" GridPane.rowIndex="4"/>
+    <Label alignment="CENTER" text="Language:" styleClass="label-title" GridPane.columnIndex="4" GridPane.rowIndex="5"/>
+    <Label alignment="CENTER" prefHeight="18.0" prefWidth="635.0" text="RESERVATION" styleClass="reservation-sec-title"
+           GridPane.columnIndex="1" GridPane.columnSpan="9" GridPane.rowIndex="11">
+        <font>
+            <Font name="System Bold" size="14.0"/>
+        </font>
+    </Label>
+    <Label alignment="CENTER" prefHeight="18.0" prefWidth="709.0" text="CHECK IN   |   CHECK OUT" styleClass="reservation-sec-title"
+           GridPane.columnIndex="1" GridPane.columnSpan="9" GridPane.rowIndex="16">
+        <font>
+            <Font name="System Bold" size="14.0"/>
+        </font>
+    </Label>
+    <Label text="Reservation Number:" styleClass="label-title" GridPane.columnIndex="1" GridPane.columnSpan="4" GridPane.rowIndex="12"/>
+    <Label text="[Check In] - [Check Out]:" styleClass="label-title" GridPane.columnIndex="1" GridPane.columnSpan="4" GridPane.rowIndex="13"/>
+    <Label text="Number of Guests:" styleClass="label-title" GridPane.columnIndex="1" GridPane.columnSpan="4" GridPane.rowIndex="14"/>
+    <Label text="Room Category:" styleClass="label-title" GridPane.columnIndex="1" GridPane.columnSpan="4" GridPane.rowIndex="15"/>
+    <Label alignment="CENTER" prefHeight="17.0" prefWidth="155.0" text="Room Additions:" styleClass="label-title" GridPane.columnIndex="6"
+           GridPane.rowIndex="12"/>
+    <Label alignment="TOP_LEFT" prefHeight="17.0" prefWidth="338.0" text="STATUS" styleClass="label-title" GridPane.columnIndex="7"
+           GridPane.columnSpan="3" GridPane.rowIndex="14"/>
+    <Label prefHeight="17.0" prefWidth="219.0" text="Comments and special requests:" styleClass="label-title" GridPane.columnIndex="1"
+           GridPane.columnSpan="4" GridPane.rowIndex="18"/>
+    <Label text="ROOM:" styleClass="reservation-sec-title" GridPane.columnIndex="1" GridPane.rowIndex="26"/>
+    <Label text="Total Price:" styleClass="reservation-sec-title" GridPane.columnIndex="1" GridPane.columnSpan="3"
+           GridPane.rowIndex="28"/>
+    <Label text="[$] 00.00" GridPane.columnIndex="4" GridPane.rowIndex="28"/>
+    <Label alignment="CENTER" prefHeight="17.0" prefWidth="121.0" text="Deposit" styleClass="reservation-sec-title"
+           GridPane.columnIndex="6" GridPane.columnSpan="2" GridPane.rowIndex="28"/>
+    <Label prefHeight="17.0" prefWidth="116.0" text="[$]00.00" GridPane.columnIndex="8" GridPane.rowIndex="28"/>
+
+    <DatePicker prefHeight="27.0" prefWidth="120.0" GridPane.columnIndex="4" GridPane.columnSpan="2"
+                GridPane.rowIndex="13"/>
+    <DatePicker prefHeight="27.0" prefWidth="120.0" GridPane.columnIndex="6" GridPane.columnSpan="2"
+                GridPane.rowIndex="13"/>
+
+    <TextTextField fx:id="guestName" alignment="TOP_RIGHT" promptText="Enter Guest's Full name" scaleY="0.8"
+                   GridPane.columnIndex="6" GridPane.rowIndex="2"/>
+    <NumberTextField fx:id="guestID" alignment="TOP_RIGHT" promptText="Enter Guest's ID Number" scaleY="0.8"
+                     GridPane.columnIndex="6" GridPane.rowIndex="3"/>
+    <NumberTextField fx:id="guestAge" alignment="TOP_RIGHT" promptText="Enter Guest's Age" scaleY="0.8"
+                     GridPane.columnIndex="6" GridPane.rowIndex="4"/>
+    <TextTextField alignment="TOP_RIGHT" promptText="Enter Guest's Language" scaleY="0.8" GridPane.columnIndex="6"
+                   GridPane.rowIndex="5"/>
+    <TextTextField fx:id="guestEmail" alignment="TOP_RIGHT" promptText="Enter Guest's E-mail" scaleY="0.8"
+                   GridPane.columnIndex="2" GridPane.columnSpan="3" GridPane.rowIndex="8"/>
+    <NumberTextField fx:id="guestPhone" alignment="TOP_RIGHT" promptText="Enter Guest's Phone" scaleY="0.8"
+                     GridPane.columnIndex="2" GridPane.columnSpan="3" GridPane.rowIndex="9"/>
+    <TextField alignment="TOP_RIGHT" promptText="Reservation Number" scaleY="0.8" GridPane.columnIndex="4"
+               GridPane.columnSpan="2" GridPane.rowIndex="12"/>
+    <NumberTextField alignment="TOP_RIGHT" promptText="Number of Guests" scaleY="0.8" GridPane.columnIndex="4"
+                     GridPane.columnSpan="2" GridPane.rowIndex="14"/>
+    <TextField alignment="TOP_RIGHT" promptText="Room Category" scaleY="0.8" GridPane.columnIndex="4"
+               GridPane.columnSpan="2" GridPane.rowIndex="15"/>
+    <TextArea prefHeight="2" prefWidth="2" promptText="Enter Guest's Address" GridPane.columnIndex="7"
+              GridPane.columnSpan="3" GridPane.rowIndex="8" GridPane.rowSpan="2"/>
+    <TextArea maxHeight="1.7976931348623157E308" prefHeight="54.0" prefWidth="220.0" GridPane.columnIndex="1"
+              GridPane.columnSpan="4" GridPane.rowIndex="19" GridPane.rowSpan="4"/>
+
+
+    <columnConstraints>
+        <ColumnConstraints/>
+        <ColumnConstraints maxWidth="50.0" minWidth="50.0" prefWidth="50.0"/>
+        <ColumnConstraints maxWidth="0.0" minWidth="0.0" prefWidth="0.0"/>
+        <ColumnConstraints maxWidth="70.0" minWidth="0.0" prefWidth="66.0"/>
+        <ColumnConstraints maxWidth="148.0" prefWidth="74.0"/>
+        <ColumnConstraints maxWidth="55.0" minWidth="0.0" prefWidth="0.0"/>
+        <ColumnConstraints maxWidth="177.5" minWidth="145.5" prefWidth="152.5"/>
+        <ColumnConstraints maxWidth="32.0" minWidth="4.0" prefWidth="18.0"/>
+        <ColumnConstraints maxWidth="146.5" minWidth="96.5" prefWidth="132.5"/>
+        <ColumnConstraints maxWidth="14.0" minWidth="0.0" prefWidth="8.0"/>
+        <ColumnConstraints maxWidth="0.0" minWidth="0.0" prefWidth="0.0"/>
+        <ColumnConstraints/>
+        <ColumnConstraints/>
+    </columnConstraints>
+    <rowConstraints>
+        <RowConstraints maxHeight="27.0" minHeight="27.0" prefHeight="27.0"/>
+        <RowConstraints maxHeight="27.0" minHeight="27.0" prefHeight="27.0"/>
+        <RowConstraints/>
+        <RowConstraints/>
+        <RowConstraints/>
+        <RowConstraints/>
+        <RowConstraints/>
+        <RowConstraints/>
+        <RowConstraints/>
+        <RowConstraints/>
+        <RowConstraints maxHeight="0.0" minHeight="0.0" prefHeight="0.0"/>
+        <RowConstraints maxHeight="25.0" minHeight="18.0" prefHeight="22.0"/>
+        <RowConstraints maxHeight="27.0" minHeight="17.0" prefHeight="22.0"/>
+        <RowConstraints maxHeight="27.0" minHeight="19.0" prefHeight="23.0"/>
+        <RowConstraints maxHeight="27.0" minHeight="20.0" prefHeight="24.0"/>
+        <RowConstraints maxHeight="32.0" minHeight="24.0" prefHeight="25.0"/>
+        <RowConstraints/>
+        <RowConstraints/>
+        <RowConstraints/>
+        <RowConstraints/>
+        <RowConstraints/>
+        <RowConstraints/>
+        <RowConstraints/>
+        <RowConstraints/>
+        <RowConstraints/>
+        <RowConstraints/>
+        <RowConstraints/>
+        <RowConstraints/>
+        <RowConstraints maxHeight="17.0" minHeight="17.0" prefHeight="17.0"/>
+        <RowConstraints maxHeight="0.0" minHeight="0.0" prefHeight="0.0"/>
+        <RowConstraints maxHeight="0.0" minHeight="0.0" prefHeight="0.0"/>
+    </rowConstraints>
 </GridPane>

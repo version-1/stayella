@@ -30,7 +30,7 @@ public class ControllerCharges extends ApplicationController {
     private ExtraBed extraBed = new ExtraBed(10, 100, 50);
     private Parking parking = new Parking(10, 100, 50);
     private StoreLuggage storeLuggage = new StoreLuggage(10, 100, 50);
-    private WashingRoom washingRoom = new WashingRoom(10, 100, 50);
+    private WashingRoom washingRoom  = new WashingRoom(10, 100, 50);
     private FoodService foodService = new FoodService(10, 100, 50);
     private ArrayList<HotelFacility> hotelFacilities = new ArrayList<HotelFacility>();
     /** extra

@@ -191,9 +191,7 @@ public class ReservationController extends ApplicationController {
 
     public void setCharges(List<Charge> charges){
         this.charges = charges;
-        for (Charge charge: this.charges
-             ) {
-        }
+
 
     }
 
