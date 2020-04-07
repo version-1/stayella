@@ -186,6 +186,12 @@ public class ReservationController extends ApplicationController {
 
     @FXML
     public void onUploadImage(ActionEvent actionEvent) throws IOException {
+        String url = getFileOfImage();
+        Image imageOfGuest = new Image(url, 112, 112, true, false);
+        imageView.setImage(imageOfGuest);
+    }
+
+    private String getFileOfImage() throws IOException {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open the image");
         fileChooser.getExtensionFilters().add(
@@ -196,8 +202,8 @@ public class ReservationController extends ApplicationController {
         );
         File file = fileChooser.showOpenDialog(null);
         String url = "file:///" + file.getPath();
-        Image imageOfGuest = new Image(url, 112, 112, true, false);
-        imageView.setImage(imageOfGuest);
+
+        return url;
     }
 
 }
