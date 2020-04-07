@@ -76,7 +76,6 @@ public class ControllerCharges extends ApplicationController {
         list.add(foodService);
     }
 
-
     private HotelFacility checkPairOfId(CheckBox checkBox) {
         for (HotelFacility facility: hotelFacilities
              ) {
@@ -88,7 +87,6 @@ public class ControllerCharges extends ApplicationController {
         return null;
     }
 
-
     @FXML
     public void onResetAction() {
         for (int i = 0; i < checkBoxes.length; i++) {
@@ -99,7 +97,6 @@ public class ControllerCharges extends ApplicationController {
         chargeTotal = 0;
         reflectSumOfCharge();
     }
-
 
     @FXML
     public void onSubmitAction(ActionEvent actionEvent) {
@@ -135,7 +132,6 @@ public class ControllerCharges extends ApplicationController {
     private void reflectSumOfCharge() {
         sumOfCharge.setText("$ " + Double.toString(chargeTotal));
     }
-
 
     // flow pain
     public void  addFlowPane() {

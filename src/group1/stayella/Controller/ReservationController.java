@@ -14,14 +14,19 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class ReservationController extends ApplicationController {
+    @FXML
+    public Button imageUpload;
+
     @FXML
     Image image;
     @FXML
@@ -77,6 +82,7 @@ public class ReservationController extends ApplicationController {
     private CreditCard creditCard;
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
         image = new Image("https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTqWGB5YLwdAKCrHNiw9_I5jXeWHDlGHh83anl58WuJ4WwhzslJ&usqp=CAU");
         imageView.setImage(image);
 
@@ -177,4 +183,21 @@ public class ReservationController extends ApplicationController {
         creditCard = new CreditCard(0,0, cardNumber, name, null, cvv, null);
    
     }
+
+    @FXML
+    public void onUploadImage(ActionEvent actionEvent) throws IOException {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Open the image");
+        fileChooser.getExtensionFilters().add(
+                new FileChooser.ExtensionFilter("Image Files", "*.png","*.jpg","*.gif")
+        );
+        fileChooser.setInitialDirectory(
+                new File(System.getProperty("user.home"))
+        );
+        File file = fileChooser.showOpenDialog(null);
+        String url = "file:///" + file.getPath();
+        Image imageOfGuest = new Image(url, 112, 112, true, false);
+        imageView.setImage(imageOfGuest);
+    }
+
 }
