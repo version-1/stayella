@@ -1,10 +1,13 @@
 package group1.stayella.Controller;
 
 import java.net.URL;
+import java.util.Date;
 import java.util.ResourceBundle;
 
 import group1.stayella.Model.Room;
+import group1.stayella.Model.Vacancy;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -13,12 +16,16 @@ public class CalendarController extends ApplicationController {
     @FXML
     TableView<Room> calendar;
 
+    @FXML
+    Label currentDate;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         initTable();
+        currentDate.setText(Vacancy.getDateString(new Date(), Vacancy.CALENDAR_DATE_FORMAT));
     }
 
-    public void initTable() {
+    private void initTable() {
 
         TableColumn<Room, ?> col1 = new TableColumn<>("Room");
         col1.setCellValueFactory(new PropertyValueFactory<>("roomNumber"));

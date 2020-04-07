@@ -7,7 +7,7 @@
 
 <GridPane fx:id="gridlayout" prefHeight="500" prefWidth="500" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="group1.stayella.Controller.CalendarController">
     <columnConstraints>
-      <ColumnConstraints percentWidth="30.0" />
+      <ColumnConstraints prefWidth="250.0" />
       <ColumnConstraints percentWidth="70.0" />
    </columnConstraints>
    <rowConstraints>
@@ -15,10 +15,96 @@
    </rowConstraints>
    <children>
       <VBox styleClass="sidebar" GridPane.columnIndex="0">
-         <Label text="Sidebar"/>
+         <VBox styleClass="group" spacing="8">
+            <Label styleClass="search-form-label" text="Boocking No."/>
+            <TextField />
+            <Label  styleClass="search-form-label" text="Check In"/>
+            <TextField />
+            <Label styleClass="search-form-label" text="Check Out"/>
+            <TextField />
+            <Label styleClass="search-form-label" text="People"/>
+            <TextField />
+         </VBox>
+         <VBox styleClass="group" spacing="8">
+            <Label styleClass="search-form-label" text="BedType"/>
+            <HBox>
+               <CheckBox />
+               <Label styleClass="search-form-label" text="Queen" />
+            </HBox>
+            <HBox>
+               <CheckBox />
+               <Label styleClass="search-form-label" text="King" />
+            </HBox>
+         </VBox>
+         <VBox styleClass="group" spacing="8">
+            <Label styleClass="search-form-label" text="Facilites"/>
+            <HBox>
+               <CheckBox />
+               <Label styleClass="search-form-label" text="Smoke" />
+            </HBox>
+            <HBox>
+               <CheckBox />
+               <Label styleClass="search-form-label" text="Smoke" />
+            </HBox>
+         </VBox>
       </VBox>
       <VBox styleClass="main" GridPane.columnIndex="1">
-         <Label text="Calender Screen"/>
+         <HBox alignment="CENTER" styleClass="header">
+            <HBox minWidth="150" alignment="CENTER_LEFT">
+               <ImageView
+                  fx:id="edit"
+                  fitWidth="32"
+                  fitHeight="32"
+               >
+                  <image>
+                     <Image
+                     url="group1/stayella/Resources/Images/Icons/edit.png"
+                     backgroundLoading="true"
+                     />
+                  </image>
+               </ImageView>
+               <ImageView
+                  fx:id="datePicker"
+                  fitWidth="46"
+                  fitHeight="35"
+               >
+                  <image>
+                     <Image
+                     url="group1/stayella/Resources/Images/Icons/calendar.png"
+                     backgroundLoading="true"
+                     />
+                  </image>
+               </ImageView>
+            </HBox>
+            <HBox minWidth="150" alignment="CENTER" spacing="8" fillHeight="true">
+               <HBox styleClass="border-box">
+                  <Label fx:id="prevDate" styleClass="arrow" text="&lt;" />
+               </HBox>
+               <HBox styleClass="border-box">
+                  <Label fx:id="currentDate" styleClass="currentDate" />
+               </HBox>
+               <HBox styleClass="border-box">
+                  <Label fx:id="prevDate" styleClass="arrow" text="&gt;" />
+               </HBox>
+            </HBox>
+            <HBox spacing="8" minWidth="150" alignment="CENTER_RIGHT">
+               <HBox styleClass="border-box" alignment="CENTER">
+                  <ImageView
+                     fx:id="reload"
+                     fitWidth="18"
+                     fitHeight="18"
+                  >
+                     <image>
+                        <Image
+                        url="group1/stayella/Resources/Images/Icons/reload.png"
+                        backgroundLoading="true"
+                        />
+                     </image>
+                  </ImageView>
+                  <Label text="Today" />
+               </HBox>
+            </HBox>
+         </HBox>
          <TableView fx:id="calendar"/>
          <Button
          fx:id="goBack"

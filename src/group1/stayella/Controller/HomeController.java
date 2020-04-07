@@ -40,9 +40,9 @@ public class HomeController extends ApplicationController {
 
     @FXML
     public void transitToCalendar(ActionEvent actionEvent) throws IOException {
-        Stage stage = transitTo(actionEvent, "CalendarView/index.fxml");
+        Stage stage = transitTo(actionEvent, "CalendarView/index.fxml", 800, 600);
         Scene scene = stage.getScene();
-        scene.getStylesheets().add("group1/stayella/View/css/calendar/layout.css");
+        scene.getStylesheets().add("group1/stayella/View/css/calendar/style.css");
     }
 
 }
