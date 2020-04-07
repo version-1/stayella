@@ -47,6 +47,7 @@
                <Label styleClass="search-form-label" text="Smoke" />
             </HBox>
          </VBox>
+         <Button styleClass="button-search" text="Search" />
       </VBox>
       <VBox styleClass="main" GridPane.columnIndex="1">
          <HBox alignment="CENTER" styleClass="header">
