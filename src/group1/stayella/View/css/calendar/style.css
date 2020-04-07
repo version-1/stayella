@@ -1,0 +1,45 @@
+.sidebar {
+  -fx-padding: 8px;
+  -fx-background-color: #1D5162;
+}
+
+.search-form-label {
+  -fx-text-fill: #FBFBFB;
+}
+
+.header {
+  -fx-padding: 16px;
+}
+
+.group {
+  -fx-padding: 8px;
+}
+
+.main {
+  -fx-padding: 16px;
+  -fx-background-color: white;
+}
+
+.border-box {
+  -fx-border-style: solid;
+  -fx-border-width: 1px;
+  -fx-border-color: #666666;
+  -fx-border-radius: 4px;
+}
+
+.arrow {
+  -fx-padding: 8px;
+  -fx-text-fill: #666666;
+  -fx-font-weight: 900;
+}
+
+.currentDate {
+  -fx-padding: 8px;
+  -fx-text-fill: #666666;
+  -fx-font-weight: 900;
+}
+
+.button-search {
+  -fx-background-color:#FFD15B;
+  -fx-text-fill: #1D5162;
+}

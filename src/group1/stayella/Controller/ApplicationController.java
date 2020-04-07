@@ -12,14 +12,24 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Stack;
 
 import group1.stayella.Model.Hotel;
+import group1.stayella.Model.Room;
 
 public class ApplicationController implements Initializable {
     private Hotel hotel;
     private Stack<Scene> sceneStack = new Stack<Scene>();
+
+    public ApplicationController() {
+    }
+
+    public ApplicationController(Hotel hotel, Stack<Scene> sceneStack) {
+        this.hotel = hotel;
+        this.sceneStack = sceneStack;
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -30,12 +40,23 @@ public class ApplicationController implements Initializable {
         this.hotel = hotel;
     }
 
+    public void setSceneStack(Stack<Scene> scene) {
+        this.sceneStack = scene;
+    }
+
     public void pushSceneStack(Scene scene) {
         this.sceneStack.push(scene);
     }
 
     public Hotel getHotel() {
         return hotel;
+    }
+
+    public List<Room> getRooms() {
+        if(hotel == null) {
+            return null;
+        }
+        return hotel.getRooms();
     }
 
     @FXML
@@ -59,22 +80,21 @@ public class ApplicationController implements Initializable {
     }
 
     public void popUpAs(ActionEvent event, String fxml, Integer with, Integer height) throws IOException {
-        Stage newPopup =  popup(event, fxml, with, height);
+        Stage newPopup = popup(event, fxml, with, height);
         newPopup.show();
     }
-
 
     private Stage transit(ActionEvent event, String fxml, Integer width, Integer height) throws IOException {
         Node node = (Node) event.getSource();
         Scene scene = node.getScene();
+
         Stage stage = (Stage) scene.getWindow();
+
         URL url = getClass().getClassLoader().getResource("group1/stayella/View/" + fxml);
         FXMLLoader loader = new FXMLLoader(url);
+        pushSceneStack(scene);
+        prepareController(loader, getHotel(), sceneStack);
         Parent page = loader.load();
-
-        ApplicationController controller = loader.getController();
-        controller.setHotel(getHotel());
-        controller.pushSceneStack(scene);
 
         Scene newPage = new Scene(page, width, height);
 
@@ -93,6 +113,7 @@ public class ApplicationController implements Initializable {
 
         URL url = getClass().getClassLoader().getResource("group1/stayella/View/" + fxml);
         FXMLLoader loader = new FXMLLoader(url);
+        prepareController(loader, hotel, sceneStack);
         Parent page = loader.load();
 
         ApplicationController controller = loader.getController();
@@ -106,8 +127,23 @@ public class ApplicationController implements Initializable {
 
     public void closeAction(ActionEvent actionEvent) {
         Scene scene = ((Node) actionEvent.getSource()).getScene();
-        Stage stage =  (Stage) scene.getWindow();
+        Stage stage = (Stage) scene.getWindow();
         stage.close();
     }
 
+    public void prepareController(FXMLLoader loader, Hotel hotel, Stack<Scene> sceneStack) {
+        loader.setControllerFactory(c -> {
+            try {
+                ApplicationController controller = (ApplicationController) c.newInstance();
+                controller.setHotel(getHotel());
+                controller.setSceneStack(sceneStack);
+                return controller;
+            } catch (InstantiationException e) {
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+            return null;
+        });
+    }
 }

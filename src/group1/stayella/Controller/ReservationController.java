@@ -16,8 +16,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -25,6 +27,9 @@ import java.util.Date;
 import java.util.ResourceBundle;
 
 public class ReservationController extends ApplicationController {
+    @FXML
+    public Button imageUpload;
+
     @FXML
     Image image;
     @FXML
@@ -87,9 +92,8 @@ public class ReservationController extends ApplicationController {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        if (status != 0) {
+        if (status != 0) {}
 
-        }
         image = new Image("https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTqWGB5YLwdAKCrHNiw9_I5jXeWHDlGHh83anl58WuJ4WwhzslJ&usqp=CAU");
         imageView.setImage(image);
 
@@ -199,4 +203,27 @@ public class ReservationController extends ApplicationController {
         imageView.setPreserveRatio(true);
         button.setGraphic(imageView);
     }
+
+    @FXML
+    public void onUploadImage(ActionEvent actionEvent) throws IOException {
+        String url = getFileOfImage();
+        Image imageOfGuest = new Image(url, 112, 112, true, false);
+        imageView.setImage(imageOfGuest);
+    }
+
+    private String getFileOfImage() throws IOException {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Open the image");
+        fileChooser.getExtensionFilters().add(
+                new FileChooser.ExtensionFilter("Image Files", "*.png","*.jpg","*.gif")
+        );
+        fileChooser.setInitialDirectory(
+                new File(System.getProperty("user.home"))
+        );
+        File file = fileChooser.showOpenDialog(null);
+        String url = "file:///" + file.getPath();
+
+        return url;
+    }
+
 }
