@@ -51,9 +51,11 @@
       </VBox>
       <VBox styleClass="main" GridPane.columnIndex="1">
          <HBox alignment="CENTER" styleClass="header">
-            <HBox minWidth="150" alignment="CENTER_LEFT">
+            <HBox spacing="8" minWidth="150" alignment="CENTER_LEFT">
                <ImageView
                   fx:id="edit"
+                  fitWidth="32"
+                  fitHeight="32"
                >
                   <image>
                      <Image
@@ -64,6 +66,8 @@
                </ImageView>
                <ImageView
                   fx:id="datePicker"
+                  fitWidth="46"
+                  fitHeight="35"
                >
                   <image>
                      <Image
