@@ -4,23 +4,44 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.GridPane?>
 
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.RowConstraints?>
 <GridPane fx:id="container" fx:controller="group1.stayella.Controller.ControllerCharges"
           xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.172-ea" hgap="20" vgap="15" stylesheets="@../css/styles.css">
 
-<Label fx:id="total" text="Total :"
+<Label fx:id="total" styleClass="label-title" text="Total :"
            GridPane.columnIndex="1"
            GridPane.rowIndex="12"
        GridPane.halignment="RIGHT"/>
-<Label fx:id="sumOfCharge" text=""
+<Label fx:id="sumOfCharge" styleClass="label-title" text=""
        GridPane.columnIndex="2"
-       GridPane.rowIndex="12" styleClass="tic-button" />
-    <Button fx:id="submit" GridPane.columnIndex="2"
-            GridPane.rowIndex="13" text="Submit" onAction="#onSubmitAction"/>
-    <Button fx:id="close" GridPane.columnIndex="1"
-            GridPane.rowIndex="14" text="close" onAction="#closeAction"/>
-    <Button fx:id="reset" GridPane.columnIndex="2"
-            GridPane.rowIndex="14" text="Reset" onAction="#onResetAction"/>
+       GridPane.rowIndex="12"  />
+    <Button fx:id="submit" styleClass="button-3d" GridPane.columnIndex="2"
+            GridPane.rowIndex="13" text="SUBMIT" onAction="#onSubmitAction"/>
+    <Button fx:id="close" styleClass="button-3d" GridPane.columnIndex="1"
+            GridPane.rowIndex="14" text="CLOSE" onAction="#closeAction"/>
+    <Button fx:id="reset" styleClass="button-3d" GridPane.columnIndex="2"
+            GridPane.rowIndex="14" text="RESET" onAction="#onResetAction"/>
 
-
+    <columnConstraints>
+        <ColumnConstraints />
+        <ColumnConstraints maxWidth="150.0" minWidth="150.0" prefWidth="150.0" />
+        <ColumnConstraints maxWidth="130.0" minWidth="130.0" prefWidth="130.0"/>
+        <ColumnConstraints />
+    </columnConstraints>
+    <rowConstraints>
+        <RowConstraints/>
+        <RowConstraints/>
+        <RowConstraints/>
+        <RowConstraints/>
+        <RowConstraints/>
+        <RowConstraints/>
+        <RowConstraints/>
+        <RowConstraints/>
+        <RowConstraints/>
+        <RowConstraints/>
+        <RowConstraints/>
+        <RowConstraints/>
+    </rowConstraints>
 </GridPane>
 
