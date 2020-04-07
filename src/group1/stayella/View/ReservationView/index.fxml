@@ -19,13 +19,13 @@
     <Button fx:id="buttonAdditions" onAction="#popupAsCharge" GridPane.columnIndex="7" GridPane.columnSpan="2"
             GridPane.rowIndex="12"/>
 
-    <Button fx:id="confirmed" prefHeight="27.0" prefWidth="178.0" text="Confirmed" textAlignment="CENTER"
+    <Button fx:id="confirmed" styleClass="button-3d" prefHeight="27.0" prefWidth="178.0" text="Confirmed" textAlignment="CENTER"
             GridPane.columnIndex="6" GridPane.columnSpan="2" GridPane.rowIndex="15"/>
-    <Button fx:id="unconfirmed" prefHeight="27.0" prefWidth="189.0" text="Unconfirmed" GridPane.columnIndex="8"
+    <Button fx:id="unconfirmed" styleClass="button-3d" prefHeight="27.0" prefWidth="189.0" text="Unconfirmed" GridPane.columnIndex="8"
             GridPane.columnSpan="3" GridPane.rowIndex="15"/>
     <HBox styleClass="reservation-footer" prefHeight="27.0" prefWidth="607.0" spacing="2" GridPane.columnIndex="1" GridPane.columnSpan="10"
           GridPane.rowIndex="30">
-        <Button fx:id="reservation"  styleClass="button-3d" onAction="#submit" prefHeight="27.0" prefWidth="136.0" text="RESERVE"/>
+        <Button fx:id="reservation" styleClass="button-3d" onAction="#submit" prefHeight="27.0" prefWidth="136.0" text="RESERVE"/>
         <Button fx:id="cancel"  styleClass="button-3d" prefHeight="27.0" prefWidth="136.0" text="CANCEL"/>
         <Button fx:id="checkIn"  styleClass="button-3d" prefHeight="27.0" prefWidth="136.0" text="CHECK IN"/>
         <Button fx:id="checkOut" styleClass="button-3d" prefHeight="27.0" prefWidth="136.0" text="CHECK OUT"/>

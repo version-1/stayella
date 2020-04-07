@@ -34,7 +34,9 @@
     -fx-border-style: solid;
     -fx-border-color: #61a2b1;
     -fx-border-width: 3px;
+    -fx-border-radius: 30px;
     -fx-background-color: linear-gradient(#ffffff, #a7caca, deep-blue);
+    -fx-background-radius: 30px;
 }
 
 .button-3d:hover {

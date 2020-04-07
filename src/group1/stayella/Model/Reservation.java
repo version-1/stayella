@@ -37,7 +37,6 @@ public class Reservation {
         this.status = status;
 
         index++;
-
     }
 
     public int getId() {
