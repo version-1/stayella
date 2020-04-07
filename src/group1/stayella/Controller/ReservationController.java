@@ -2,6 +2,8 @@ package group1.stayella.Controller;
 
 import group1.stayella.Model.Charge;
 import group1.stayella.Model.CreditCard;
+import group1.stayella.Model.Guest;
+import group1.stayella.Model.Reservation;
 import group1.stayella.Vallidation.NumberTextField;
 import group1.stayella.Vallidation.TextTextField;
 import group1.stayella.View.Paymentview.PopPayment;
@@ -15,15 +17,21 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Date;
 import java.util.ResourceBundle;
 
 public class ReservationController extends ApplicationController {
+
+    @FXML
+    public Button imageUpload;
 
     @FXML
     Image image;
@@ -75,7 +83,10 @@ public class ReservationController extends ApplicationController {
     TextTextField guestName;
     @FXML
     TextTextField guestEmail;
+    @FXML
+    TextTextField guestLanguage;
 
+    private int id;
     private ArrayList<String> creditCardInfo;
     private CreditCard creditCard;
 
@@ -84,9 +95,14 @@ public class ReservationController extends ApplicationController {
     @FXML
     public Label totalPrice;
 
+    private Guest guest;
+    private Reservation newReservation;
+    private int status = 0;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        if (status != 0) {}
+
         image = new Image("https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTqWGB5YLwdAKCrHNiw9_I5jXeWHDlGHh83anl58WuJ4WwhzslJ&usqp=CAU");
         imageView.setImage(image);
 
@@ -103,20 +119,22 @@ public class ReservationController extends ApplicationController {
             confirmed.isFocused();
             confirmed.setStyle("-fx-border-color: #00ee00; -fx-border-width: 3px;");
             unconfirmed.setStyle("-fx-border-color: #ee0000; -fx-border-width: 1px;");
+            status = 2;
         });
 
         unconfirmed.setOnAction(e -> {
             unconfirmed.isFocused();
             unconfirmed.setStyle("-fx-border-color: #00ee00; -fx-border-width: 3px;");
             confirmed.setStyle("-fx-border-color: #ee0000; -fx-border-width: 1px;");
+            status = 1;
         });
 
         buttonCard.setOnAction(e -> {
             creditCardInfo = PopPayment.display("Insert CC Info");
             if (creditCardInfo != null && creditCardInfo.size() == 3) {
                 setCreditCard(creditCardInfo.get(0), creditCardInfo.get(1), creditCardInfo.get(2));
+                showCCInfo(creditCardInfo.get(0));
             }
-            showCCInfo(creditCardInfo.get(0));
         });
     }
 
@@ -127,7 +145,7 @@ public class ReservationController extends ApplicationController {
         this.cardNumberLabel.setText("XXXX-XXXX-" + text.substring(8));
     }
 
-    public void submit(ActionEvent event) {
+    public boolean submit() {
         String message = "";
         if (!guestName.nameValidation(guestName.getText())) {
             message += "Invalid Guest's Name\n";
@@ -141,6 +159,8 @@ public class ReservationController extends ApplicationController {
             message += "Invalid Guest's Phone Number\n";
         } else if (!guestEmail.emailValidation(guestEmail.getText())) {
             message += "Invalid Guest's Email";
+        } else if (status == 0) {
+            message += "Cannot be reserved with undefined status";
         }
         if (!message.equals("")) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
@@ -148,7 +168,41 @@ public class ReservationController extends ApplicationController {
             alert.setHeaderText("Important information is missing.");
             alert.setContentText(message);
             alert.showAndWait();
+            return false;
         }
+        return true;
+    }
+
+    @FXML
+    public void popupAsCharge(ActionEvent actionEvent) throws IOException {
+        popUpAs(actionEvent,"ChargesView/index.fxml",330,400);
+    }
+
+    @FXML
+    public void makeAReservation(ActionEvent actionEvent) {
+        if (submit()) {
+            newReservation = new Reservation(guest, 0, status);
+            //newReservation.make()
+            setGuestInformation();
+        }
+    }
+
+    /**
+     * With the getters we can set all the text field in 'initialize' if the status is
+     * either confirmed or unconfirmed. Can we send some information about particular
+     * reservation from the source?
+     *
+     * */
+
+    // do need credit card ID, guest ID?
+    public void setCreditCard(String cardNumber, String name, String cvv) {
+        creditCard = new CreditCard(id,0, cardNumber, name, null, cvv, null);
+        // creditCard.checkExpired() -> null pointer exception error
+    }
+
+    public void setGuestInformation() {
+        guest = new Guest(id, guestName.getText(), guestAge.getText(), guestPhone.getText(), guestEmail.getText(), guestID.getText(), creditCard, guestLanguage.getText());
+        // guest.setPaymentMethod(creditCard); -> close without saving causes error
     }
 
     public void insertImage(Image image, ImageView imageView, Button button, int height, int width) {
@@ -159,33 +213,26 @@ public class ReservationController extends ApplicationController {
         button.setGraphic(imageView);
     }
 
-    public void openNewStage(ActionEvent actionEvent) {
-        try {
-            FXMLLoader loaderPayment = new FXMLLoader(getClass().getResource("/group1/stayella/View/Paymentview/index.fxml"));
-            Parent rootPayment = loaderPayment.load();
-            FXMLLoader loaderAdditions = new FXMLLoader(getClass().getResource("/group1/stayella/View/ChargesView/index.fxml"));
-            Parent rootAdditions = loaderAdditions.load();
-            Stage stage = new Stage();
-            if (actionEvent.getSource() == buttonAdditions) {
-                stage.setScene(new Scene(rootAdditions, 300, 400));
-            } else if (actionEvent.getSource() == buttonCard) {
-                //stage.setScene(new Scene(rootPayment, 280, 140));
-            }
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-
     @FXML
-    public void popupAsCharge(ActionEvent actionEvent) throws IOException {
-        popUpAs(actionEvent,"ChargesView/index.fxml",330,400);
+    public void onUploadImage(ActionEvent actionEvent) throws IOException {
+        String url = getFileOfImage();
+        Image imageOfGuest = new Image(url, 112, 112, true, false);
+        imageView.setImage(imageOfGuest);
     }
-      
-    public void setCreditCard(String cardNumber, String name, String cvv) {
-        creditCard = new CreditCard(0,0, cardNumber, name, null, cvv, null);
-   
+
+    private String getFileOfImage() throws IOException {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Open the image");
+        fileChooser.getExtensionFilters().add(
+                new FileChooser.ExtensionFilter("Image Files", "*.png","*.jpg","*.gif")
+        );
+        fileChooser.setInitialDirectory(
+                new File(System.getProperty("user.home"))
+        );
+        File file = fileChooser.showOpenDialog(null);
+        String url = "file:///" + file.getPath();
+
+        return url;
     }
 
 
@@ -207,4 +254,5 @@ public class ReservationController extends ApplicationController {
         System.out.println("[$] " + Double.toString(total));
         totalPrice.setText("[$] " + Double.toString(total));
     }
+
 }

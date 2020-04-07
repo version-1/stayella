@@ -2,8 +2,10 @@ package group1.stayella.Controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
@@ -38,7 +40,9 @@ public class HomeController extends ApplicationController {
 
     @FXML
     public void transitToCalendar(ActionEvent actionEvent) throws IOException {
-        transitTo(actionEvent, "CalendarView/index.fxml");
+        Stage stage = transitTo(actionEvent, "CalendarView/index.fxml", 800, 600);
+        Scene scene = stage.getScene();
+        scene.getStylesheets().add("group1/stayella/View/css/calendar/style.css");
     }
 
 }

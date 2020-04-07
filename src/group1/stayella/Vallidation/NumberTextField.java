@@ -17,7 +17,7 @@ public class NumberTextField extends TextField {
     }
 
     public boolean phoneNumberValidation (String text) {
-        return (text.length() == 10);
+        return (text.length() > 9);
     }
 
     public boolean idNumberValidation (String text) {

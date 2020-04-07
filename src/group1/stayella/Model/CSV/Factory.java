@@ -169,7 +169,7 @@ public class Factory {
     Reservation reservation = new Reservation(
       guest,
       1,
-      getRandomInt(0, 2) // uncofirmed or confirm
+      getRandomInt(0, 2) // unconfirmed or confirm
     );
     reservation.make(room.getVacancies(), start, getRandomInt(2, 5));
   }
@@ -206,8 +206,7 @@ public class Factory {
         Guest guest = new Guest(
           toInt(row.get("ID")),
           row.get("NAME"),
-          toInt(row.get("AGE")),
-          "",
+          row.get("AGE"),
           row.get("PHONE_NUMBER"),
           row.get("EMAIL"),
           row.get("ID_NUMBER"),
