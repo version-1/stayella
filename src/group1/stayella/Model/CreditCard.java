@@ -86,7 +86,7 @@ public class CreditCard {
     }
 
     //check expired
-    private boolean checkExpired(Date expired){
+    public boolean checkExpired(Date expired){
         Date today = new Date();
         if(expired.after(today)) {
             System.out.println("Expired Date");

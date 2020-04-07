@@ -5,7 +5,7 @@ import java.awt.*;
 public class Guest {
     private int id;
     private String name;
-    private int age;
+    private String age;
     private Image photo;
     private String phoneNumber;
     private String emailAddress;
@@ -16,11 +16,11 @@ public class Guest {
     public Guest() {
     }
 
-    public Guest(int id, String name, int age, String file, String phoneNumber, String emailAddress, String idNumber, CreditCard paymentMethod, String language) {
+    public Guest(int id, String name, String age, String phoneNumber, String emailAddress, String idNumber, CreditCard paymentMethod, String language) {
         this.id = id;
         this.name = name;
         this.age = age;
-//        this.photo = new Image(file);
+//        this.photo = new Image(file); -> add to constructor as well
         this.phoneNumber = phoneNumber;
         this.emailAddress = emailAddress;
         this.idNumber = idNumber;
@@ -37,7 +37,7 @@ public class Guest {
         this.name = name;
     }
 
-    public void setAge(int age) {
+    public void setAge(String age) {
         this.age = age;
     }
 
@@ -58,7 +58,7 @@ public class Guest {
     }
 
     public void setPaymentMethod(CreditCard paymentMethod) {
-        if(nameCheck(paymentMethod.getCardHolderName())) {
+        if(paymentMethod.getCardHolderName() != null && nameCheck(paymentMethod.getCardHolderName())) {
             this.paymentMethod = paymentMethod;
         }
     }
@@ -77,7 +77,7 @@ public class Guest {
         return name;
     }
 
-    public int getAge() {
+    public String getAge() {
         return age;
     }
 

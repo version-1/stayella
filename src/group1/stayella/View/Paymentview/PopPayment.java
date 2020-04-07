@@ -1,6 +1,8 @@
 package group1.stayella.View.Paymentview;
 
 import group1.stayella.Controller.ApplicationController;
+import group1.stayella.Vallidation.NumberTextField;
+import group1.stayella.Vallidation.TextTextField;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -17,9 +19,9 @@ public class PopPayment extends ApplicationController implements Initializable {
     static ArrayList<String> creditCard;
 
     public static ArrayList<String> display(String title) {
-        TextField fieldCardNumber = new TextField();
-        TextField fieldCardHolderName = new TextField();
-        TextField fieldSecurityCode = new TextField();
+        NumberTextField fieldCardNumber = new NumberTextField();
+        TextTextField fieldCardHolderName = new TextTextField();
+        NumberTextField fieldSecurityCode = new NumberTextField();
         Button submit = new Button();
         fieldCardNumber.setPromptText("Enter CC Number");
         fieldCardNumber.setMaxWidth(220);
