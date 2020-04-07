@@ -54,24 +54,20 @@
             <HBox minWidth="150" alignment="CENTER_LEFT">
                <ImageView
                   fx:id="edit"
-                  fitWidth="32"
-                  fitHeight="32"
                >
                   <image>
                      <Image
-                     url="group1/stayella/Resources/Images/Icons/edit.png"
+                     url="group1/stayella/Resources/Images/Icons/edit-dark.png"
                      backgroundLoading="true"
                      />
                   </image>
                </ImageView>
                <ImageView
                   fx:id="datePicker"
-                  fitWidth="46"
-                  fitHeight="35"
                >
                   <image>
                      <Image
-                     url="group1/stayella/Resources/Images/Icons/calendar.png"
+                     url="group1/stayella/Resources/Images/Icons/calendar-dark.png"
                      backgroundLoading="true"
                      />
                   </image>
