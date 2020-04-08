@@ -1,9 +1,6 @@
 package group1.stayella.Controller;
 
-import group1.stayella.Model.Charge;
-import group1.stayella.Model.CreditCard;
-import group1.stayella.Model.Guest;
-import group1.stayella.Model.Reservation;
+import group1.stayella.Model.*;
 import group1.stayella.Vallidation.NumberTextField;
 import group1.stayella.Vallidation.TextTextField;
 import group1.stayella.View.Paymentview.PopPayment;
@@ -15,6 +12,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -25,6 +23,8 @@ import javafx.stage.Stage;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.time.Duration;
+import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Date;
@@ -87,6 +87,10 @@ public class ReservationController extends ApplicationController {
     TextTextField guestEmail;
     @FXML
     TextTextField guestLanguage;
+    @FXML
+    DatePicker checkIN;
+    @FXML
+    DatePicker checkOUT;
 
     private int id;
     private ArrayList<String> creditCardInfo;
@@ -140,14 +144,14 @@ public class ReservationController extends ApplicationController {
         });
     }
 
-    public void showCCInfo(String text) {
+    private void showCCInfo(String text) {
         if (text.length() != 12) {
             this.cardNumberLabel.setText("INVALID!");
         }
         this.cardNumberLabel.setText("XXXX-XXXX-" + text.substring(8));
     }
 
-    public boolean submit() {
+    private boolean submit() {
         String message = "";
         if (!guestName.nameValidation(guestName.getText())) {
             message += "Invalid Guest's Name\n";
@@ -177,11 +181,19 @@ public class ReservationController extends ApplicationController {
 
 
     @FXML
-    public void makeAReservation(ActionEvent actionEvent) {
+    private void makeAReservation(ActionEvent actionEvent) {
         if (submit()) {
+            Period period = Period.between(checkIN.getValue(), checkOUT.getValue());
+            int lengthOfStay = (int) (period.getDays());
+
             newReservation = new Reservation(guest, 0, status);
-            //newReservation.make()
+            Room room = this.getHotel().getRooms().get(1);
             setGuestInformation();
+            newReservation.make(room.getVacancies(), checkIN.getValue(), lengthOfStay);
+            newReservation.setCheckInTime(checkIN.getValue());
+            newReservation.setCheckOutTime(checkOUT.getValue());
+            System.out.println(newReservation);
+            System.out.println(guest);
         }
     }
 
@@ -193,17 +205,17 @@ public class ReservationController extends ApplicationController {
      * */
 
     // do need credit card ID, guest ID?
-    public void setCreditCard(String cardNumber, String name, String cvv) {
+    private void setCreditCard(String cardNumber, String name, String cvv) {
         creditCard = new CreditCard(id,0, cardNumber, name, null, cvv, null);
         // creditCard.checkExpired() -> null pointer exception error
     }
 
-    public void setGuestInformation() {
-        guest = new Guest(id, guestName.getText(), guestAge.getText(), guestPhone.getText(), guestEmail.getText(), guestID.getText(), creditCard, guestLanguage.getText());
+    private void setGuestInformation() {
+        guest = new Guest(id, guestName.getText(), guestAge.getText(), imageView.getImage(), guestPhone.getText(), guestEmail.getText(), guestID.getText(), creditCard, guestLanguage.getText());
         // guest.setPaymentMethod(creditCard); -> close without saving causes error
     }
 
-    public void insertImage(Image image, ImageView imageView, Button button, int height, int width) {
+    private void insertImage(Image image, ImageView imageView, Button button, int height, int width) {
         imageView.setImage(image);
         imageView.setFitHeight(height);
         imageView.setFitWidth(width);
@@ -212,7 +224,7 @@ public class ReservationController extends ApplicationController {
     }
 
     @FXML
-    public void onUploadImage(ActionEvent actionEvent) throws IOException {
+    private void onUploadImage(ActionEvent actionEvent) throws IOException {
         String url = getFileOfImage();
         Image imageOfGuest = new Image(url, 112, 112, true, false);
         imageView.setImage(imageOfGuest);
@@ -229,7 +241,6 @@ public class ReservationController extends ApplicationController {
         );
         File file = fileChooser.showOpenDialog(null);
         String url = "file:///" + file.getPath();
-
         return url;
     }
     
@@ -237,6 +248,10 @@ public class ReservationController extends ApplicationController {
     ****************READ ROOM NUMBER, and ADD PRICE****************
      **/
     @FXML
+    public void setCharges(List<Charge> charges){
+        this.charges = charges;
+    }
+
     public void setTotalPriceToLabel() {
         double total = 0;
         if(!charges.isEmpty()) {
@@ -285,5 +300,4 @@ public class ReservationController extends ApplicationController {
 
         setTotalPriceToLabel();
     }
-
 }

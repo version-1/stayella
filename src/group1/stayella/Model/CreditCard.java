@@ -103,4 +103,16 @@ public class CreditCard {
     public void setId(int id) {
         this.id = id;
     }
+
+    @Override
+    public String toString() {
+        return "CreditCard{" +
+                "id=" + id +
+                ", guestId=" + guestId +
+                ", cardNumber='" + cardNumber + '\'' +
+                ", cardHolderName='" + cardHolderName + '\'' +
+                ", cardSecurityNumber='" + cardSecurityNumber + '\'' +
+                ", expired=" + expired +
+                '}';
+    }
 }

@@ -1,6 +1,8 @@
 package group1.stayella.Model.CSV;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -27,7 +29,7 @@ public class Factory {
     List<Hotel> hotels = getHotels();
     for (Hotel hotel: hotels) {
       hotel.setFacilities(getHotelFacilities(hotel.getID()));
-      List<Room> rooms = getRooms(hotel.getID());
+      ArrayList<Room> rooms = getRooms(hotel.getID());
       for (Room room: rooms) {
         List<RoomFacility> facilities = getRoomFacilities(room.getID());
         List<Vacancy> vacancies = getVacancies(room.getID());
@@ -91,10 +93,10 @@ public class Factory {
     return null;
   }
 
-  public static List<Room> getRooms(int id) {
+  public static ArrayList<Room> getRooms(int id) {
     try {
       List<HashMap<String, String>> csv = new Core(ROOM_PATH).load();
-      List<Room> list = new ArrayList<Room>();
+      ArrayList<Room> list = new ArrayList<Room>();
       for(HashMap<String, String> row: csv){
         if (toInt(row.get("HOTEL_ID")) == id) {
           Room room = new Room(
@@ -171,7 +173,8 @@ public class Factory {
       1,
       getRandomInt(0, 2) // unconfirmed or confirm
     );
-    reservation.make(room.getVacancies(), start, getRandomInt(2, 5));
+    LocalDate localDate = start.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+    reservation.make(room.getVacancies(), localDate, getRandomInt(2, 5));
   }
 
   public static List<CreditCard> getCreditCards() {
@@ -207,6 +210,7 @@ public class Factory {
           toInt(row.get("ID")),
           row.get("NAME"),
           row.get("AGE"),
+          null,
           row.get("PHONE_NUMBER"),
           row.get("EMAIL"),
           row.get("ID_NUMBER"),

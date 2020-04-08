@@ -1,12 +1,14 @@
 package group1.stayella.Model;
 
+import javafx.scene.image.ImageView;
+
 import java.awt.*;
 
 public class Guest {
     private int id;
     private String name;
     private String age;
-    private Image photo;
+    private     javafx.scene.image.Image photo;
     private String phoneNumber;
     private String emailAddress;
     private String idNumber;
@@ -16,11 +18,11 @@ public class Guest {
     public Guest() {
     }
 
-    public Guest(int id, String name, String age, String phoneNumber, String emailAddress, String idNumber, CreditCard paymentMethod, String language) {
+    public Guest(int id, String name, String age, javafx.scene.image.Image image, String phoneNumber, String emailAddress, String idNumber, CreditCard paymentMethod, String language) {
         this.id = id;
         this.name = name;
         this.age = age;
-//        this.photo = new Image(file); -> add to constructor as well
+        this.photo = image; // what format of image do we want
         this.phoneNumber = phoneNumber;
         this.emailAddress = emailAddress;
         this.idNumber = idNumber;
@@ -41,7 +43,7 @@ public class Guest {
         this.age = age;
     }
 
-    public void setImage(Image photo) {
+    public void setImage(javafx.scene.image.Image photo) {
         this.photo = photo;
     }
 
@@ -103,10 +105,6 @@ public class Guest {
         return paymentMethod;
     }
 
-    public Image getImage() {
-        return photo;
-    }
-
     // name check
     private boolean nameCheck(String name){
         if( this.name.toUpperCase() == name.toUpperCase()){
@@ -114,5 +112,20 @@ public class Guest {
         } else {
             return false;
         }
+    }
+
+    @Override
+    public String toString() {
+        return "Guest{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", age='" + age + '\'' +
+                ", photo=" + photo +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", emailAddress='" + emailAddress + '\'' +
+                ", idNumber='" + idNumber + '\'' +
+                ", paymentMethod=" + paymentMethod +
+                ", language='" + language + '\'' +
+                '}';
     }
 }
