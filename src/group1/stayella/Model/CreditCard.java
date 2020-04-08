@@ -10,7 +10,7 @@ public class CreditCard {
     private String cardSecurityNumber;
     private Date expired;
 
-    public CreditCard(int id, int guestId, String cardNumber, String cardHolderName, String cardCompany,
+    public CreditCard(int id, int guestId, String cardNumber, String cardHolderName,
             String cardSecurityNumber, Date expired) {
         this.id = id;
         this.guestId = guestId;

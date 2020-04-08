@@ -10,8 +10,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.ComboBoxTableCell;
-import javafx.scene.control.cell.ComboBoxTreeCell;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
@@ -229,7 +227,7 @@ public class ReservationController extends ApplicationController {
 
     // do need credit card ID, guest ID?
     public void setCreditCard(String cardNumber, String name, String cvv) {
-        creditCard = new CreditCard(id,0, cardNumber, name, null, cvv, null);
+        creditCard = new CreditCard(id,0, cardNumber, name, cvv, null);
         // creditCard.checkExpired() -> null pointer exception error
     }
 

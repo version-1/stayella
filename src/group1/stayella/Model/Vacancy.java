@@ -44,11 +44,9 @@ public class Vacancy {
         return startTime;
     }
 
-
     public Date getEndTime() {
         return endTime;
     }
-
 
     public void setId(int id) {
         this.id = id;
