@@ -30,7 +30,7 @@ public class Calendar {
 
     private void setDateList() {
         dateList = new ArrayList<Date>();
-        for (int i = 0; i <= DATE_SPAN; i++) {
+        for (int i = 0; i < DATE_SPAN; i++) {
             java.util.Calendar cal = java.util.Calendar.getInstance();
             cal.setTime(currentDate);
             cal.add(java.util.Calendar.DATE, i);
@@ -40,13 +40,16 @@ public class Calendar {
     }
 
     private void setHourList() {
-        dateList = new ArrayList<Date>();
-        for (int i = 0; i < HOUR_SPAN; i++) {
-            java.util.Calendar cal = java.util.Calendar.getInstance();
-            cal.setTime(currentDate);
-            cal.add(java.util.Calendar.DATE, i);
+        hourList = new ArrayList<Date>();
+        for (Date date: dateList) {
+            int count = 24 / HOUR_SPAN;
+            for (int i = 0; i < count; i++) {
+                java.util.Calendar cal = java.util.Calendar.getInstance();
+                cal.setTime(date);
+                cal.add(java.util.Calendar.HOUR, i);
 
-            dateList.add(cal.getTime());
+                hourList.add(cal.getTime());
+            }
         }
     }
 
