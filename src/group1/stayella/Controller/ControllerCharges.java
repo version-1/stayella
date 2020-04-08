@@ -20,82 +20,37 @@ import java.util.ResourceBundle;
 
 public class ControllerCharges extends ApplicationController {
 
-    private List<Charge> chargesForReservation;
+    private List<Charge> chargesForReservation = new ArrayList<Charge>();
     private double chargeTotal;
+
     @FXML
     private GridPane container;
-
     @FXML
     private CheckBox[] checkBoxes;
-
     @FXML
     public Label sumOfCharge;
+    @FXML
     public Label total;
-
     @FXML
     public Button reset;
     @FXML
     public Button submit;
 
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        chargeTotal = 0;
         checkBoxes = new CheckBox[getHotel().getFacilities().size()];
-        chargesForReservation = new ArrayList<Charge>();
         addFlowPane();
         reflectSumOfCharge();
     }
 
-
-
     private HotelFacility checkPairOfId(CheckBox checkBox) {
-        for (HotelFacility facility: getHotel().getFacilities()
-             ) {
-            if(facility.getLabel() == checkBox.getText()) {
+        for (HotelFacility facility : getHotel().getFacilities()
+        ) {
+            if (facility.getLabel() == checkBox.getText()) {
                 return facility;
             }
         }
         return null;
-    }
-
-    @FXML
-    public void onResetAction() {
-        for (int i = 0; i < checkBoxes.length; i++) {
-            if (checkBoxes[i].isSelected()) {
-                checkBoxes[i].setSelected(false);
-            }
-        }
-        chargeTotal = 0;
-        reflectSumOfCharge();
-    }
-
-    @FXML
-    public void onSubmitAction(ActionEvent actionEvent) throws IOException {
-        setFacilityToCharge(makeListForChecked());
-        closeAction(actionEvent);
-    }
-
-
-    private void setFacilityToCharge(List<HotelFacility> hotelFacilitiesForReservation) {
-        int id = 1;
-        int reservationId = 111;
-        for (HotelFacility facility: hotelFacilitiesForReservation
-             ) {
-            Charge charge = new Charge( id++, reservationId++, facility);
-            chargesForReservation.add(charge);
-        }
-    }
-
-
-    private List<HotelFacility> makeListForChecked(){
-        List<HotelFacility> list = new ArrayList<>();
-        for (int i = 0; i < checkBoxes.length; i++) {
-            if(checkBoxes[i].isSelected()) {
-                list.add(checkPairOfId(checkBoxes[i]));
-            }
-        }
-        return list;
     }
 
     public void onSelectedAction(ActionEvent actionEvent) {
@@ -114,14 +69,22 @@ public class ControllerCharges extends ApplicationController {
     }
 
     // flow pain
-    public void  addFlowPane() {
+    @FXML
+    public void addFlowPane() {
         Integer row = 2;
-        for(int i = 0; i < getHotel().getFacilities().size(); i++) {
+        for (int i = 0; i < getHotel().getFacilities().size(); i++) {
             HotelFacility facility = getHotel().getFacilities().get(i);
             checkBoxes[i] = new CheckBox();
             checkBoxes[i].setId(facility.getKey());
             checkBoxes[i].setText(facility.getLabel());
             checkBoxes[i].setOnAction(this::onSelectedAction);
+            for (Charge reserveC : chargesForReservation
+            ) {
+                if (reserveC.getFacility() == facility) {
+                    checkBoxes[i].setSelected(true);
+                    break;
+                }
+            }
             container.add(checkBoxes[i], 1, row);
             Label label = new Label();
             label.setText("$ " + Double.toString(facility.getPrice()));
@@ -132,4 +95,60 @@ public class ControllerCharges extends ApplicationController {
     public List<Charge> getChargesForReservation() {
         return chargesForReservation;
     }
+
+    public void setChargesForReservation(List<Charge> chargesForReservation) {
+        this.chargesForReservation = chargesForReservation;
+    }
+
+
+    @FXML
+    public void onResetAction() {
+        if (chargesForReservation.isEmpty()) {
+            for (int i = 0; i < checkBoxes.length; i++) {
+                if (checkBoxes[i].isSelected()) {
+                    checkBoxes[i].setSelected(false);
+                }
+            }
+            chargeTotal = 0;
+        } else {
+            for (int i = 0; i < checkBoxes.length; i++) {
+                String boxLabel = checkBoxes[i].getText();
+                double price = checkPairOfId(checkBoxes[i]).getPrice();
+                boolean selected = checkBoxes[i].isSelected();
+                int count = 0;
+                for (int k = 0; k < chargesForReservation.size(); k++) {
+                    String CFRLabel = chargesForReservation.get(k).getFacility().getLabel();
+                    if (boxLabel == CFRLabel) {
+                        count++;
+                    }
+                }
+                if (count == 1 && !selected) {
+                    checkBoxes[i].setSelected(true);
+                    chargeTotal += price;
+                } else if (count == 0 && selected) {
+                    checkBoxes[i].setSelected(false);
+                    chargeTotal -= price;
+                }
+            }
+        }
+        reflectSumOfCharge();
+    }
+
+    @FXML
+    public void onSubmitAction(ActionEvent actionEvent) throws IOException {
+        makeListForChecked();
+        closeAction(actionEvent);
+    }
+
+    private void makeListForChecked() {
+        chargesForReservation.clear();
+        int id = 1;
+        int reservationId = 111;
+        for (int i = 0; i < checkBoxes.length; i++) {
+            if (checkBoxes[i].isSelected()) {
+                chargesForReservation.add(new Charge(id++, reservationId++, checkPairOfId(checkBoxes[i])));
+            }
+        }
+    }
+
 }

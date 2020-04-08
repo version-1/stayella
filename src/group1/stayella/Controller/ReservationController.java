@@ -239,6 +239,7 @@ public class ReservationController extends ApplicationController {
         if(!charges.isEmpty()) {
             for (Charge charge : charges
             ) {
+                System.out.println(charge.getFacility().getLabel());
                 total += charge.getFacility().getPrice();
             }
         }
@@ -264,14 +265,19 @@ public class ReservationController extends ApplicationController {
         Parent page = loader.load();
 
         ApplicationController controller = loader.getController();
+
         controller.setHotel(getHotel());
+        ControllerCharges controllerCharges = (ControllerCharges) loader.getController();
+        if(!charges.isEmpty()) {
+            controllerCharges.setChargesForReservation(charges);
+            controllerCharges.onResetAction();
+        }
 
         Scene newPage = new Scene(page, 330, 500);
 
         newStage.setScene(newPage);
         newStage.showAndWait();
 
-        ControllerCharges controllerCharges = (ControllerCharges) loader.getController();
         this.charges = controllerCharges.getChargesForReservation();
 
         setTotalPriceToLabel();
