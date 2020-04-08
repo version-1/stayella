@@ -81,7 +81,7 @@ public class ApplicationController implements Initializable {
 
     public void popUpAs(ActionEvent event, String fxml, Integer with, Integer height) throws IOException {
         Stage newPopup = popup(event, fxml, with, height);
-        newPopup.show();
+        newPopup.showAndWait();
     }
 
     private Stage transit(ActionEvent event, String fxml, Integer width, Integer height) throws IOException {
@@ -145,6 +145,10 @@ public class ApplicationController implements Initializable {
             }
             return null;
         });
+    }
+
+    public Stack<Scene> getSceneStack() {
+        return sceneStack;
     }
 
 }

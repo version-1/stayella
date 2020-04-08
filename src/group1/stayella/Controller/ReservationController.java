@@ -10,6 +10,7 @@ import group1.stayella.View.Paymentview.PopPayment;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -18,6 +19,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.File;
@@ -173,10 +175,6 @@ public class ReservationController extends ApplicationController {
         return true;
     }
 
-    @FXML
-    public void popupAsCharge(ActionEvent actionEvent) throws IOException {
-        popUpAs(actionEvent,"ChargesView/index.fxml",330,400);
-    }
 
     @FXML
     public void makeAReservation(ActionEvent actionEvent) {
@@ -236,23 +234,49 @@ public class ReservationController extends ApplicationController {
     }
 
 
-    public void setCharges(List<Charge> charges){
-        this.charges = charges;
-
-
-    }
-
     public void setTotalPriceToLabel() {
         double total = 0;
         if(!charges.isEmpty()) {
             for (Charge charge : charges
             ) {
-                System.out.println(charge.getFacility().getLabel());
                 total += charge.getFacility().getPrice();
             }
         }
-        System.out.println("[$] " + Double.toString(total));
         totalPrice.setText("[$] " + Double.toString(total));
     }
+
+
+    @FXML
+    public void popupAsCharge(ActionEvent event) throws IOException {
+        Node node = (Node) event.getSource();
+        Scene scene = node.getScene();
+        Stage stage = (Stage) scene.getWindow();
+
+        Stage newStage = new Stage();
+        newStage.initModality(Modality.APPLICATION_MODAL);
+        newStage.initOwner(stage);
+
+        URL url = getClass().getClassLoader().getResource("group1/stayella/View/ChargesView/index.fxml");
+        FXMLLoader loader = new FXMLLoader(url);
+
+
+        prepareController(loader, getHotel(), getSceneStack());
+        Parent page = loader.load();
+
+        ApplicationController controller = loader.getController();
+        controller.setHotel(getHotel());
+
+        Scene newPage = new Scene(page, 330, 500);
+
+        newStage.setScene(newPage);
+        newStage.showAndWait();
+
+        ControllerCharges controllerCharges = (ControllerCharges) loader.getController();
+        this.charges = controllerCharges.getChargesForReservation();
+
+        setTotalPriceToLabel();
+    }
+
+
 
 }
