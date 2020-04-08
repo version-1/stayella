@@ -8,7 +8,7 @@ public class Guest {
     private int id;
     private String name;
     private String age;
-    private     javafx.scene.image.Image photo;
+    private javafx.scene.image.Image photo;
     private String phoneNumber;
     private String emailAddress;
     private String idNumber;

@@ -9,10 +9,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.ComboBoxTableCell;
+import javafx.scene.control.cell.ComboBoxTreeCell;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
@@ -89,6 +88,9 @@ public class ReservationController extends ApplicationController {
     DatePicker checkIN;
     @FXML
     DatePicker checkOUT;
+    
+    @FXML
+    ComboBox<String> roomSelection;
 
     private int id;
     private ArrayList<String> creditCardInfo;
@@ -106,7 +108,6 @@ public class ReservationController extends ApplicationController {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         if (status != 0) {}
-
         image = new Image("https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTqWGB5YLwdAKCrHNiw9_I5jXeWHDlGHh83anl58WuJ4WwhzslJ&usqp=CAU");
         imageView.setImage(image);
 
@@ -118,6 +119,8 @@ public class ReservationController extends ApplicationController {
 
         imageAdditions = new Image("https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRz2AEfespdhCgKtTN2R-o6maiMq1_SuKR7q9drWDi6NGJqxkhQ&usqp=CAU");
         insertImage(imageAdditions, imageAdditionsView, buttonAdditions, 30, 30);
+
+        roomSelected();
 
         confirmed.setOnAction(e -> {
             confirmed.isFocused();
@@ -142,14 +145,32 @@ public class ReservationController extends ApplicationController {
         });
     }
 
-    private void showCCInfo(String text) {
+    /**
+     * List through vacancies and get only vacant rooms for that period -> Vacancy(to be set)
+     *
+     * */
+
+    public TreeItem<String> makeBranch(String title, TreeItem<String> parent) {
+        TreeItem<String> room = new TreeItem(title);
+        parent.getChildren().add(room);
+        return room;
+    }
+
+
+    @FXML
+    public void roomSelected() {
+        String[] categories = {"CategoryA", "CategoryB", "CategoryC", "CategoryD"};
+        roomSelection.getItems().addAll(categories);
+    }
+
+    public void showCCInfo(String text) {
         if (text.length() != 12) {
             this.cardNumberLabel.setText("INVALID!");
         }
         this.cardNumberLabel.setText("XXXX-XXXX-" + text.substring(8));
     }
 
-    private boolean submit() {
+    public boolean submit() {
         String message = "";
         if (!guestName.nameValidation(guestName.getText())) {
             message += "Invalid Guest's Name\n";
@@ -183,7 +204,7 @@ public class ReservationController extends ApplicationController {
     }
 
     @FXML
-    private void makeAReservation(ActionEvent actionEvent) {
+    public void makeAReservation(ActionEvent actionEvent) {
         if (submit()) {
             Period period = Period.between(checkIN.getValue(), checkOUT.getValue());
             int lengthOfStay = (int) (period.getDays());
@@ -207,17 +228,17 @@ public class ReservationController extends ApplicationController {
      * */
 
     // do need credit card ID, guest ID?
-    private void setCreditCard(String cardNumber, String name, String cvv) {
+    public void setCreditCard(String cardNumber, String name, String cvv) {
         creditCard = new CreditCard(id,0, cardNumber, name, null, cvv, null);
         // creditCard.checkExpired() -> null pointer exception error
     }
 
-    private void setGuestInformation() {
+    public void setGuestInformation() {
         guest = new Guest(id, guestName.getText(), guestAge.getText(), imageView.getImage(), guestPhone.getText(), guestEmail.getText(), guestID.getText(), creditCard, guestLanguage.getText());
         // guest.setPaymentMethod(creditCard); -> close without saving causes error
     }
 
-    private void insertImage(Image image, ImageView imageView, Button button, int height, int width) {
+    public void insertImage(Image image, ImageView imageView, Button button, int height, int width) {
         imageView.setImage(image);
         imageView.setFitHeight(height);
         imageView.setFitWidth(width);
@@ -226,13 +247,13 @@ public class ReservationController extends ApplicationController {
     }
 
     @FXML
-    private void onUploadImage(ActionEvent actionEvent) throws IOException {
+    public void onUploadImage(ActionEvent actionEvent) throws IOException {
         String url = getFileOfImage();
         Image imageOfGuest = new Image(url, 112, 112, true, false);
         imageView.setImage(imageOfGuest);
     }
 
-    private String getFileOfImage() throws IOException {
+    public String getFileOfImage() throws IOException {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open the image");
         fileChooser.getExtensionFilters().add(

@@ -4,7 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Vacancy {
-    public final static String CALENDAR_DATE_FORMAT = "yyyy.MMMM.dd";
+    public final static String CALENDAR_DATE_FORMAT = "yyyy.MM.dd";
     private int id;
     private String roomNumber;
     private Reservation reservation;
@@ -35,6 +35,7 @@ public class Vacancy {
     public String getRoomNumber() {
         return roomNumber;
     }
+
     public Reservation getReservation() {
         return reservation;
     }
