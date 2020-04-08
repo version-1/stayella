@@ -4,25 +4,34 @@ import java.net.URL;
 import java.util.Date;
 import java.util.ResourceBundle;
 
+
 import group1.stayella.Model.Room;
 import group1.stayella.Model.Vacancy;
+import group1.stayella.Resources.Images.Icon;
+import group1.stayella.View.CalendarView.Calendar;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.ImageView;
 
 public class CalendarController extends ApplicationController {
     @FXML
-    TableView<Room> calendar;
+    TableView<Room> table;
 
     @FXML
     Label currentDate;
 
+    private Calendar calendar;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        calendar = new Calendar(getRooms());
         initTable();
-        currentDate.setText(Vacancy.getDateString(new Date(), Vacancy.CALENDAR_DATE_FORMAT));
+        currentDate.setText(calendar.getDateString());
     }
 
     private void initTable() {
@@ -30,26 +39,45 @@ public class CalendarController extends ApplicationController {
         TableColumn<Room, ?> col1 = new TableColumn<>("Room");
         col1.setCellValueFactory(new PropertyValueFactory<>("roomNumber"));
 
-        TableColumn<Room, ?> col2 = new TableColumn<>("Price");
+        TableColumn<Room, ImageView> col2 = new TableColumn<Room, ImageView>();
+        ImageView dollar = Icon.getWithLayout(Icon.DOLLAR, 15, 27);
+        col2.setGraphic(dollar);
         col2.setCellValueFactory(new PropertyValueFactory<>("roomPrice"));
 
-        TableColumn<Room, ?> col3 = new TableColumn<>("Capacity");
+        TableColumn<Room, ?> col3 = new TableColumn<>();
+        ImageView people = Icon.getWithLayout(Icon.PEOPLE, 29, 21);
+        col3.setGraphic(people);
         col3.setCellValueFactory(new PropertyValueFactory<>("roomCapacity"));
 
-        TableColumn<Room, ?> col4 = new TableColumn<>("Smoke");
-        TableColumn<Room, ?> col5 = new TableColumn<>("Pet");
-        TableColumn<Room, ?> col6 = new TableColumn<>("Status");
-        // col3.setCellValueFactory(new PropertyValueFactory<>("roomCapacity"));
+        TableColumn<Room, ImageView> col4 = new TableColumn<Room, ImageView>();
+        col4.setCellValueFactory(new PropertyValueFactory<>("cigarette"));
+        ImageView cigarette = Icon.getWithLayout(Icon.CIGARETTE, 29, 23);
+        col4.setGraphic(cigarette);
 
-        calendar.getColumns().add(col1);
-        calendar.getColumns().add(col2);
-        calendar.getColumns().add(col3);
-        calendar.getColumns().add(col4);
-        calendar.getColumns().add(col5);
-        calendar.getColumns().add(col6);
+        TableColumn<Room, ImageView> col5 = new TableColumn<>();
+        col5.setCellValueFactory(new PropertyValueFactory<>("pet"));
+        ImageView pet = Icon.getWithLayout(Icon.PET, 24, 22);
+        col5.setGraphic(pet);
 
-        for (Room room : getRooms()) {
-            calendar.getItems().add(room);
+        TableColumn<Room, ImageView> col6 = new TableColumn<>();
+        col6.setCellValueFactory(new PropertyValueFactory<>("clean"));
+        ImageView clean = Icon.getWithLayout(Icon.CLEAN, 30, 23);
+        col6.setGraphic(clean);
+
+
+        table.getColumns().add(col1);
+        table.getColumns().add(col2);
+        table.getColumns().add(col3);
+        table.getColumns().add(col4);
+        table.getColumns().add(col5);
+        table.getColumns().add(col6);
+
+        for (Date date: calendar.getDateList()) {
+            TableColumn<Room, ?> col = new TableColumn<>(calendar.getDateString(date));
+            table.getColumns().add(col);
         }
+
+        ObservableList<Room> rooms = FXCollections.observableArrayList(getRooms());
+        table.setItems(rooms);
     }
 }

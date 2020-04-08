@@ -51,7 +51,7 @@
       </VBox>
       <VBox styleClass="main" GridPane.columnIndex="1">
          <HBox alignment="CENTER" styleClass="header">
-            <HBox minWidth="150" alignment="CENTER_LEFT">
+            <HBox spacing="8" minWidth="150" alignment="CENTER_LEFT">
                <ImageView
                   fx:id="edit"
                   fitWidth="32"
@@ -59,7 +59,7 @@
                >
                   <image>
                      <Image
-                     url="group1/stayella/Resources/Images/Icons/edit.png"
+                     url="group1/stayella/Resources/Images/Icons/edit-dark.png"
                      backgroundLoading="true"
                      />
                   </image>
@@ -71,7 +71,7 @@
                >
                   <image>
                      <Image
-                     url="group1/stayella/Resources/Images/Icons/calendar.png"
+                     url="group1/stayella/Resources/Images/Icons/calendar-dark.png"
                      backgroundLoading="true"
                      />
                   </image>
@@ -97,7 +97,7 @@
                   >
                      <image>
                         <Image
-                        url="group1/stayella/Resources/Images/Icons/reload.png"
+                        url="group1/stayella/Resources/Images/Icons/reload-dark.png"
                         backgroundLoading="true"
                         />
                      </image>
@@ -106,7 +106,7 @@
                </HBox>
             </HBox>
          </HBox>
-         <TableView fx:id="calendar"/>
+         <TableView fx:id="table"/>
          <Button
          fx:id="goBack"
          onAction="#goBack"

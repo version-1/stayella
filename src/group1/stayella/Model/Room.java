@@ -2,11 +2,15 @@ package group1.stayella.Model;
 
 import java.util.List;
 
+import group1.stayella.Model.RoomFacility.Pet;
 import group1.stayella.Model.RoomFacility.RoomFacility;
+import group1.stayella.Model.RoomFacility.Smorking;
+import group1.stayella.Resources.Images.Icon;
+import javafx.scene.image.ImageView;
 
 public class Room {
-    private final static int VACANT = 0;
-    private final static int OCCUPIED = 100;
+    private final static int OPEN = 0;
+    private final static int CLOSED = 100;
     private final static int DIRTY = 200;
 
     private int id;
@@ -64,6 +68,35 @@ public class Room {
         return bedType;
     }
 
+    private boolean hasFacility(Class c) {
+        for(RoomFacility facility: facilities) {
+            if (facility.getClass() == c) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public ImageView getSmorking() {
+        if (hasFacility(Smorking.class)) {
+            return Icon.getWithLayout(Icon.CIGARETTE_LIGHT, 29, 23);
+        }
+        return null;
+    }
+
+    public ImageView getPet() {
+        if (hasFacility(Pet.class)) {
+            return Icon.getWithLayout(Icon.PET_LIGHT, 29, 23);
+        }
+        return null;
+    }
+
+    public ImageView getClean() {
+        if (status == DIRTY) {
+            return null;
+        }
+        return Icon.getWithLayout(Icon.CLEAN_LIGHT, 30, 23);
+    }
 
     public int getNumberOfBeds() {
         return numberOfBeds;
@@ -88,4 +121,5 @@ public class Room {
     public void setStatus(int status) {
         this.status = status;
     }
+
 }
