@@ -187,7 +187,6 @@ public class Factory {
           toInt(row.get("GUEST_ID")),
           row.get("NUMBER"),
           row.get("NAME"),
-          row.get("BRAND"),
           row.get("SECURITY_NUMBER"),
           toDate(row.get("EXPIRE"))
         );
