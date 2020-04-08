@@ -4,33 +4,34 @@ import java.net.URL;
 import java.util.Date;
 import java.util.ResourceBundle;
 
-import javax.security.auth.callback.Callback;
 
 import group1.stayella.Model.Room;
 import group1.stayella.Model.Vacancy;
 import group1.stayella.Resources.Images.Icon;
+import group1.stayella.View.CalendarView.Calendar;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 public class CalendarController extends ApplicationController {
     @FXML
-    TableView<Room> calendar;
+    TableView<Room> table;
 
     @FXML
     Label currentDate;
 
+    private Calendar calendar;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        calendar = new Calendar(getRooms());
         initTable();
-        currentDate.setText(Vacancy.getDateString(new Date(), Vacancy.CALENDAR_DATE_FORMAT));
+        currentDate.setText(calendar.getDateString());
     }
 
     private void initTable() {
@@ -63,14 +64,20 @@ public class CalendarController extends ApplicationController {
         ImageView clean = Icon.getWithLayout(Icon.CLEAN, 30, 23);
         col6.setGraphic(clean);
 
-        calendar.getColumns().add(col1);
-        calendar.getColumns().add(col2);
-        calendar.getColumns().add(col3);
-        calendar.getColumns().add(col4);
-        calendar.getColumns().add(col5);
-        calendar.getColumns().add(col6);
+
+        table.getColumns().add(col1);
+        table.getColumns().add(col2);
+        table.getColumns().add(col3);
+        table.getColumns().add(col4);
+        table.getColumns().add(col5);
+        table.getColumns().add(col6);
+
+        for (Date date: calendar.getDateList()) {
+            TableColumn<Room, ?> col = new TableColumn<>(calendar.getDateString(date));
+            table.getColumns().add(col);
+        }
 
         ObservableList<Room> rooms = FXCollections.observableArrayList(getRooms());
-        calendar.setItems(rooms);
+        table.setItems(rooms);
     }
 }

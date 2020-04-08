@@ -106,7 +106,7 @@
                </HBox>
             </HBox>
          </HBox>
-         <TableView fx:id="calendar"/>
+         <TableView fx:id="table"/>
          <Button
          fx:id="goBack"
          onAction="#goBack"
