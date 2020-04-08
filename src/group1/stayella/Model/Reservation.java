@@ -1,5 +1,7 @@
 package group1.stayella.Model;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -18,8 +20,8 @@ public class Reservation {
     private List<Vacancy> vacancies = new ArrayList<Vacancy>();
     private Guest mainGuest;
     private int numberOfGuest;
-    private Date checkInTime;
-    private Date checkOutTime;
+    private LocalDate checkInTime;
+    private LocalDate checkOutTime;
     private int status;
 
     // e.g 0: cancel 1:unconfirmed 2: confirmed
@@ -47,11 +49,11 @@ public class Reservation {
         return charges;
     }
 
-    public Date getCheckInTime() {
+    public LocalDate getCheckInTime() {
         return checkInTime;
     }
 
-    public Date getCheckOutTime() {
+    public LocalDate getCheckOutTime() {
         return checkOutTime;
     }
 
@@ -75,12 +77,12 @@ public class Reservation {
         this.charges = charges;
     }
 
-    public void setCheckInTime(Date checkInTime) {
-        Date today = new Date();
+    public void setCheckInTime(LocalDate checkInTime) {
+        LocalDate today = LocalDate.now();
         if(checkTheDate(today, checkInTime)){this.checkInTime = checkInTime;}
     }
 
-    public void setCheckOutTime(Date checkOutTime) {
+    public void setCheckOutTime(LocalDate checkOutTime) {
         if(checkTheDate(checkInTime, checkOutTime)) {
             this.checkOutTime = checkOutTime;
         }
@@ -117,16 +119,19 @@ public class Reservation {
     }
 
     // make the reservation
-    public boolean make(List<Vacancy> vacancies, Date start, int lengthOfStay) {
+    public boolean make(List<Vacancy> vacancies, LocalDate start, int lengthOfStay) {
         if (vacancies.size() == 0) {
             return false;
         }
+        ZoneId defaultZoneId = ZoneId.systemDefault();
+        //local date + atStartOfDay() + default time zone + toInstant() = Date
+        Date date = Date.from(start.atStartOfDay(defaultZoneId).toInstant());
         Calendar calendar = Calendar.getInstance();
-        calendar.setTime(start);
+        calendar.setTime(date);
         calendar.add(Calendar.DATE, lengthOfStay);
         Date end = calendar.getTime();
         for (Vacancy vacancy: vacancies) {
-            boolean isInclude = start.compareTo(vacancy.getEndTime()) <= 0 &&
+            boolean isInclude = date.compareTo(vacancy.getEndTime()) <= 0 &&
                 end.compareTo(vacancy.getStartTime()) >= 0;
             if (isInclude) {
                 if (vacancy.isOccupied()) {
@@ -142,12 +147,24 @@ public class Reservation {
 
     // check the input
     // Date validation
-    private boolean checkTheDate(Date before, Date settingTime){
-        if(before.after(settingTime)) {
+    private boolean checkTheDate(LocalDate before, LocalDate settingTime){
+        if(before.isAfter(settingTime)) {
             return false;
         }else {
             return true;
         }
     }
 
+    @Override
+    public String toString() {
+        return "Reservation{" +
+                "id=" + id +
+                ", reservationNo='" + reservationNo + '\'' +
+                ", charges=" + charges +
+                ", numberOfGuest=" + numberOfGuest +
+                ", checkInTime=" + checkInTime +
+                ", checkOutTime=" + checkOutTime +
+                ", status=" + status +
+                '}';
+    }
 }
