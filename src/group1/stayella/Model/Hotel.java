@@ -14,7 +14,7 @@ public class Hotel {
     private String url;
     private int deposit;
     private int parkingCapacity;
-    private List<Room> rooms;
+    private ArrayList<Room> rooms;
     private List<HotelFacility> facilities;
 
     public Hotel() {
@@ -108,7 +108,7 @@ public class Hotel {
         return rooms;
     }
 
-    public void setRooms(List<Room> rooms) {
+    public void setRooms(ArrayList<Room> rooms) {
         this.rooms = rooms;
     }
 }
