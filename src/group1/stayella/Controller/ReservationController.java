@@ -232,14 +232,16 @@ public class ReservationController extends ApplicationController {
 
         return url;
     }
-
-
+    
+    /**
+    ****************READ ROOM NUMBER, and ADD PRICE****************
+     **/
+    @FXML
     public void setTotalPriceToLabel() {
         double total = 0;
         if(!charges.isEmpty()) {
             for (Charge charge : charges
             ) {
-                System.out.println(charge.getFacility().getLabel());
                 total += charge.getFacility().getPrice();
             }
         }
@@ -278,11 +280,10 @@ public class ReservationController extends ApplicationController {
         newStage.setScene(newPage);
         newStage.showAndWait();
 
+
         this.charges = controllerCharges.getChargesForReservation();
 
         setTotalPriceToLabel();
     }
-
-
 
 }

@@ -11,7 +11,6 @@
     light-brown: #C9732C;
     brown: #7D5534;
     deep-blue:  #1D5162;
-
 }
 
 .gridpane {
@@ -29,6 +28,15 @@
 .button:hover {
 }
 
+.button-orange {
+  -fx-background-color:#FFD15B;
+  -fx-text-fill: #583F00;
+}
+
+.button-orange:hover {
+  -fx-background-color:#76785A;
+}
+
 .button-3d {
     -fx-padding: 8px 16px;
     -fx-border-style: solid;
@@ -43,7 +51,6 @@
     -fx-background-color: linear-gradient(#2A5058, #69BBC9);
     -fx-border-color: #3D7A85;
 }
-
 
 .label-title {
     -fx-font-weight: bold;
