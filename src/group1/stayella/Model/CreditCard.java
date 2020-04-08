@@ -8,15 +8,16 @@ public class CreditCard {
     private String cardNumber;
     private String cardHolderName;
     private String cardSecurityNumber;
-    private Date expired;
+    private String expired;
 
     public CreditCard(int id, int guestId, String cardNumber, String cardHolderName,
-            String cardSecurityNumber, Date expired) {
+            String cardSecurityNumber, String expired) {
         this.id = id;
         this.guestId = guestId;
         this.cardNumber = cardNumber;
         this.cardHolderName = cardHolderName;
         this.cardSecurityNumber = cardSecurityNumber;
+        this.expired = expired;
 
     }
 
@@ -29,7 +30,7 @@ public class CreditCard {
         this.cardSecurityNumber = cardSecurityNumber;
     }
 
-    public void setExpired(Date expired) {
+    public void setExpired(String expired) {
         this.expired = expired;
     }
 
@@ -54,7 +55,7 @@ public class CreditCard {
         return cardSecurityNumber;
     }
 
-    public Date getExpired() {
+    public String getExpired() {
         return expired;
     }
 
@@ -87,6 +88,7 @@ public class CreditCard {
 
     //check expired
     public boolean checkExpired(Date expired){
+        //toDate(row.get("EXPIRE"))
         Date today = new Date();
         if(expired.after(today)) {
             System.out.println("Expired Date");

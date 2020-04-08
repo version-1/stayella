@@ -188,7 +188,7 @@ public class Factory {
           row.get("NUMBER"),
           row.get("NAME"),
           row.get("SECURITY_NUMBER"),
-          toDate(row.get("EXPIRE"))
+          row.get("EXPIRE")
         );
         list.add(card);
 

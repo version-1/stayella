@@ -96,7 +96,7 @@ public class ReservationController extends ApplicationController {
     private ArrayList<String> creditCardInfo;
     private CreditCard creditCard;
 
-    private List<Charge> charges = new ArrayList<Charge>();
+    private List<Charge> charges = new ArrayList<>();
 
     @FXML
     public Label totalPrice;
@@ -138,8 +138,8 @@ public class ReservationController extends ApplicationController {
 
         buttonCard.setOnAction(e -> {
             creditCardInfo = PopPayment.display("Insert CC Info");
-            if (creditCardInfo != null && creditCardInfo.size() == 3) {
-                setCreditCard(creditCardInfo.get(0), creditCardInfo.get(1), creditCardInfo.get(2));
+            if (creditCardInfo != null && creditCardInfo.size() > 3) {
+                setCreditCard(creditCardInfo.get(0), creditCardInfo.get(1), creditCardInfo.get(2), creditCardInfo.get(3));
                 showCCInfo(creditCardInfo.get(0));
             }
         });
@@ -149,13 +149,6 @@ public class ReservationController extends ApplicationController {
      * List through vacancies and get only vacant rooms for that period -> Vacancy(to be set)
      *
      * */
-
-    public TreeItem<String> makeBranch(String title, TreeItem<String> parent) {
-        TreeItem<String> room = new TreeItem(title);
-        parent.getChildren().add(room);
-        return room;
-    }
-
 
     @FXML
     public void roomSelected() {
@@ -224,8 +217,8 @@ public class ReservationController extends ApplicationController {
      * */
 
     // do need credit card ID, guest ID?
-    public void setCreditCard(String cardNumber, String name, String cvv) {
-        creditCard = new CreditCard(id,0, cardNumber, name, cvv, null);
+    public void setCreditCard(String cardNumber, String name, String cvv, String expirationDate) {
+        creditCard = new CreditCard(id,0, cardNumber, name, cvv, expirationDate);
         // creditCard.checkExpired() -> null pointer exception error
     }
 

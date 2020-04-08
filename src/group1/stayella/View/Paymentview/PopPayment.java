@@ -22,18 +22,21 @@ public class PopPayment extends ApplicationController implements Initializable {
         NumberTextField fieldCardNumber = new NumberTextField();
         TextTextField fieldCardHolderName = new TextTextField();
         NumberTextField fieldSecurityCode = new NumberTextField();
+        TextField fieldExpirationDate = new TextField();
         Button submit = new Button();
-        fieldCardNumber.setPromptText("Enter CC Number");
+        fieldCardNumber.setPromptText("Enter Card Number");
         fieldCardNumber.setMaxWidth(220);
-        fieldCardHolderName.setPromptText("Enter CC Holder Name");
+        fieldCardHolderName.setPromptText("Enter Card Holder Name");
         fieldCardHolderName.setPrefWidth(220);
-        fieldSecurityCode.setPromptText("Enter CVV");
-        fieldSecurityCode.setPrefWidth(80);
+        fieldSecurityCode.setPromptText("CVV");
+        fieldSecurityCode.setPrefWidth(70);
+        fieldExpirationDate.setPromptText("MM-YY");
+        fieldExpirationDate.setPrefWidth(70);
         submit.setText("SUBMIT");
-        submit.setPrefWidth(90);
+        submit.setPrefWidth(70);
         HBox hbox = new HBox();
-        hbox.getChildren().addAll(fieldSecurityCode, submit);
-        hbox.setSpacing(50);
+        hbox.getChildren().addAll(fieldSecurityCode,fieldExpirationDate, submit);
+        hbox.setSpacing(5);
         GridPane gridPane = new GridPane();
         gridPane.add(fieldCardNumber, 1, 1, 3, 1);
         gridPane.add(fieldCardHolderName, 1, 3, 1, 1);
@@ -45,10 +48,11 @@ public class PopPayment extends ApplicationController implements Initializable {
 
         submit.setOnAction(e ->  {
             if (fieldCardNumber.getText().length() == 12 && fieldSecurityCode.getText() .length() == 3 && !fieldCardHolderName.getText().isEmpty()) {
-            creditCard = new ArrayList<>(3);
+            creditCard = new ArrayList<>();
             creditCard.add(0, fieldCardNumber.getText());
             creditCard.add(1, fieldCardHolderName.getText());
             creditCard.add(2, fieldSecurityCode.getText());
+            creditCard.add(3, fieldExpirationDate.getText());
                 window.close();
             } else {
                 Alert alert = new Alert(Alert.AlertType.WARNING);
