@@ -1,16 +1,14 @@
 package group1.stayella.Controller;
 
 import java.net.URL;
-import java.util.Date;
 import java.util.ResourceBundle;
 
-
 import group1.stayella.Model.Room;
-import group1.stayella.Model.Vacancy;
 import group1.stayella.Resources.Images.Icon;
 import group1.stayella.View.CalendarView.Calendar;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -29,12 +27,12 @@ public class CalendarController extends ApplicationController {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        calendar = new Calendar(getRooms());
+        calendar = new Calendar();
         initTable();
-        currentDate.setText(calendar.getDateString());
     }
 
     private void initTable() {
+        currentDate.setText(calendar.getDateString());
 
         TableColumn<Room, ?> col1 = new TableColumn<>("Room");
         col1.setCellValueFactory(new PropertyValueFactory<>("roomNumber"));
@@ -65,16 +63,38 @@ public class CalendarController extends ApplicationController {
         col6.setGraphic(clean);
 
 
-        table.getColumns().add(col1);
-        table.getColumns().add(col2);
-        table.getColumns().add(col3);
-        table.getColumns().add(col4);
-        table.getColumns().add(col5);
-        table.getColumns().add(col6);
+        this.table.getColumns().add(col1);
+        this.table.getColumns().add(col2);
+        this.table.getColumns().add(col3);
+        this.table.getColumns().add(col4);
+        this.table.getColumns().add(col5);
+        this.table.getColumns().add(col6);
 
         calendar.buildVacanciesTable(table);
 
-        ObservableList<Room> rooms = FXCollections.observableArrayList(getRooms());
-        table.setItems(rooms);
+        for (Room room: getRooms()) {
+            this.table.getItems().add(room);
+        }
+    }
+
+    @FXML
+    public void refresh() {
+        this.calendar = new Calendar();
+        this.table.getColumns().clear();
+        initTable();
+    }
+
+    @FXML
+    public void next() {
+        calendar.tomorrow();
+        this.table.getColumns().clear();
+        initTable();
+    }
+
+    @FXML
+    public void previous() {
+        calendar.yesterday();
+        this.table.getColumns().clear();
+        initTable();
     }
 }

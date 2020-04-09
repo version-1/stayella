@@ -1,20 +1,16 @@
 package group1.stayella.View.CalendarView;
 
-import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
-import group1.stayella.Model.Reservation;
 import group1.stayella.Model.Room;
 import group1.stayella.Model.Vacancy;
-import javafx.scene.control.Tab;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.util.Callback;
 
 public class Calendar {
     public final static int DATE_SPAN = 7;
@@ -22,19 +18,15 @@ public class Calendar {
     private Date currentDate;
     private List<Date> dateList;
     private List<Date> hourList;
-    private List<Room> rooms;
 
-    public Calendar(List<Room> rooms) {
-        this.rooms = rooms;
+    public Calendar() {
         currentDate = new Date();
         setDateList();
-        setHourList();
     }
 
     public void setCurrentDate(Date date) {
         this.currentDate = date;
         setDateList();
-        setHourList();
     }
 
     private void setDateList() {
@@ -45,20 +37,6 @@ public class Calendar {
             cal.add(java.util.Calendar.DATE, i);
 
             dateList.add(cal.getTime());
-        }
-    }
-
-    private void setHourList() {
-        hourList = new ArrayList<Date>();
-        for (Date date : dateList) {
-            int count = 24 / HOUR_SPAN;
-            for (int i = 0; i < count; i++) {
-                java.util.Calendar cal = java.util.Calendar.getInstance();
-                cal.setTime(date);
-                cal.add(java.util.Calendar.HOUR, i);
-
-                hourList.add(cal.getTime());
-            }
         }
     }
 
@@ -112,6 +90,16 @@ public class Calendar {
             }
             table.getColumns().add(col);
         }
+    }
+
+    public void tomorrow() {
+        Date tomorrow = add(currentDate, java.util.Calendar.DATE, 1);
+        setCurrentDate(tomorrow);
+    }
+
+    public void yesterday() {
+        Date yesterday = add(currentDate, java.util.Calendar.DATE, -1);
+        setCurrentDate(yesterday);
     }
 
     public List<Date> getDateList() {
