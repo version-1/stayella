@@ -79,17 +79,21 @@
             </HBox>
             <HBox minWidth="150" alignment="CENTER" spacing="8" fillHeight="true">
                <HBox styleClass="border-box">
-                  <Label fx:id="prevDate" styleClass="arrow" text="&lt;" />
+                  <Label fx:id="prevDate" onMouseClicked="#previous" styleClass="arrow" text="&lt;" />
                </HBox>
                <HBox styleClass="border-box">
                   <Label fx:id="currentDate" styleClass="currentDate" />
                </HBox>
                <HBox styleClass="border-box">
-                  <Label fx:id="prevDate" styleClass="arrow" text="&gt;" />
+                  <Label fx:id="nextDate" onMouseClicked="#next" styleClass="arrow" text="&gt;" />
                </HBox>
             </HBox>
             <HBox spacing="8" minWidth="150" alignment="CENTER_RIGHT">
-               <HBox styleClass="border-box" alignment="CENTER">
+               <HBox
+                 onMouseClicked="#refresh"
+                 styleClass="border-box"
+                 alignment="CENTER"
+                 >
                   <ImageView
                      fx:id="reload"
                      fitWidth="18"

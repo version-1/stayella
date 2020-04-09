@@ -1,5 +1,8 @@
 package group1.stayella.Model;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 
 import group1.stayella.Model.RoomFacility.Pet;
@@ -21,7 +24,7 @@ public class Room {
     private int status;
     private int numberOfBeds;
     private String bedType;
-    private List<Vacancy> vacancies;
+    private HashMap<String, Vacancy> vacancyMap;
     private List<RoomFacility> facilities;
 
 
@@ -45,7 +48,14 @@ public class Room {
     }
 
     public void setVacancies(List<Vacancy> vacancies) {
-        this.vacancies = vacancies;
+        setVacancyMap(vacancies);
+    }
+
+    public void setVacancyMap(List<Vacancy> vacancies) {
+        vacancyMap = new HashMap<String, Vacancy>();
+        for (Vacancy v: vacancies) {
+            vacancyMap.put(v.getStartTimeString(), v);
+        }
     }
 
     public int getID() {
@@ -103,7 +113,11 @@ public class Room {
     }
 
     public List<Vacancy> getVacancies() {
-        return vacancies;
+        return new ArrayList<Vacancy>(vacancyMap.values());
+    }
+
+    public HashMap<String, Vacancy> getVacancyMap() {
+        return vacancyMap;
     }
 
     public List<RoomFacility> getFacilities() {
