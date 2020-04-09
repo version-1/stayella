@@ -72,10 +72,7 @@ public class CalendarController extends ApplicationController {
         table.getColumns().add(col5);
         table.getColumns().add(col6);
 
-        for (Date date: calendar.getDateList()) {
-            TableColumn<Room, ?> col = new TableColumn<>(calendar.getDateString(date));
-            table.getColumns().add(col);
-        }
+        calendar.buildVacanciesTable(table);
 
         ObservableList<Room> rooms = FXCollections.observableArrayList(getRooms());
         table.setItems(rooms);

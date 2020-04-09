@@ -88,7 +88,7 @@ public class ReservationController extends ApplicationController {
     DatePicker checkIN;
     @FXML
     DatePicker checkOUT;
-    
+
     @FXML
     ComboBox<String> roomSelection;
 
@@ -208,11 +208,9 @@ public class ReservationController extends ApplicationController {
             newReservation = new Reservation(guest, 0, status);
             Room room = this.getHotel().getRooms().get(1);
             setGuestInformation();
-            newReservation.make(room.getVacancies(), checkIN.getValue(), lengthOfStay);
+            newReservation.make(room, checkIN.getValue(), lengthOfStay);
             newReservation.setCheckInTime(checkIN.getValue());
             newReservation.setCheckOutTime(checkOUT.getValue());
-            System.out.println(newReservation);
-            System.out.println(guest);
         }
     }
 
@@ -262,7 +260,7 @@ public class ReservationController extends ApplicationController {
         String url = "file:///" + file.getPath();
         return url;
     }
-    
+
     /**
     ****************READ ROOM NUMBER, and ADD PRICE****************
      **/
