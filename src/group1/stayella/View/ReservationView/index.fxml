@@ -16,13 +16,16 @@
    <Button fx:id="buttonCard" styleClass="button-image" GridPane.columnIndex="8" GridPane.columnSpan="5" GridPane.rowIndex="2" GridPane.rowSpan="6" />
    <Button fx:id="buttonAdditions" styleClass="button-image" onAction="#popupAsCharge" GridPane.columnIndex="10" GridPane.columnSpan="2" GridPane.rowIndex="12" />
 
-    <HBox styleClass="reservation-sec-status" prefHeight="27.0" prefWidth="607.0"  GridPane.columnIndex="6" GridPane.columnSpan="7" GridPane.rowIndex="15">
-        <Button fx:id="confirmed" styleClass="button-3d" prefHeight="27.0" prefWidth="178.0" text="Confirmed" textAlignment="CENTER"
-                />
-        <Button fx:id="unconfirmed" styleClass="button-3d" prefHeight="27.0" prefWidth="189.0" text="Unconfirmed" />
+    <HBox styleClass="reservation-sec-status" prefHeight="27.0" prefWidth="607.0"  GridPane.columnIndex="1" GridPane.columnSpan="10" GridPane.rowIndex="15">
+        <Button fx:id="confirmed" styleClass="button-3d" prefHeight="27.0" prefWidth="200.0" text="Confirmed" textAlignment="CENTER"/>
+        <Button fx:id="unconfirmed" styleClass="button-3d" prefHeight="27.0" prefWidth="200.0" text="Unconfirmed" textAlignment="CENTER"/>
+    </HBox>
+    <HBox styleClass="reservation-sec-status" prefHeight="27.0" spacing="8"  GridPane.columnIndex="5" GridPane.columnSpan="6" GridPane.rowIndex="14">
+        <Label text="Room Category:" styleClass="label-title" prefWidth="200.0"/>
+        <ComboBox fx:id="categorySelection" onAction="#categorySelected" prefWidth="210.0" />
+        <ComboBox fx:id="roomSelection" prefWidth="180.0"/>
     </HBox>
     <HBox styleClass="reservation-footer" prefHeight="27.0" prefWidth="607.0" spacing="2" GridPane.columnIndex="0" GridPane.columnSpan="10"
-
           GridPane.rowIndex="30">
         <Button fx:id="reservation" styleClass="button-3d" onAction="#makeAReservation" prefHeight="27.0" prefWidth="136.0" text="RESERVE"/>
         <Button fx:id="cancel"  styleClass="button-3d" prefHeight="27.0" prefWidth="136.0" text="CANCEL"/>
@@ -84,15 +87,11 @@
     <Label text="Reservation Number:" styleClass="label-title" GridPane.columnIndex="1" GridPane.columnSpan="4" GridPane.rowIndex="12"/>
     <Label text="[Check In] - [Check Out]:" styleClass="label-title" GridPane.columnIndex="1" GridPane.columnSpan="4" GridPane.rowIndex="13"/>
     <Label text="Number of Guests:" styleClass="label-title" GridPane.columnIndex="1" GridPane.columnSpan="4" GridPane.rowIndex="14"/>
-    <Label text="Room Category:" styleClass="label-title" GridPane.columnIndex="1" GridPane.columnSpan="4" GridPane.rowIndex="15"/>
     <Label alignment="CENTER" prefHeight="17.0" prefWidth="155.0" text="Room Additions:" styleClass="label-title" GridPane.columnIndex="7"
            GridPane.columnSpan="3"
            GridPane.rowIndex="12"/>
-    <Label alignment="TOP_LEFT" prefHeight="17.0" prefWidth="338.0" text="STATUS" styleClass="label-title" GridPane.columnIndex="7"
-           GridPane.columnSpan="3" GridPane.rowIndex="14"/>
     <Label prefHeight="17.0" prefWidth="219.0" text="Comments and special requests:" styleClass="label-title" GridPane.columnIndex="1"
            GridPane.columnSpan="4" GridPane.rowIndex="18"/>
-    <Label text="ROOM:" styleClass="reservation-sec-title" GridPane.columnIndex="1" GridPane.columnSpan="5" GridPane.rowIndex="26"/>
     <Label text="Total Price:" styleClass="reservation-sec-title" GridPane.columnIndex="1" GridPane.columnSpan="3"
            GridPane.rowIndex="28"/>
     <Label fx:id="totalPrice" text="[$] 00.00" GridPane.columnIndex="4" GridPane.rowIndex="28"/>
@@ -118,8 +117,6 @@
               GridPane.columnSpan="3" GridPane.rowIndex="8" GridPane.rowSpan="2"/>
     <TextArea maxHeight="1.7976931348623157E308" prefHeight="54.0" prefWidth="220.0" GridPane.columnIndex="1"
               GridPane.columnSpan="4" GridPane.rowIndex="19" GridPane.rowSpan="4"/>
-    <ComboBox fx:id="roomSelection" GridPane.columnIndex="4" GridPane.columnSpan="2" GridPane.rowIndex="15" />
-
 
     <columnConstraints>
         <ColumnConstraints/>
