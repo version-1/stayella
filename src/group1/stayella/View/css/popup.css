@@ -1,3 +1,37 @@
+.root {
+    -fx-font-size: 13px;
+    -fx-font-family: "Arial";
+    -fx-text-fill: #666666;
+    -fx-background-color: #fbfbfb;
+    -fx-padding: 0px;
+    turquoise-dark-blule: #34727D;
+    turquoise-blule: #40B5C9;
+    light-blue: #69BBC9;
+    light-brown: #C9732C;
+    brown: #7D5534;
+    deep-blue:  #1D5162;
+}
+
 #message {
     -fx-text-fill: blue;
+}
+
+.button {
+    -fx-padding: 4px 12px;
+    -fx-min-width: 70px;
+    -fx-alignment: center;
+    -fx-font-size: 10px;
+    -fx-font-weight: 400;
+    -fx-text-fill: #000;
+    -fx-border-style: solid;
+    -fx-border-color: #61a2b1;
+    -fx-border-width: 3px;
+    -fx-border-radius: 30px;
+    -fx-background-color: linear-gradient(#ffffff, #a7caca, deep-blue);
+    -fx-background-radius: 30px;
+}
+
+.button:hover {
+    -fx-background-color: linear-gradient(#2A5058, #69BBC9);
+    -fx-border-color: #3D7A85;
 }
