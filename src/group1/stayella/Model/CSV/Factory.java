@@ -32,7 +32,7 @@ public class Factory {
       ArrayList<Room> rooms = getRooms(hotel.getID());
       for (Room room: rooms) {
         List<RoomFacility> facilities = getRoomFacilities(room.getID());
-        List<Vacancy> vacancies = getVacancies(room.getID());
+        List<Vacancy> vacancies = getVacancies(room);
         room.setFacilities(facilities);
         room.setVacancies(vacancies);
       }
@@ -140,15 +140,15 @@ public class Factory {
     return null;
   }
 
-  public static List<Vacancy> getVacancies(int id) {
+  public static List<Vacancy> getVacancies(Room room) {
     try {
       List<HashMap<String, String>> csv = new Core(VACANCY_PATH).load();
       List<Vacancy> list = new ArrayList<Vacancy>();
       for(HashMap<String, String> row: csv){
-        if (toInt(row.get("ROOM_ID")) == id) {
+        if (toInt(row.get("ROOM_ID")) == room.getID()) {
           Vacancy vacancy = new Vacancy(
             toInt(row.get("ID")),
-            row.get("ROOM_NUMBER"),
+            room,
             null,
             toDate(row.get("START_TIME")),
             toDate(row.get("END_TIME"))
@@ -174,7 +174,7 @@ public class Factory {
       getRandomInt(0, 2) // unconfirmed or confirm
     );
     LocalDate localDate = start.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-    reservation.make(room.getVacancies(), localDate, getRandomInt(2, 5));
+    reservation.make(room, localDate, getRandomInt(2, 5));
   }
 
   public static List<CreditCard> getCreditCards() {

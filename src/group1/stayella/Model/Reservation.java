@@ -22,15 +22,14 @@ public class Reservation {
     private int numberOfGuest;
     private LocalDate checkInTime;
     private LocalDate checkOutTime;
+    private Room room;
     private int status;
 
     // e.g 0: cancel 1:unconfirmed 2: confirmed
 
-
     public  Reservation(){
        index++;
     }
-
 
     public Reservation(Guest guest, int numberOfGuest, int status) {
         this.id = index;
@@ -112,7 +111,9 @@ public class Reservation {
         this.numberOfGuest = numberOfGuest;
     }
 
-
+    public void setRoom(Room room) {
+        this.room = room;
+    }
 
     public boolean isLocked() {
         return status != CANCEL;
@@ -120,6 +121,18 @@ public class Reservation {
 
     // make the reservation
     public boolean make(List<Vacancy> vacancies, LocalDate start, int lengthOfStay) {
+       return reserve(vacancies, start, lengthOfStay);
+    }
+
+    public boolean make(Room room, LocalDate start, int lengthOfStay) {
+       boolean res = reserve(room.getVacancies(), start, lengthOfStay);
+       if (res) {
+         setRoom(room);
+       }
+       return res;
+    }
+
+    private boolean reserve(List<Vacancy> vacancies, LocalDate start, int lengthOfStay) {
         if (vacancies.size() == 0) {
             return false;
         }

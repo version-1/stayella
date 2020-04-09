@@ -43,3 +43,15 @@
   -fx-background-color:#FFD15B;
   -fx-text-fill: #1D5162;
 }
+
+.occupied-cell-1 {
+  -fx-background-color: rgba(161, 204, 210, 0.8);
+}
+
+.occupied-cell-2 {
+  -fx-background-color: rgba(255, 211, 197, 0.8);
+}
+
+.occupied-cell-3 {
+  -fx-background-color: rgba(255, 242, 174, 0.8);
+}
