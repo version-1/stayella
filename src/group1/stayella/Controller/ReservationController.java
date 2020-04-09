@@ -100,6 +100,7 @@ public class ReservationController extends ApplicationController {
     private CreditCard creditCard;
 
     private List<Charge> charges = new ArrayList<>();
+    private ArrayList<Room> availableRooms = new ArrayList<>();
 
     @FXML
     public Label totalPrice;
@@ -150,32 +151,52 @@ public class ReservationController extends ApplicationController {
         });
     }
 
-    /**
-     * List through vacancies and get only vacant rooms for that period -> Vacancy(to be set)
-     *
-     * */
-
-    public void listOfAvailability(){
-        ArrayList<String> availableRooms = new ArrayList<>();
-        List<Room> rooms = this.getHotel().getRooms();
-        List<Vacancy> vacancies = rooms.get(1).getVacancies();
-        Date in = Date.from(checkIN.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant());
-        Date out = Date.from(checkOUT.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant());
-        for (int i = 0; i < rooms.size(); i++) {
-            boolean occupied = false;
-            for (int j = 0; j < rooms.get(i).getVacancies().size(); j++)
-                if (rooms.get(i).getVacancies().get(j).getEndTime().compareTo(in) < 0 ||
-                        rooms.get(i).getVacancies().get(j).getStartTime().compareTo(out) > 0) {
-                } else {
-                    occupied = true;
+    public ArrayList<Room> listOfAvailability(){
+        availableRooms.clear();
+        if (checkIN.getValue() == null || checkOUT.getValue() == null) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Not allowed");
+            alert.setHeaderText("Check in - Check out dates are missing.");
+            alert.showAndWait();
+        } else {
+            List<Room> rooms = this.getHotel().getRooms();
+            List<Vacancy> vacancies = rooms.get(1).getVacancies();
+            Date in = Date.from(checkIN.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant());
+            Date out = Date.from(checkOUT.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant());
+            for (int i = 0; i < rooms.size(); i++) {
+                boolean occupied = false;
+                for (int j = 0; j < rooms.get(i).getVacancies().size(); j++)
+                    if (rooms.get(i).getVacancies().get(j).getEndTime().compareTo(in) < 0 ||
+                            rooms.get(i).getVacancies().get(j).getStartTime().compareTo(out) > 0) {
+                    } else {
+                        occupied = true;
+                    }
+                if (!occupied) {
+                    availableRooms.add(rooms.get(i));
                 }
-            if (!occupied) {
-                availableRooms.add(rooms.get(i).getRoomNumber());
             }
         }
-        System.out.println(availableRooms);
+        return availableRooms;
     }
 
+
+    @FXML
+    public void categorySelected() {
+        listOfAvailability();
+        roomSelection.getItems().clear();
+        for (Room room : availableRooms) {
+            if (categorySelection.getValue().equals("CategoryD") && room.getID() < 4) {
+                roomSelection.getItems().add(room.getRoomNumber());
+            } else if (categorySelection.getValue().equals("CategoryC") && room.getID() > 4 && room.getID() <= 10) {
+                roomSelection.getItems().add(room.getRoomNumber());
+            } else if (categorySelection.getValue().equals("CategoryB") && room.getID() > 10 && room.getID() < 16) {
+                roomSelection.getItems().add(room.getRoomNumber());
+            } else if (categorySelection.getValue().equals("CategoryA") && room.getID() >= 16) {
+                roomSelection.getItems().add(room.getRoomNumber());
+            }
+        }
+
+    }
 
     public void showCCInfo(String text) {
         if (text.length() != 12) {
