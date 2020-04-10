@@ -94,7 +94,7 @@
     <Label fx:id="totalPrice" text="[$] 00.00" GridPane.columnIndex="4" GridPane.rowIndex="28"/>
     <Label alignment="CENTER" prefHeight="17.0" prefWidth="121.0" text="Deposit" styleClass="reservation-sec-title"
            GridPane.columnIndex="6" GridPane.columnSpan="2" GridPane.rowIndex="28"/>
-    <Label prefHeight="17.0" prefWidth="116.0" text="[$]00.00" GridPane.columnIndex="8" GridPane.rowIndex="28"/>
+    <Label fx:id="deposit" prefHeight="17.0" prefWidth="116.0" GridPane.columnIndex="8" GridPane.rowIndex="28"/>
 
 
     <DatePicker fx:id="checkIN" prefHeight="27.0" prefWidth="120.0" GridPane.columnIndex="4" GridPane.columnSpan="2"

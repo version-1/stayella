@@ -102,6 +102,8 @@ public class ReservationController extends ApplicationController {
 
     @FXML
     public Label totalPrice;
+    @FXML
+    Label deposit;
 
     private Guest guest;
     private Reservation newReservation;
@@ -109,10 +111,9 @@ public class ReservationController extends ApplicationController {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        if (status != 0) {}
-
         String[] categories = {"CategoryA", "CategoryB", "CategoryC", "CategoryD"};
         categorySelection.getItems().addAll(categories);
+        deposit.setText("[$] " + this.getHotel().getDeposit());
 
         image = new Image("https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTqWGB5YLwdAKCrHNiw9_I5jXeWHDlGHh83anl58WuJ4WwhzslJ&usqp=CAU");
         imageView.setImage(image);
