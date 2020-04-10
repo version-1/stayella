@@ -87,7 +87,7 @@ public class Room {
         return false;
     }
 
-    public ImageView getSmorking() {
+    public ImageView getSmoking() {
         if (hasFacility(Smorking.class)) {
             return Icon.getWithLayout(Icon.CIGARETTE_LIGHT, 29, 23);
         }

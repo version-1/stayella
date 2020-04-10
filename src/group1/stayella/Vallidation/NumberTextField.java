@@ -16,27 +16,26 @@ public class NumberTextField extends TextField {
         super.replaceSelection(replacement);
     }
 
-    public boolean phoneNumberValidation (String text) {
+    public boolean phoneNumberValidation(String text) {
         return (text.length() > 9);
     }
 
-    public boolean idNumberValidation (String text) {
+    public boolean numberOfGuestValidation(String text) {
+        if (text.isEmpty()) {
+            return false;
+        }
+        return (Integer.parseInt(text) > 0 && Integer.parseInt(text) <= 10);
+    }
+
+    public boolean idNumberValidation(String text) {
         return (text.length() == 9);
     }
 
-    public boolean ageValidation (String text) {
+    public boolean ageValidation(String text) {
         if (text == null || text.isEmpty()) {
             return false;
         }
         int age = Integer.parseInt(text);
         return (age > 19 && age < 100);
-    }
-
-    public boolean numOfGuest (String text) {
-        if (text == null) {
-            return false;
-        }
-        int guests = Integer.parseInt(text);
-        return (guests > 0 && guests < 10);
     }
 }

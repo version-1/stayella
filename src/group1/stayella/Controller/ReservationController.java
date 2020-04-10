@@ -76,6 +76,8 @@ public class ReservationController extends ApplicationController {
     @FXML
     NumberTextField guestAge;
     @FXML
+    NumberTextField numberOfGuests;
+    @FXML
     TextTextField guestName;
     @FXML
     TextTextField guestEmail;
@@ -180,13 +182,16 @@ public class ReservationController extends ApplicationController {
         listOfAvailability();
         roomSelection.getItems().clear();
         for (Room room : availableRooms.values()) {
-            if (categorySelection.getValue().equals("CategoryD") && room.getID() < 4) {
+            if (categorySelection.getValue().equals("CategoryD") && room.getID() < 4 && Integer.parseInt(numberOfGuests.getText()) <= 2) {
                 roomSelection.getItems().add(room.getRoomNumber());
-            } else if (categorySelection.getValue().equals("CategoryC") && room.getID() >= 4 && room.getID() < 10) {
+            } else if (categorySelection.getValue().equals("CategoryC") && room.getID() >= 4 &&
+                    room.getID() < 10 && Integer.parseInt(numberOfGuests.getText()) <= 4) {
                 roomSelection.getItems().add(room.getRoomNumber());
-            } else if (categorySelection.getValue().equals("CategoryB") && room.getID() >= 10 && room.getID() < 16) {
+            } else if (categorySelection.getValue().equals("CategoryB") && room.getID() >= 10 &&
+                    room.getID() < 16 && Integer.parseInt(numberOfGuests.getText()) <= 6) {
                 roomSelection.getItems().add(room.getRoomNumber());
-            } else if (categorySelection.getValue().equals("CategoryA") && room.getID() >= 16) {
+            } else if (categorySelection.getValue().equals("CategoryA") && room.getID() >= 16 &&
+                    Integer.parseInt(numberOfGuests.getText()) <= 10) {
                 roomSelection.getItems().add(room.getRoomNumber());
             }
         }
@@ -236,6 +241,10 @@ public class ReservationController extends ApplicationController {
             message += "Invalid Guest's Email\n";
         } else if (checkIN.getValue() == null || checkOUT.getValue() == null) {
             message += "C/I and C/O dates are not set\n";
+        } else if (!numberOfGuests.numberOfGuestValidation(numberOfGuests.getText())) {
+            message += "Invalid number of guests\n";
+        } else if (roomSelection.getValue() == null) {
+            message += "Room is not selected\n";
         } else if (status == 0) {
             message += "Cannot be reserved with undefined status";
         }
@@ -252,7 +261,7 @@ public class ReservationController extends ApplicationController {
             Period period = Period.between(checkIN.getValue(), checkOUT.getValue());
             int lengthOfStay = (int) (period.getDays());
 
-            newReservation = new Reservation(guest, 0, status);
+            newReservation = new Reservation(guest, Integer.parseInt(numberOfGuests.getText()), status);
             Room room = this.getHotel().getRooms().get(1);
             newReservation.make(room, checkIN.getValue(), lengthOfStay);
             if (newReservation.setCheckInTime(checkIN.getValue()) && newReservation.setCheckOutTime(checkOUT.getValue())) {
@@ -263,7 +272,8 @@ public class ReservationController extends ApplicationController {
     }
 
     public void setGuestInformation() {
-        guest = new Guest(id, guestName.getText(), guestAge.getText(), imageView.getImage(), guestPhone.getText(), guestEmail.getText(), guestID.getText(), creditCard, guestLanguage.getText());
+        guest = new Guest(id, guestName.getText(), guestAge.getText(), imageView.getImage(), guestPhone.getText(),
+                guestEmail.getText(), guestID.getText(), creditCard, guestLanguage.getText());
         // guest.setPaymentMethod(creditCard); -> close without saving causes error
     }
 

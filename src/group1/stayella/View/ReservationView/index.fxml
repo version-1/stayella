@@ -108,7 +108,7 @@
                      GridPane.columnIndex="2" GridPane.columnSpan="3" GridPane.rowIndex="9"/>
     <TextField alignment="TOP_RIGHT" promptText="Reservation Number" scaleY="0.8" GridPane.columnIndex="4"
                GridPane.columnSpan="2" GridPane.rowIndex="12"/>
-    <NumberTextField alignment="TOP_RIGHT" promptText="Number of Guests" scaleY="0.8" GridPane.columnIndex="4"
+    <NumberTextField fx:id="numberOfGuests" alignment="TOP_RIGHT" promptText="Number of Guests" scaleY="0.8" GridPane.columnIndex="4"
                      GridPane.columnSpan="2" GridPane.rowIndex="14"/>
     <TextArea prefHeight="2" prefWidth="2" promptText="Enter Guest's Address" GridPane.columnIndex="7"
               GridPane.columnSpan="3" GridPane.rowIndex="8" GridPane.rowSpan="2"/>
