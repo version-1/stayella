@@ -110,7 +110,7 @@
                </HBox>
             </HBox>
          </HBox>
-         <TableView minHeight="640" fx:id="table"/>
+         <TableView minHeight="980" fx:id="table"/>
          <Button
          fx:id="goBack"
          onAction="#goBack"

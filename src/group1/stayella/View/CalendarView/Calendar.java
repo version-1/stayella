@@ -59,7 +59,6 @@ public class Calendar {
 
     public void buildVacanciesTable(TableView<Room> table) {
         int count = 24 / HOUR_SPAN;
-        stopRendering = false;
         for (Date date : getDateList()) {
             TableColumn<Room, HashMap<String, Vacancy>> col = new TableColumn<>(getDateString(date));
             Date startOfDay = getStartOfDay(date);
