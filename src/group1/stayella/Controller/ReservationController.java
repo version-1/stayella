@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.time.Duration;
 import java.time.Period;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Date;
@@ -90,6 +91,8 @@ public class ReservationController extends ApplicationController {
     DatePicker checkOUT;
 
     @FXML
+    ComboBox<String> categorySelection;
+    @FXML
     ComboBox<String> roomSelection;
 
     private int id;
@@ -97,6 +100,7 @@ public class ReservationController extends ApplicationController {
     private CreditCard creditCard;
 
     private List<Charge> charges = new ArrayList<>();
+    private ArrayList<Room> availableRooms = new ArrayList<>();
 
     @FXML
     public Label totalPrice;
@@ -108,6 +112,10 @@ public class ReservationController extends ApplicationController {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         if (status != 0) {}
+
+        String[] categories = {"CategoryA", "CategoryB", "CategoryC", "CategoryD"};
+        categorySelection.getItems().addAll(categories);
+
         image = new Image("https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTqWGB5YLwdAKCrHNiw9_I5jXeWHDlGHh83anl58WuJ4WwhzslJ&usqp=CAU");
         imageView.setImage(image);
 
@@ -119,8 +127,6 @@ public class ReservationController extends ApplicationController {
 
         imageAdditions = new Image("https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRz2AEfespdhCgKtTN2R-o6maiMq1_SuKR7q9drWDi6NGJqxkhQ&usqp=CAU");
         insertImage(imageAdditions, imageAdditionsView, buttonAdditions, 30, 30);
-
-        roomSelected();
 
         confirmed.setOnAction(e -> {
             confirmed.isFocused();
@@ -145,15 +151,51 @@ public class ReservationController extends ApplicationController {
         });
     }
 
-    /**
-     * List through vacancies and get only vacant rooms for that period -> Vacancy(to be set)
-     *
-     * */
+    public ArrayList<Room> listOfAvailability(){
+        availableRooms.clear();
+        if (checkIN.getValue() == null || checkOUT.getValue() == null) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Not allowed");
+            alert.setHeaderText("Check in - Check out dates are missing.");
+            alert.showAndWait();
+        } else {
+            List<Room> rooms = this.getHotel().getRooms();
+            List<Vacancy> vacancies = rooms.get(1).getVacancies();
+            Date in = Date.from(checkIN.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant());
+            Date out = Date.from(checkOUT.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant());
+            for (int i = 0; i < rooms.size(); i++) {
+                boolean occupied = false;
+                for (int j = 0; j < rooms.get(i).getVacancies().size(); j++)
+                    if (rooms.get(i).getVacancies().get(j).getEndTime().compareTo(in) < 0 ||
+                            rooms.get(i).getVacancies().get(j).getStartTime().compareTo(out) > 0) {
+                    } else {
+                        occupied = true;
+                    }
+                if (!occupied) {
+                    availableRooms.add(rooms.get(i));
+                }
+            }
+        }
+        return availableRooms;
+    }
+
 
     @FXML
-    public void roomSelected() {
-        String[] categories = {"CategoryA", "CategoryB", "CategoryC", "CategoryD"};
-        roomSelection.getItems().addAll(categories);
+    public void categorySelected() {
+        listOfAvailability();
+        roomSelection.getItems().clear();
+        for (Room room : availableRooms) {
+            if (categorySelection.getValue().equals("CategoryD") && room.getID() < 4) {
+                roomSelection.getItems().add(room.getRoomNumber());
+            } else if (categorySelection.getValue().equals("CategoryC") && room.getID() > 4 && room.getID() <= 10) {
+                roomSelection.getItems().add(room.getRoomNumber());
+            } else if (categorySelection.getValue().equals("CategoryB") && room.getID() > 10 && room.getID() < 16) {
+                roomSelection.getItems().add(room.getRoomNumber());
+            } else if (categorySelection.getValue().equals("CategoryA") && room.getID() >= 16) {
+                roomSelection.getItems().add(room.getRoomNumber());
+            }
+        }
+
     }
 
     public void showCCInfo(String text) {
