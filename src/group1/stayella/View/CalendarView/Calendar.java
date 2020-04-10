@@ -7,10 +7,13 @@ import java.util.List;
 
 import group1.stayella.Model.Room;
 import group1.stayella.Model.Vacancy;
+import javafx.beans.value.ObservableValue;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.util.Callback;
 
 public class Calendar {
     public final static int DATE_SPAN = 7;
@@ -18,6 +21,7 @@ public class Calendar {
     private Date currentDate;
     private List<Date> dateList;
     private List<Date> hourList;
+    private boolean stopRendering = false;
 
     public Calendar() {
         currentDate = new Date();
@@ -57,8 +61,9 @@ public class Calendar {
         return calendar.getTime();
     }
 
-    public void buildVacanciesTable(TableView table) {
+    public void buildVacanciesTable(TableView<Room> table) {
         int count = 24 / HOUR_SPAN;
+        stopRendering = false;
         for (Date date : getDateList()) {
             TableColumn<Room, HashMap<String, Vacancy>> col = new TableColumn<>(getDateString(date));
             Date startOfDay = getStartOfDay(date);
@@ -66,13 +71,26 @@ public class Calendar {
                 Date time = Calendar.add(startOfDay, java.util.Calendar.HOUR, i * HOUR_SPAN);
                 String timeStr = getTimeString(time);
                 TableColumn<Room, HashMap<String, Vacancy>> term = new TableColumn<>(timeStr);
+                term.setUserData(getDateTimeString(time));
                 term.setCellValueFactory(new PropertyValueFactory<>("vacancyMap"));
+                // term.setCellValueFactory(new Callback<CellDataFeatures<Room, String>, ObservableValue<String>>() {
+                //     public ObservableValue<String> call(CellDataFeatures<Room, String> p) {
+                //         HashMap<String, Vacancy> map = p.getValue().getVacancyMap();
+                //         Vacancy v = map.get(timeStr);
+                //         // return p.get;
+                //     }
+                //  });
+                // }
                 // Custom rendering of the table cell.
                 term.setCellFactory(column -> {
+                    String key = (String) column.getUserData();
                     return new TableCell() {
                         @Override
                         protected void updateItem(Object item , boolean empty) {
-                            String key = getDateTimeString(time);
+                            super.updateItem(item, empty);
+                            if (empty) {
+                                return;
+                            }
                             HashMap<String, Vacancy> map  = (HashMap<String, Vacancy>) item;
                             if (map != null) {
                               Vacancy v = map.get(key);
@@ -80,8 +98,6 @@ public class Calendar {
                                     getStyleClass().add(v.getFilledClass());
                                 }
                             }
-
-                            super.updateItem(item, empty);
 
                         }
                     };

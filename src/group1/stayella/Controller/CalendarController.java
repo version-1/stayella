@@ -81,6 +81,7 @@ public class CalendarController extends ApplicationController {
     public void refresh() {
         this.calendar = new Calendar();
         this.table.getColumns().clear();
+        this.table.getItems().clear();
         initTable();
     }
 
@@ -88,6 +89,7 @@ public class CalendarController extends ApplicationController {
     public void next() {
         calendar.tomorrow();
         this.table.getColumns().clear();
+        this.table.getItems().clear();
         initTable();
     }
 
@@ -95,6 +97,7 @@ public class CalendarController extends ApplicationController {
     public void previous() {
         calendar.yesterday();
         this.table.getColumns().clear();
+        this.table.getItems().clear();
         initTable();
     }
 }
