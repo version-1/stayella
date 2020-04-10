@@ -6,9 +6,6 @@ import java.util.ResourceBundle;
 import group1.stayella.Model.Room;
 import group1.stayella.Resources.Images.Icon;
 import group1.stayella.View.CalendarView.Calendar;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -48,7 +45,7 @@ public class CalendarController extends ApplicationController {
         col3.setCellValueFactory(new PropertyValueFactory<>("roomCapacity"));
 
         TableColumn<Room, ImageView> col4 = new TableColumn<Room, ImageView>();
-        col4.setCellValueFactory(new PropertyValueFactory<>("cigarette"));
+        col4.setCellValueFactory(new PropertyValueFactory<>("smorking"));
         ImageView cigarette = Icon.getWithLayout(Icon.CIGARETTE, 29, 23);
         col4.setGraphic(cigarette);
 
@@ -81,6 +78,7 @@ public class CalendarController extends ApplicationController {
     public void refresh() {
         this.calendar = new Calendar();
         this.table.getColumns().clear();
+        this.table.getItems().clear();
         initTable();
     }
 
@@ -88,6 +86,7 @@ public class CalendarController extends ApplicationController {
     public void next() {
         calendar.tomorrow();
         this.table.getColumns().clear();
+        this.table.getItems().clear();
         initTable();
     }
 
@@ -95,6 +94,7 @@ public class CalendarController extends ApplicationController {
     public void previous() {
         calendar.yesterday();
         this.table.getColumns().clear();
+        this.table.getItems().clear();
         initTable();
     }
 }

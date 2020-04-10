@@ -3,6 +3,13 @@ package group1.stayella.Model;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import javafx.scene.control.TableCell;
+import javafx.scene.layout.Border;
+import javafx.scene.layout.BorderStroke;
+import javafx.scene.layout.BorderStrokeStyle;
+import javafx.scene.layout.BorderWidths;
+import javafx.scene.paint.Color;
+
 public class Vacancy {
     public final static String CALENDAR_DATE_FORMAT = "yyyy.MM.dd";
     public final static String CALENDAR_TIME_FORMAT = "HH:mm";
@@ -15,7 +22,8 @@ public class Vacancy {
     private Date startTime;
     private Date endTime;
 
-    public  Vacancy() {}
+    public Vacancy() {
+    }
 
     public Vacancy(int id, Room room, Reservation reservation, Date startTime, Date endTime) {
         this.id = id;
@@ -67,6 +75,23 @@ public class Vacancy {
         return room;
     }
 
+    public boolean isFirstVacantForRervation() {
+        return reservation.getVacancies().get(0).id == id;
+    }
+
+    public String getReservationNo() {
+        return reservation.getReservationNo();
+    }
+
+    public String getReservationText() {
+        if (reservation == null || !isFirstVacantForRervation()) {
+            return null;
+        }
+
+        return String.format("%s x %s\n - %s", reservation.getMainGuest().getName(), reservation.getNumberOfGuest(),
+                getDateString(startTime, CALENDAR_DATETIME_FORMAT));
+    }
+
     public String getFilledClass() {
         if (room == null) {
             return null;
@@ -104,5 +129,28 @@ public class Vacancy {
     public static String getDateString(Date date, String pattern) {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
         return simpleDateFormat.format(date);
+    }
+
+    public void decorate(TableCell cell) {
+        cell.getStyleClass().add(getFilledClass());
+        if (isFirstVacantForRervation()) {
+            BorderStroke stroke = new BorderStroke(
+                null,
+                null,
+                null,
+                Color.ORANGE,
+                null,
+                null,
+                null,
+                BorderStrokeStyle.SOLID,
+                null,
+                new BorderWidths(5),
+                null
+            );
+            cell.setBorder(new Border(stroke));
+        }
+        cell.getStyleClass().add(getFilledClass());
+        cell.setText(getReservationText());
+        cell.setId(getReservationNo());
     }
 }
