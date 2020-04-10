@@ -5,33 +5,44 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 
+<?import javafx.scene.layout.HBox?>
 <GridPane fx:id="gridlayout" stylesheets="@css/styles.css" styleClass="primary-background-color" hgap="5" vgap="5" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.172-ea" fx:controller="group1.stayella.Controller.HomeController">
     <Button
       fx:id="reservation"
       onAction="#transitToReservaiton"
       text="Reservation"
-      GridPane.columnIndex="1"
+      GridPane.columnIndex="0"
       GridPane.rowIndex="3"
       alignment="CENTER_LEFT"
       styleClass="button-3d"
       />
     <Button
-      fx:id="calendar"
-      text="Calendar"
-      onAction="#transitToCalendar"
-      GridPane.columnIndex="3"
+        fx:id="calendar"
+        text="Calendar"
+        onAction="#transitToCalendar"
+        GridPane.columnIndex="1"
+        GridPane.rowIndex="3"
+        alignment="CENTER"
+        styleClass="button-3d"
+    />
+    <Button
+      fx:id="reservationList"
+      text="Reservation list"
+      onAction="#transitToReservationList"
+      GridPane.columnIndex="2"
       GridPane.rowIndex="3"
       alignment="CENTER_RIGHT"
       styleClass="button-3d"
     />
 
 
-
-    <Label fx:id="label" styleClass="home-label-title" text="STAYELLA\nVersion: 1.0" GridPane.columnIndex="2" GridPane.rowIndex="1" alignment="CENTER"/>
+    <HBox GridPane.columnIndex="0" GridPane.columnSpan="3" GridPane.rowIndex="1" alignment="CENTER">
+        <Label fx:id="label" styleClass="home-label-title" text="STAYELLA\nVersion: 1.0" />
+    </HBox>
     <columnConstraints>
-        <ColumnConstraints />
-        <ColumnConstraints />
-        <ColumnConstraints />
+        <ColumnConstraints percentWidth="33" halignment="LEFT"/>
+        <ColumnConstraints percentWidth="33" halignment="CENTER"/>
+        <ColumnConstraints percentWidth="33" halignment="RIGHT"/>
     </columnConstraints>
 </GridPane>
 

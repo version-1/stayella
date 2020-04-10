@@ -13,8 +13,7 @@ import group1.stayella.Model.*;
 import group1.stayella.Model.HotelFacility.*;
 import group1.stayella.Model.RoomFacility.RoomFacility;
 
-public class Factory {
-  private final static String CSV_DATA_PATH = "src/group1/stayella/Data/";
+public class Factory { private final static String CSV_DATA_PATH = "src/group1/stayella/Data/";
   private final static String CHARGE_PATH = CSV_DATA_PATH + "charge.csv";
   private final static String HOTEL_FACILITY_PATH = CSV_DATA_PATH + "hotel_facility.csv";
   private final static String HOTEL_PATH = CSV_DATA_PATH + "hotel.csv";
@@ -24,9 +23,12 @@ public class Factory {
   private final static String VACANCY_PATH = CSV_DATA_PATH + "vacancy.csv";
   private final static String ROOM_PATH = CSV_DATA_PATH + "room.csv";
   private final static String ROOM_FACILITY_PATH = CSV_DATA_PATH + "room_facility.csv";
-
+  private static List<Hotel> hotels;
   public static List<Hotel> initialize() {
-    List<Hotel> hotels = getHotels();
+    if (hotels != null) {
+      return hotels;
+    }
+    hotels = getHotels();
     for (Hotel hotel: hotels) {
       hotel.setFacilities(getHotelFacilities(hotel.getID()));
       ArrayList<Room> rooms = getRooms(hotel.getID());
@@ -39,11 +41,10 @@ public class Factory {
       hotel.setRooms(rooms);
       List<Guest> guests = getGuests();
       for (Guest guest: guests) {
-         Room room = rooms.get(getRandomInt(0, rooms.size() - 1));
-         makeReservations(guest, room);
+        Room room = rooms.get(getRandomInt(0, rooms.size() - 1));
+        makeReservations(guest, room);
       }
     }
-
     return hotels;
   }
 

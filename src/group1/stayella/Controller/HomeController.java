@@ -24,6 +24,7 @@ public class HomeController extends ApplicationController {
     public Label label;
     @FXML
     public Button roomAdd;
+    public Button reservationList;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -43,6 +44,11 @@ public class HomeController extends ApplicationController {
         Stage stage = transitTo(actionEvent, "CalendarView/index.fxml", 1200, 980);
         Scene scene = stage.getScene();
         scene.getStylesheets().add("group1/stayella/View/css/calendar/style.css");
+    }
+
+    @FXML
+    public void transitToReservationList(ActionEvent actionEvent) throws IOException {
+        transitTo(actionEvent, "ReservationListView/index.fxml", 800, 600);
     }
 
 }
