@@ -22,10 +22,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.time.Period;
 import java.time.ZoneId;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Date;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class ReservationController extends ApplicationController {
 
@@ -99,7 +96,7 @@ public class ReservationController extends ApplicationController {
     private CreditCard creditCard;
 
     private List<Charge> charges = new ArrayList<>();
-    private ArrayList<Room> availableRooms = new ArrayList<>();
+    private HashMap<String, Room> availableRooms = new HashMap<>();
 
     @FXML
     public Label totalPrice;
@@ -154,12 +151,12 @@ public class ReservationController extends ApplicationController {
      **************** Room Methods ****************
      **/
 
-    public ArrayList<Room> listOfAvailability(){
+    public void listOfAvailability(){
         availableRooms.clear();
         if (checkIN.getValue() == null || checkOUT.getValue() == null) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Not allowed");
-            alert.setHeaderText("Check in - Check out dates are missing.");
+            alert.setHeaderText("[Check in - Check out] dates are missing.");
             alert.showAndWait();
         } else {
             List<Room> rooms = this.getHotel().getRooms();
@@ -175,18 +172,17 @@ public class ReservationController extends ApplicationController {
                         occupied = true;
                     }
                 if (!occupied) {
-                    availableRooms.add(rooms.get(i));
+                    availableRooms.put(rooms.get(i).getRoomNumber(), rooms.get(i));
                 }
             }
         }
-        return availableRooms;
     }
 
     @FXML
     public void categorySelected() {
         listOfAvailability();
         roomSelection.getItems().clear();
-        for (Room room : availableRooms) {
+        for (Room room : availableRooms.values()) {
             if (categorySelection.getValue().equals("CategoryD") && room.getID() < 4) {
                 roomSelection.getItems().add(room.getRoomNumber());
             } else if (categorySelection.getValue().equals("CategoryC") && room.getID() >= 4 && room.getID() < 10) {
@@ -197,7 +193,6 @@ public class ReservationController extends ApplicationController {
                 roomSelection.getItems().add(room.getRoomNumber());
             }
         }
-
     }
 
     /**
@@ -319,13 +314,11 @@ public class ReservationController extends ApplicationController {
 
     public void setTotalPriceToLabel() {
         double total = 0;
-        if (roomSelection.getValue() != null && availableRooms.indexOf(roomSelection.getValue()) > 0) {
-                int index = availableRooms.indexOf(roomSelection.getValue());
-                total += availableRooms.get(index).getRoomPrice();
+        if (roomSelection.getValue() != null && availableRooms.containsKey(roomSelection.getValue())) {
+                total += availableRooms.get(roomSelection.getValue()).getRoomPrice();
         }
         if (!charges.isEmpty()) {
-            for (Charge charge : charges
-            ) {
+            for (Charge charge : charges) {
                 total += charge.getFacility().getPrice();
             }
         }
