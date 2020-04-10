@@ -7,13 +7,10 @@ import java.util.List;
 
 import group1.stayella.Model.Room;
 import group1.stayella.Model.Vacancy;
-import javafx.beans.value.ObservableValue;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.util.Callback;
 
 public class Calendar {
     public final static int DATE_SPAN = 7;
@@ -21,7 +18,6 @@ public class Calendar {
     private Date currentDate;
     private List<Date> dateList;
     private List<Date> hourList;
-    private boolean stopRendering = false;
 
     public Calendar() {
         currentDate = new Date();
@@ -85,7 +81,7 @@ public class Calendar {
                             if (map != null) {
                                 Vacancy v = map.get(key);
                                 if (v != null && v.isOccupied()) {
-                                    getStyleClass().add(v.getFilledClass());
+                                    v.decorate(this);
                                 }
                             }
 
