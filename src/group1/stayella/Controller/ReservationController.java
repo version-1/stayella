@@ -20,13 +20,9 @@ import javafx.stage.Stage;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.time.Duration;
 import java.time.Period;
 import java.time.ZoneId;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Date;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class ReservationController extends ApplicationController {
 
@@ -80,6 +76,8 @@ public class ReservationController extends ApplicationController {
     @FXML
     NumberTextField guestAge;
     @FXML
+    NumberTextField numberOfGuests;
+    @FXML
     TextTextField guestName;
     @FXML
     TextTextField guestEmail;
@@ -95,12 +93,12 @@ public class ReservationController extends ApplicationController {
     @FXML
     ComboBox<String> roomSelection;
 
-    private int id;
+    private int id = 0;
     private ArrayList<String> creditCardInfo;
     private CreditCard creditCard;
 
     private List<Charge> charges = new ArrayList<>();
-    private ArrayList<Room> availableRooms = new ArrayList<>();
+    private HashMap<String, Room> availableRooms = new HashMap<>();
 
     @FXML
     public Label totalPrice;
@@ -151,13 +149,14 @@ public class ReservationController extends ApplicationController {
         });
     }
 
-    public ArrayList<Room> listOfAvailability(){
+    /**
+     **************** Room Methods ****************
+     **/
+
+    public void listOfAvailability(){
         availableRooms.clear();
         if (checkIN.getValue() == null || checkOUT.getValue() == null) {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Not allowed");
-            alert.setHeaderText("Check in - Check out dates are missing.");
-            alert.showAndWait();
+            alertMessage("Not Allowed", "Important information is missing.", "Select [Check in - Check out] dates");
         } else {
             List<Room> rooms = this.getHotel().getRooms();
             List<Vacancy> vacancies = rooms.get(1).getVacancies();
@@ -172,31 +171,35 @@ public class ReservationController extends ApplicationController {
                         occupied = true;
                     }
                 if (!occupied) {
-                    availableRooms.add(rooms.get(i));
+                    availableRooms.put(rooms.get(i).getRoomNumber(), rooms.get(i));
                 }
             }
         }
-        return availableRooms;
     }
-
 
     @FXML
     public void categorySelected() {
         listOfAvailability();
         roomSelection.getItems().clear();
-        for (Room room : availableRooms) {
-            if (categorySelection.getValue().equals("CategoryD") && room.getID() < 4) {
+        for (Room room : availableRooms.values()) {
+            if (categorySelection.getValue().equals("CategoryD") && room.getID() < 4 && Integer.parseInt(numberOfGuests.getText()) <= 2) {
                 roomSelection.getItems().add(room.getRoomNumber());
-            } else if (categorySelection.getValue().equals("CategoryC") && room.getID() > 4 && room.getID() <= 10) {
+            } else if (categorySelection.getValue().equals("CategoryC") && room.getID() >= 4 &&
+                    room.getID() < 10 && Integer.parseInt(numberOfGuests.getText()) <= 4) {
                 roomSelection.getItems().add(room.getRoomNumber());
-            } else if (categorySelection.getValue().equals("CategoryB") && room.getID() > 10 && room.getID() < 16) {
+            } else if (categorySelection.getValue().equals("CategoryB") && room.getID() >= 10 &&
+                    room.getID() < 16 && Integer.parseInt(numberOfGuests.getText()) <= 6) {
                 roomSelection.getItems().add(room.getRoomNumber());
-            } else if (categorySelection.getValue().equals("CategoryA") && room.getID() >= 16) {
+            } else if (categorySelection.getValue().equals("CategoryA") && room.getID() >= 16 &&
+                    Integer.parseInt(numberOfGuests.getText()) <= 10) {
                 roomSelection.getItems().add(room.getRoomNumber());
             }
         }
-
     }
+
+    /**
+     **************** Payment Methods ****************
+     **/
 
     public void showCCInfo(String text) {
         if (text.length() != 12) {
@@ -204,6 +207,23 @@ public class ReservationController extends ApplicationController {
         }
         this.cardNumberLabel.setText("XXXX-XXXX-" + text.substring(8));
     }
+
+    // do need credit card ID, guest ID?
+    public void setCreditCard(String cardNumber, String name, String cvv, String expirationDate) {
+        creditCard = new CreditCard(id, cardNumber, name, cvv, expirationDate); // -> null pointer exception error
+        System.out.println(creditCard);
+    }
+
+    /**
+     *
+     **************** Reservation Methods ****************
+     *
+     * With the getters we can set all the text field in 'initialize' if the status is
+     * either confirmed or unconfirmed. Can we send some information about particular
+     * reservation from the source?
+     *
+     * */
+
 
     public boolean submit() {
         String message = "";
@@ -218,21 +238,22 @@ public class ReservationController extends ApplicationController {
         } else if (!guestPhone.phoneNumberValidation(guestPhone.getText())) {
             message += "Invalid Guest's Phone Number\n";
         } else if (!guestEmail.emailValidation(guestEmail.getText())) {
-            message += "Invalid Guest's Email";
+            message += "Invalid Guest's Email\n";
+        } else if (checkIN.getValue() == null || checkOUT.getValue() == null) {
+            message += "C/I and C/O dates are not set\n";
+        } else if (!numberOfGuests.numberOfGuestValidation(numberOfGuests.getText())) {
+            message += "Invalid number of guests\n";
+        } else if (roomSelection.getValue() == null) {
+            message += "Room is not selected\n";
         } else if (status == 0) {
             message += "Cannot be reserved with undefined status";
         }
         if (!message.equals("")) {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Unconfirmed");
-            alert.setHeaderText("Important information is missing.");
-            alert.setContentText(message);
-            alert.showAndWait();
+            alertMessage("Unconfirmed", "Important information is missing.", message);
             return false;
         }
         return true;
     }
-
 
     @FXML
     public void makeAReservation(ActionEvent actionEvent) {
@@ -240,32 +261,37 @@ public class ReservationController extends ApplicationController {
             Period period = Period.between(checkIN.getValue(), checkOUT.getValue());
             int lengthOfStay = (int) (period.getDays());
 
-            newReservation = new Reservation(guest, 0, status);
+            newReservation = new Reservation(guest, Integer.parseInt(numberOfGuests.getText()), status);
             Room room = this.getHotel().getRooms().get(1);
-            setGuestInformation();
             newReservation.make(room, checkIN.getValue(), lengthOfStay);
-            newReservation.setCheckInTime(checkIN.getValue());
-            newReservation.setCheckOutTime(checkOUT.getValue());
+            if (newReservation.setCheckInTime(checkIN.getValue()) && newReservation.setCheckOutTime(checkOUT.getValue())) {
+                setGuestInformation();
+                System.out.println("RESERVATION WAS CREATED\n" + newReservation);
+                System.out.println(newReservation);
+                System.out.println(guest);
+            } else {
+                alertMessage("Unconfirmed", "Important information is missing", "Invalid Check in / Check out date");
+            }
         }
     }
 
-    /**
-     * With the getters we can set all the text field in 'initialize' if the status is
-     * either confirmed or unconfirmed. Can we send some information about particular
-     * reservation from the source?
-     *
-     * */
-
-    // do need credit card ID, guest ID?
-    public void setCreditCard(String cardNumber, String name, String cvv, String expirationDate) {
-        creditCard = new CreditCard(id,0, cardNumber, name, cvv, expirationDate);
-        // creditCard.checkExpired() -> null pointer exception error
-    }
-
     public void setGuestInformation() {
-        guest = new Guest(id, guestName.getText(), guestAge.getText(), imageView.getImage(), guestPhone.getText(), guestEmail.getText(), guestID.getText(), creditCard, guestLanguage.getText());
+        guest = new Guest(id, guestName.getText(), guestAge.getText(), imageView.getImage(), guestPhone.getText(),
+                guestEmail.getText(), guestID.getText(), creditCard, guestLanguage.getText());
         // guest.setPaymentMethod(creditCard); -> close without saving causes error
     }
+
+    public void alertMessage(String tittle, String message, String content) {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle(tittle);
+        alert.setHeaderText(message);
+        alert.setContentText(content);
+        alert.showAndWait();
+    }
+
+    /**
+     **************** Room Methods ****************
+     **/
 
     public void insertImage(Image image, ImageView imageView, Button button, int height, int width) {
         imageView.setImage(image);
@@ -306,12 +332,15 @@ public class ReservationController extends ApplicationController {
 
     public void setTotalPriceToLabel() {
         double total = 0;
-        if(!charges.isEmpty()) {
-            for (Charge charge : charges
-            ) {
+        if (roomSelection.getValue() != null && availableRooms.containsKey(roomSelection.getValue())) {
+                total += availableRooms.get(roomSelection.getValue()).getRoomPrice();
+        }
+        if (!charges.isEmpty()) {
+            for (Charge charge : charges) {
                 total += charge.getFacility().getPrice();
             }
         }
+
         totalPrice.setText("[$] " + Double.toString(total));
     }
 

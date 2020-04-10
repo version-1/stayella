@@ -185,7 +185,6 @@ public class Factory { private final static String CSV_DATA_PATH = "src/group1/s
       for(HashMap<String, String> row: csv){
         CreditCard card = new CreditCard(
           toInt(row.get("ID")),
-          toInt(row.get("GUEST_ID")),
           row.get("NUMBER"),
           row.get("NAME"),
           row.get("SECURITY_NUMBER"),

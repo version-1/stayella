@@ -1,5 +1,6 @@
 package group1.stayella.Model;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 public class CreditCard {
@@ -10,7 +11,7 @@ public class CreditCard {
     private String cardSecurityNumber;
     private String expired;
 
-    public CreditCard(int id, int guestId, String cardNumber, String cardHolderName,
+    public CreditCard(int id, String cardNumber, String cardHolderName,
             String cardSecurityNumber, String expired) {
         this.id = id;
         this.guestId = guestId;
@@ -87,10 +88,13 @@ public class CreditCard {
     }
 
     //check expired
-    public boolean checkExpired(Date expired){
-        //toDate(row.get("EXPIRE"))
+    public boolean checkExpired(String expiration) {
         Date today = new Date();
-        if(expired.after(today)) {
+        int month = today.getMonth();
+        int year = today.getYear();
+        if (Integer.parseInt(expiration.substring(2, 5)) > year ||
+                (Integer.parseInt(expiration.substring(2, 5)) == year &&
+                        Integer.parseInt(expiration.substring(0, 1)) > month)) {
             System.out.println("Expired Date");
             return false;
         } else {
