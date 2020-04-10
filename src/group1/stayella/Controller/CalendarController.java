@@ -1,12 +1,18 @@
 package group1.stayella.Controller;
 
+import java.io.IOException;
 import java.net.URL;
+import java.util.HashMap;
 import java.util.ResourceBundle;
+import java.util.function.Function;
 
 import group1.stayella.Model.Room;
+import group1.stayella.Model.Vacancy;
 import group1.stayella.Resources.Images.Icon;
 import group1.stayella.View.CalendarView.Calendar;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -20,12 +26,18 @@ public class CalendarController extends ApplicationController {
     @FXML
     Label currentDate;
 
+    @FXML
+    Button edit;
+
     private Calendar calendar;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         calendar = new Calendar();
         initTable();
+
+        ImageView image = Icon.getWithLayout(Icon.EDIT, 32, 32);
+        edit.setGraphic(image);
     }
 
     private void initTable() {
@@ -59,7 +71,6 @@ public class CalendarController extends ApplicationController {
         ImageView clean = Icon.getWithLayout(Icon.CLEAN, 30, 23);
         col6.setGraphic(clean);
 
-
         this.table.getColumns().add(col1);
         this.table.getColumns().add(col2);
         this.table.getColumns().add(col3);
@@ -67,34 +78,52 @@ public class CalendarController extends ApplicationController {
         this.table.getColumns().add(col5);
         this.table.getColumns().add(col6);
 
-        calendar.buildVacanciesTable(table);
+        Function<ActionEvent, ?> onClickCell = (event) -> {
+            try {
+                popUpAs(event, "ReservationView/index.fxml", 700, 700);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+         };
+        calendar.buildVacanciesTable(table, onClickCell);
 
-        for (Room room: getRooms()) {
+
+        for (Room room : getRooms()) {
             this.table.getItems().add(room);
         }
+    }
+
+    public void refreshCalendar() {
+        this.table.getColumns().clear();
+        this.table.getItems().clear();
+        initTable();
     }
 
     @FXML
     public void refresh() {
         this.calendar = new Calendar();
-        this.table.getColumns().clear();
-        this.table.getItems().clear();
-        initTable();
+        refreshCalendar();
     }
 
     @FXML
     public void next() {
         calendar.tomorrow();
-        this.table.getColumns().clear();
-        this.table.getItems().clear();
-        initTable();
+        refreshCalendar();
     }
 
     @FXML
     public void previous() {
         calendar.yesterday();
-        this.table.getColumns().clear();
-        this.table.getItems().clear();
-        initTable();
+        refreshCalendar();
+    }
+
+    @FXML
+    public void onClickNewRervation(ActionEvent event) throws IOException {
+        popUpAs(event, "/ReservationView/index.fxml", 700, 700);
+    }
+
+    public void onClickCell(ActionEvent event, Vacancy vacancy) throws IOException {
+        popUpAs(event, "/ReservationView/index.fxml", 700, 700);
     }
 }

@@ -359,7 +359,7 @@ public class ReservationController extends ApplicationController {
         FXMLLoader loader = new FXMLLoader(url);
 
 
-        prepareController(loader, getHotel(), getSceneStack());
+        setDefaultControllerFactory(loader);
         Parent page = loader.load();
 
         ApplicationController controller = loader.getController();

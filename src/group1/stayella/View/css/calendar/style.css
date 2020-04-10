@@ -44,6 +44,11 @@
   -fx-text-fill: #1D5162;
 }
 
+.button-icon {
+  -fx-background-color: transparent;
+  -fx-border-color: transparent;
+}
+
 .occupied-cell-1 {
   -fx-background-color: rgba(161, 204, 210, 0.8);
 }

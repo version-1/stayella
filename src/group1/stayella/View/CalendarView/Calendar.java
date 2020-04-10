@@ -4,9 +4,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.function.Function;
 
 import group1.stayella.Model.Room;
 import group1.stayella.Model.Vacancy;
+import javafx.event.ActionEvent;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -57,7 +60,7 @@ public class Calendar {
         return calendar.getTime();
     }
 
-    public void buildVacanciesTable(TableView<Room> table) {
+    public void buildVacanciesTable(TableView<Room> table, Function<ActionEvent, ?> onClickCell) {
         int count = 24 / HOUR_SPAN;
         for (Date date : getDateList()) {
             TableColumn<Room, HashMap<String, Vacancy>> col = new TableColumn<>(getDateString(date));
@@ -81,6 +84,7 @@ public class Calendar {
                                 Vacancy v = map.get(key);
                                 if (v != null && v.isOccupied()) {
                                     v.decorate(this);
+                                    Button btn = new Button("");
                                 }
                             }
 

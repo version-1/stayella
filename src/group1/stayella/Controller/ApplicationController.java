@@ -9,17 +9,17 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Stack;
+import java.util.function.Function;
 
 import group1.stayella.Model.Hotel;
 import group1.stayella.Model.Room;
-
-import javax.lang.model.element.Element;
 
 public class ApplicationController implements Initializable {
     private Hotel hotel;
@@ -74,19 +74,19 @@ public class ApplicationController implements Initializable {
     }
 
     public Stage transitTo(ActionEvent event, String fxml, Integer width, Integer height) throws IOException {
-        return transit(event, fxml, width, height);
+        return transit(event, null, fxml, width, height);
     }
 
     public Stage transitTo(ActionEvent event, String fxml) throws IOException {
-        return transit(event, fxml, 500, 500);
+        return transit(event, null, fxml, 500, 500);
     }
 
     public void popUpAs(ActionEvent event, String fxml, Integer with, Integer height) throws IOException {
-        Stage newPopup = popup(event, fxml, with, height);
+        Stage newPopup = popup(event, null, fxml, with, height);
         newPopup.showAndWait();
     }
 
-    private Stage transit(ActionEvent event, String fxml, Integer width, Integer height) throws IOException {
+    private Stage transit(ActionEvent event, Callback<Class<?>,Object> cFactory,String fxml, Integer width, Integer height) throws IOException {
         Node node = (Node) event.getSource();
         Scene scene = node.getScene();
 
@@ -95,7 +95,11 @@ public class ApplicationController implements Initializable {
         URL url = getClass().getClassLoader().getResource("group1/stayella/View/" + fxml);
         FXMLLoader loader = new FXMLLoader(url);
         pushSceneStack(scene);
-        prepareController(loader, getHotel(), sceneStack);
+        if (cFactory == null) {
+          setDefaultControllerFactory(loader);
+        } else {
+          loader.setControllerFactory(cFactory);
+        }
         Parent page = loader.load();
 
         Scene newPage = new Scene(page, width, height);
@@ -104,7 +108,13 @@ public class ApplicationController implements Initializable {
         return stage;
     }
 
-    private Stage popup(ActionEvent event, String fxml, Integer width, Integer height) throws IOException {
+    private Stage popup(
+        ActionEvent event,
+        Callback<Class<?>,Object> cFactory,
+        String fxml,
+        Integer width,
+        Integer height
+        ) throws IOException {
         Node node = (Node) event.getSource();
         Scene scene = node.getScene();
         Stage stage = (Stage) scene.getWindow();
@@ -115,11 +125,12 @@ public class ApplicationController implements Initializable {
 
         URL url = getClass().getClassLoader().getResource("group1/stayella/View/" + fxml);
         FXMLLoader loader = new FXMLLoader(url);
-        prepareController(loader, hotel, sceneStack);
+        if (cFactory == null) {
+          setDefaultControllerFactory(loader);
+        } else {
+          loader.setControllerFactory(cFactory);
+        }
         Parent page = loader.load();
-
-        ApplicationController controller = loader.getController();
-        controller.setHotel(getHotel());
 
         Scene newPage = new Scene(page, width, height);
 
@@ -133,10 +144,10 @@ public class ApplicationController implements Initializable {
         stage.close();
     }
 
-    public void prepareController(FXMLLoader loader, Hotel hotel, Stack<Scene> sceneStack) {
+    public void setDefaultControllerFactory(FXMLLoader loader) {
         loader.setControllerFactory(c -> {
             try {
-                ApplicationController controller = (ApplicationController) c.newInstance();
+                ApplicationController controller = (ApplicationController)c.newInstance();
                 controller.setHotel(getHotel());
                 controller.setSceneStack(sceneStack);
                 return controller;
