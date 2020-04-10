@@ -10,17 +10,18 @@
            fx:controller="group1.stayella.Controller.ReservationListController"
             prefHeight="400.0" prefWidth="600.0"
            stylesheets="@../css/reservationList/style.css">
-    <HBox GridPane.rowIndex="0" GridPane.columnIndex="0" spacing="50" >
+    <HBox GridPane.rowIndex="0" GridPane.columnIndex="0" spacing="20" >
         <Label fx:id="title" text="Reservation List" styleClass="title"/>
-        <Button fx:id="reload" styleClass="reload" />
+        <Button fx:id="edit" styleClass="button-edit" text="Edit" onAction="#transitToReservationList"/>
     </HBox>
-    <TableView fx:id="table" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
-
+    <TableView fx:id="table" GridPane.rowIndex="1" GridPane.columnIndex="0" />
+    <Button fx:id="back" text="Back" styleClass="button-back" onAction="#transitToHome" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
     <columnConstraints>
-        <ColumnConstraints percentWidth="100" />
+        <ColumnConstraints percentWidth="400" />
     </columnConstraints>
     <rowConstraints>
         <RowConstraints prefHeight="50" />
+        <RowConstraints />
         <RowConstraints />
     </rowConstraints>
 </GridPane>
