@@ -68,6 +68,10 @@ public class Reservation {
         return reservationNo;
     }
 
+    public List<Vacancy> getVacancies() {
+        return vacancies;
+    }
+
     public void setId(int id) {
         this.id = id;
     }

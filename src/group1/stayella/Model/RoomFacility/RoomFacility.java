@@ -33,7 +33,7 @@ public abstract class RoomFacility implements Facility {
               res = new Smorking(id, price);
               break;
             case "view":
-              res = new Smorking(id, price);
+              res = new View(id, price);
               break;
             default:
               // code block
