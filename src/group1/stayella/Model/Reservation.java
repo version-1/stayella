@@ -167,7 +167,7 @@ public class Reservation {
     // check the input
     // Date validation
     private boolean checkTheDate(LocalDate before, LocalDate settingTime){
-        if(settingTime.isAfter(before)) {
+        if (before.isAfter(settingTime)) {
             return false;
         } else {
             return true;

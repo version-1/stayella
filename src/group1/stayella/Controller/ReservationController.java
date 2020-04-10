@@ -210,8 +210,8 @@ public class ReservationController extends ApplicationController {
 
     // do need credit card ID, guest ID?
     public void setCreditCard(String cardNumber, String name, String cvv, String expirationDate) {
-        creditCard = new CreditCard(id, cardNumber, name, cvv, expirationDate);
-        // creditCard.checkExpired() -> null pointer exception error
+        creditCard = new CreditCard(id, cardNumber, name, cvv, expirationDate); // -> null pointer exception error
+        System.out.println(creditCard);
     }
 
     /**
@@ -267,6 +267,10 @@ public class ReservationController extends ApplicationController {
             if (newReservation.setCheckInTime(checkIN.getValue()) && newReservation.setCheckOutTime(checkOUT.getValue())) {
                 setGuestInformation();
                 System.out.println("RESERVATION WAS CREATED\n" + newReservation);
+                System.out.println(newReservation);
+                System.out.println(guest);
+            } else {
+                alertMessage("Unconfirmed", "Important information is missing", "Invalid Check in / Check out date");
             }
         }
     }

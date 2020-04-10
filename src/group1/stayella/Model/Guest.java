@@ -60,7 +60,7 @@ public class Guest {
     }
 
     public void setPaymentMethod(CreditCard paymentMethod) {
-        if(paymentMethod.getCardHolderName() != null && nameCheck(paymentMethod.getCardHolderName())) {
+        if (paymentMethod.getCardHolderName() != null && nameCheck(paymentMethod.getCardHolderName())) {
             this.paymentMethod = paymentMethod;
         }
     }

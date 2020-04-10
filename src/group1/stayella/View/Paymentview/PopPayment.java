@@ -47,23 +47,32 @@ public class PopPayment extends ApplicationController implements Initializable {
         window.setTitle(title);
 
         submit.setOnAction(e ->  {
-            if (fieldCardNumber.cardNumberValidation(fieldCardHolderName.getText()) &&
-                    fieldSecurityCode.securityCodeValidation(fieldSecurityCode.getText()) &&
-                    fieldCardHolderName.nameValidation(fieldCardHolderName.getText()) &&
-                    fieldExpirationDate.expirationDateValidation(fieldExpirationDate.getText())) {
-            creditCard = new ArrayList<>();
-            creditCard.add(0, fieldCardNumber.getText());
-            creditCard.add(1, fieldCardHolderName.getText());
-            creditCard.add(2, fieldSecurityCode.getText());
-            creditCard.add(3, fieldExpirationDate.getText());
-                window.close();
-            } else {
+            String message = "";
+            if (!fieldCardNumber.cardNumberValidation(fieldCardNumber.getText())) {
+                message += "Invalid Card Number!\n";
+            } else if (!fieldCardHolderName.nameValidation(fieldCardHolderName.getText())) {
+                message += "Invalid Card Holder Name!\n";
+            } else if (!fieldSecurityCode.securityCodeValidation(fieldSecurityCode.getText())) {
+                message += "Invalid Security code!\n";
+            } else if (!fieldExpirationDate.expirationDateValidation(fieldExpirationDate.getText())) {
+                message += "Invalid Expiration Date!\n";
+            }
+            if (message != "") {
                 Alert alert = new Alert(Alert.AlertType.WARNING);
                 alert.setTitle("Warning");
                 alert.setHeaderText("Invalid Credit Card Information!");
+                alert.setContentText(message);
                 alert.showAndWait();
+            } else {
+                creditCard = new ArrayList<>();
+                creditCard.add(0, fieldCardNumber.getText());
+                creditCard.add(1, fieldCardHolderName.getText());
+                creditCard.add(2, fieldSecurityCode.getText());
+                creditCard.add(3, fieldExpirationDate.getText());
+                window.close();
             }
         });
+
         VBox layout = new VBox(5);
         Label messageLabel = new Label();
         messageLabel.setStyle("-fx-text-fill: blue; -fx-font-size: 20;");
