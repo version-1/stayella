@@ -8,9 +8,14 @@ public class FoodService extends HotelFacility {
         super(id, price, capcity);
         // TODO Auto-generated constructor stub
     }
-
-
     public String getLabel() {
         return label;
+    }
+
+    @Override
+    public String toString() {
+        return "FoodService{" +
+                "label='" + label +
+                '}';
     }
 }

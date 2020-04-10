@@ -11,4 +11,11 @@ public class ExtraBed extends HotelFacility {
     public String getLabel() {
         return label;
     }
+
+    @Override
+    public String toString() {
+        return "ExtraBed{" +
+                ", label='" + label +
+                '}';
+    }
 }

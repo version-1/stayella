@@ -12,4 +12,11 @@ public class StoreLuggage extends HotelFacility {
     public String getLabel() {
         return label;
     }
+
+    @Override
+    public String toString() {
+        return "StoreLuggage{" +
+                "label='" + label +
+                '}';
+    }
 }
