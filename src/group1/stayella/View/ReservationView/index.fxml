@@ -63,7 +63,7 @@
                              GridPane.columnIndex="6" GridPane.rowIndex="3"/>
             <NumberTextField fx:id="guestAge" alignment="TOP_RIGHT" promptText="Enter Guest's Age" scaleY="0.8"
                              GridPane.columnIndex="6" GridPane.rowIndex="4"/>
-            <TextTextField alignment="TOP_RIGHT" promptText="Enter Guest's Language" scaleY="0.8" GridPane.columnIndex="6"
+            <TextTextField fx:id="guestLanguage" alignment="TOP_RIGHT" promptText="Enter Guest's Language" scaleY="0.8" GridPane.columnIndex="6"
                            GridPane.rowIndex="5"/>
         </VBox>
     </children>

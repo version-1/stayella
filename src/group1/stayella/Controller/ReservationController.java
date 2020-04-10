@@ -91,7 +91,7 @@ public class ReservationController extends ApplicationController {
     @FXML
     ComboBox<String> roomSelection;
 
-    private int id;
+    private int id = 0;
     private ArrayList<String> creditCardInfo;
     private CreditCard creditCard;
 
@@ -154,10 +154,7 @@ public class ReservationController extends ApplicationController {
     public void listOfAvailability(){
         availableRooms.clear();
         if (checkIN.getValue() == null || checkOUT.getValue() == null) {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Not allowed");
-            alert.setHeaderText("[Check in - Check out] dates are missing.");
-            alert.showAndWait();
+            alertMessage("Not Allowed", "Important information is missing.", "Select [Check in - Check out] dates");
         } else {
             List<Room> rooms = this.getHotel().getRooms();
             List<Vacancy> vacancies = rooms.get(1).getVacancies();
@@ -236,16 +233,14 @@ public class ReservationController extends ApplicationController {
         } else if (!guestPhone.phoneNumberValidation(guestPhone.getText())) {
             message += "Invalid Guest's Phone Number\n";
         } else if (!guestEmail.emailValidation(guestEmail.getText())) {
-            message += "Invalid Guest's Email";
+            message += "Invalid Guest's Email\n";
+        } else if (checkIN.getValue() == null || checkOUT.getValue() == null) {
+            message += "C/I and C/O dates are not set\n";
         } else if (status == 0) {
             message += "Cannot be reserved with undefined status";
         }
         if (!message.equals("")) {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Unconfirmed");
-            alert.setHeaderText("Important information is missing.");
-            alert.setContentText(message);
-            alert.showAndWait();
+            alertMessage("Unconfirmed", "Important information is missing.", message);
             return false;
         }
         return true;
@@ -259,16 +254,25 @@ public class ReservationController extends ApplicationController {
 
             newReservation = new Reservation(guest, 0, status);
             Room room = this.getHotel().getRooms().get(1);
-            setGuestInformation();
             newReservation.make(room, checkIN.getValue(), lengthOfStay);
-            newReservation.setCheckInTime(checkIN.getValue());
-            newReservation.setCheckOutTime(checkOUT.getValue());
+            if (newReservation.setCheckInTime(checkIN.getValue()) && newReservation.setCheckOutTime(checkOUT.getValue())) {
+                setGuestInformation();
+                System.out.println("RESERVATION WAS CREATED\n" + newReservation);
+            }
         }
     }
 
     public void setGuestInformation() {
         guest = new Guest(id, guestName.getText(), guestAge.getText(), imageView.getImage(), guestPhone.getText(), guestEmail.getText(), guestID.getText(), creditCard, guestLanguage.getText());
         // guest.setPaymentMethod(creditCard); -> close without saving causes error
+    }
+
+    public void alertMessage(String tittle, String message, String content) {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle(tittle);
+        alert.setHeaderText(message);
+        alert.setContentText(content);
+        alert.showAndWait();
     }
 
     /**

@@ -76,15 +76,21 @@ public class Reservation {
         this.charges = charges;
     }
 
-    public void setCheckInTime(LocalDate checkInTime) {
+    public boolean setCheckInTime(LocalDate checkInTime) {
         LocalDate today = LocalDate.now();
-        if(checkTheDate(today, checkInTime)){this.checkInTime = checkInTime;}
+        if (checkTheDate(today, checkInTime)) {
+             this.checkInTime = checkInTime;
+             return true;
+        }
+        return false;
     }
 
-    public void setCheckOutTime(LocalDate checkOutTime) {
-        if(checkTheDate(checkInTime, checkOutTime)) {
+    public boolean setCheckOutTime(LocalDate checkOutTime) {
+        if (checkTheDate(checkInTime, checkOutTime)) {
             this.checkOutTime = checkOutTime;
+            return true;
         }
+        return false;
     }
 
     public void setMainGuest(Guest guest) {
@@ -161,9 +167,9 @@ public class Reservation {
     // check the input
     // Date validation
     private boolean checkTheDate(LocalDate before, LocalDate settingTime){
-        if(before.isAfter(settingTime)) {
+        if(settingTime.isAfter(before)) {
             return false;
-        }else {
+        } else {
             return true;
         }
     }
