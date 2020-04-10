@@ -73,27 +73,17 @@ public class Calendar {
                 TableColumn<Room, HashMap<String, Vacancy>> term = new TableColumn<>(timeStr);
                 term.setUserData(getDateTimeString(time));
                 term.setCellValueFactory(new PropertyValueFactory<>("vacancyMap"));
-                // term.setCellValueFactory(new Callback<CellDataFeatures<Room, String>, ObservableValue<String>>() {
-                //     public ObservableValue<String> call(CellDataFeatures<Room, String> p) {
-                //         HashMap<String, Vacancy> map = p.getValue().getVacancyMap();
-                //         Vacancy v = map.get(timeStr);
-                //         // return p.get;
-                //     }
-                //  });
-                // }
+
                 // Custom rendering of the table cell.
                 term.setCellFactory(column -> {
                     String key = (String) column.getUserData();
                     return new TableCell() {
                         @Override
-                        protected void updateItem(Object item , boolean empty) {
+                        protected void updateItem(Object item, boolean empty) {
                             super.updateItem(item, empty);
-                            if (empty) {
-                                return;
-                            }
-                            HashMap<String, Vacancy> map  = (HashMap<String, Vacancy>) item;
+                            HashMap<String, Vacancy> map = (HashMap<String, Vacancy>) item;
                             if (map != null) {
-                              Vacancy v = map.get(key);
+                                Vacancy v = map.get(key);
                                 if (v != null && v.isOccupied()) {
                                     getStyleClass().add(v.getFilledClass());
                                 }
