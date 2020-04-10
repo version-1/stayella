@@ -210,7 +210,7 @@ public class ReservationController extends ApplicationController {
 
     // do need credit card ID, guest ID?
     public void setCreditCard(String cardNumber, String name, String cvv, String expirationDate) {
-        creditCard = new CreditCard(id,0, cardNumber, name, cvv, expirationDate);
+        creditCard = new CreditCard(id, cardNumber, name, cvv, expirationDate);
         // creditCard.checkExpired() -> null pointer exception error
     }
 

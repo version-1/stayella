@@ -22,7 +22,7 @@ public class PopPayment extends ApplicationController implements Initializable {
         NumberTextField fieldCardNumber = new NumberTextField();
         TextTextField fieldCardHolderName = new TextTextField();
         NumberTextField fieldSecurityCode = new NumberTextField();
-        TextField fieldExpirationDate = new TextField();
+        NumberTextField fieldExpirationDate = new NumberTextField();
         Button submit = new Button();
         fieldCardNumber.setPromptText("Enter Card Number");
         fieldCardNumber.setMaxWidth(220);
@@ -30,7 +30,7 @@ public class PopPayment extends ApplicationController implements Initializable {
         fieldCardHolderName.setPrefWidth(220);
         fieldSecurityCode.setPromptText("CVV");
         fieldSecurityCode.setPrefWidth(70);
-        fieldExpirationDate.setPromptText("MM-YY");
+        fieldExpirationDate.setPromptText("MMYY");
         fieldExpirationDate.setPrefWidth(70);
         submit.setText("SUBMIT");
         submit.setPrefWidth(70);
@@ -47,7 +47,10 @@ public class PopPayment extends ApplicationController implements Initializable {
         window.setTitle(title);
 
         submit.setOnAction(e ->  {
-            if (fieldCardNumber.getText().length() == 12 && fieldSecurityCode.getText() .length() == 3 && !fieldCardHolderName.getText().isEmpty()) {
+            if (fieldCardNumber.cardNumberValidation(fieldCardHolderName.getText()) &&
+                    fieldSecurityCode.securityCodeValidation(fieldSecurityCode.getText()) &&
+                    fieldCardHolderName.nameValidation(fieldCardHolderName.getText()) &&
+                    fieldExpirationDate.expirationDateValidation(fieldExpirationDate.getText())) {
             creditCard = new ArrayList<>();
             creditCard.add(0, fieldCardNumber.getText());
             creditCard.add(1, fieldCardHolderName.getText());

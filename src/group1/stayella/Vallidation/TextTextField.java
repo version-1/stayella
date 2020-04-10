@@ -28,5 +28,4 @@ public class TextTextField extends TextField {
         }
         return (text.indexOf('@') >= 0 && text.indexOf('.') >= 0);
     }
-
 }

@@ -2,6 +2,8 @@ package group1.stayella.Vallidation;
 
 import javafx.scene.control.TextField;
 
+import java.util.ArrayList;
+
 public class NumberTextField extends TextField {
 
     @Override
@@ -17,7 +19,7 @@ public class NumberTextField extends TextField {
     }
 
     public boolean phoneNumberValidation(String text) {
-        return (text.length() > 9);
+        return text.length() > 9;
     }
 
     public boolean numberOfGuestValidation(String text) {
@@ -28,7 +30,7 @@ public class NumberTextField extends TextField {
     }
 
     public boolean idNumberValidation(String text) {
-        return (text.length() == 9);
+        return text.length() == 9;
     }
 
     public boolean ageValidation(String text) {
@@ -37,5 +39,17 @@ public class NumberTextField extends TextField {
         }
         int age = Integer.parseInt(text);
         return (age > 19 && age < 100);
+    }
+
+    public boolean cardNumberValidation(String text) {
+        return text.length() == 12;
+    }
+
+    public boolean securityCodeValidation(String text) {
+        return text.length() == 3;
+    }
+
+    public boolean expirationDateValidation(String text) {
+        return text.length() == 4;
     }
 }
