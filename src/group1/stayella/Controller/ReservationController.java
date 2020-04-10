@@ -20,7 +20,6 @@ import javafx.stage.Stage;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.time.Duration;
 import java.time.Period;
 import java.time.ZoneId;
 import java.util.ArrayList;
@@ -151,6 +150,10 @@ public class ReservationController extends ApplicationController {
         });
     }
 
+    /**
+     **************** Room Methods ****************
+     **/
+
     public ArrayList<Room> listOfAvailability(){
         availableRooms.clear();
         if (checkIN.getValue() == null || checkOUT.getValue() == null) {
@@ -179,7 +182,6 @@ public class ReservationController extends ApplicationController {
         return availableRooms;
     }
 
-
     @FXML
     public void categorySelected() {
         listOfAvailability();
@@ -187,9 +189,9 @@ public class ReservationController extends ApplicationController {
         for (Room room : availableRooms) {
             if (categorySelection.getValue().equals("CategoryD") && room.getID() < 4) {
                 roomSelection.getItems().add(room.getRoomNumber());
-            } else if (categorySelection.getValue().equals("CategoryC") && room.getID() > 4 && room.getID() <= 10) {
+            } else if (categorySelection.getValue().equals("CategoryC") && room.getID() >= 4 && room.getID() < 10) {
                 roomSelection.getItems().add(room.getRoomNumber());
-            } else if (categorySelection.getValue().equals("CategoryB") && room.getID() > 10 && room.getID() < 16) {
+            } else if (categorySelection.getValue().equals("CategoryB") && room.getID() >= 10 && room.getID() < 16) {
                 roomSelection.getItems().add(room.getRoomNumber());
             } else if (categorySelection.getValue().equals("CategoryA") && room.getID() >= 16) {
                 roomSelection.getItems().add(room.getRoomNumber());
@@ -198,12 +200,33 @@ public class ReservationController extends ApplicationController {
 
     }
 
+    /**
+     **************** Payment Methods ****************
+     **/
+
     public void showCCInfo(String text) {
         if (text.length() != 12) {
             this.cardNumberLabel.setText("INVALID!");
         }
         this.cardNumberLabel.setText("XXXX-XXXX-" + text.substring(8));
     }
+
+    // do need credit card ID, guest ID?
+    public void setCreditCard(String cardNumber, String name, String cvv, String expirationDate) {
+        creditCard = new CreditCard(id,0, cardNumber, name, cvv, expirationDate);
+        // creditCard.checkExpired() -> null pointer exception error
+    }
+
+    /**
+     *
+     **************** Reservation Methods ****************
+     *
+     * With the getters we can set all the text field in 'initialize' if the status is
+     * either confirmed or unconfirmed. Can we send some information about particular
+     * reservation from the source?
+     *
+     * */
+
 
     public boolean submit() {
         String message = "";
@@ -233,7 +256,6 @@ public class ReservationController extends ApplicationController {
         return true;
     }
 
-
     @FXML
     public void makeAReservation(ActionEvent actionEvent) {
         if (submit()) {
@@ -249,23 +271,14 @@ public class ReservationController extends ApplicationController {
         }
     }
 
-    /**
-     * With the getters we can set all the text field in 'initialize' if the status is
-     * either confirmed or unconfirmed. Can we send some information about particular
-     * reservation from the source?
-     *
-     * */
-
-    // do need credit card ID, guest ID?
-    public void setCreditCard(String cardNumber, String name, String cvv, String expirationDate) {
-        creditCard = new CreditCard(id,0, cardNumber, name, cvv, expirationDate);
-        // creditCard.checkExpired() -> null pointer exception error
-    }
-
     public void setGuestInformation() {
         guest = new Guest(id, guestName.getText(), guestAge.getText(), imageView.getImage(), guestPhone.getText(), guestEmail.getText(), guestID.getText(), creditCard, guestLanguage.getText());
         // guest.setPaymentMethod(creditCard); -> close without saving causes error
     }
+
+    /**
+     **************** Room Methods ****************
+     **/
 
     public void insertImage(Image image, ImageView imageView, Button button, int height, int width) {
         imageView.setImage(image);
@@ -306,12 +319,17 @@ public class ReservationController extends ApplicationController {
 
     public void setTotalPriceToLabel() {
         double total = 0;
-        if(!charges.isEmpty()) {
+        if (roomSelection.getValue() != null && availableRooms.indexOf(roomSelection.getValue()) > 0) {
+                int index = availableRooms.indexOf(roomSelection.getValue());
+                total += availableRooms.get(index).getRoomPrice();
+        }
+        if (!charges.isEmpty()) {
             for (Charge charge : charges
             ) {
                 total += charge.getFacility().getPrice();
             }
         }
+
         totalPrice.setText("[$] " + Double.toString(total));
     }
 
