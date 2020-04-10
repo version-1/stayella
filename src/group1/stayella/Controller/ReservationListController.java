@@ -83,9 +83,18 @@ public class ReservationListController extends ApplicationController {
         return NumberOfVacancy;
     }
 
+    private boolean checkSameReservation(Reservation reservation1, Reservation reservation2){
+        if(reservation1.equals(reservation2)) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
     private void setDataList() {
         for (int i = 0; i < getHotel().getRooms().size(); i++) {
             Room room = getHotel().getRooms().get(i);
+            Reservation compared;
             for (int k = 0; k < room.getVacancies().size(); k++) {
                 System.out.println("Room:" + i + ", vacancy: " + k);
                 Reservation reservation = room.getVacancies().get(k).getReservation();
