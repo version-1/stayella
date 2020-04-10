@@ -14,7 +14,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 
 public class Calendar {
     public final static int DATE_SPAN = 7;
-    public final static int HOUR_SPAN = 6;
+    public final static int HOUR_SPAN = 12;
     private Date currentDate;
     private List<Date> dateList;
     private List<Date> hourList;

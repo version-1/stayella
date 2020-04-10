@@ -48,7 +48,7 @@ public class CalendarController extends ApplicationController {
         col3.setCellValueFactory(new PropertyValueFactory<>("roomCapacity"));
 
         TableColumn<Room, ImageView> col4 = new TableColumn<Room, ImageView>();
-        col4.setCellValueFactory(new PropertyValueFactory<>("cigarette"));
+        col4.setCellValueFactory(new PropertyValueFactory<>("smorking"));
         ImageView cigarette = Icon.getWithLayout(Icon.CIGARETTE, 29, 23);
         col4.setGraphic(cigarette);
 
