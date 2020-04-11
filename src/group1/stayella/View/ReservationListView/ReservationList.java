@@ -84,6 +84,10 @@ public class ReservationList {
         return numberOfGuests.get();
     }
 
+    public ReservationList getReservationList() {
+        return this;
+    }
+
 
 
     // setter

@@ -48,7 +48,7 @@ public class ReservationListController extends ApplicationController {
 
         onMouseSetReservation(table);
 
-        TableColumn<ReservationList, String> editCol = new TableColumn("Edit");
+        TableColumn<ReservationList, ReservationList> editCol = new TableColumn("Edit");
         TableColumn<Reservation, String> reservationNoCol = new TableColumn<>("Reservation No.");
         TableColumn<Guest, String> guestNameCol = new TableColumn<>("Guest Name");
         TableColumn<Reservation, Integer> numberOfGuestsCol = new TableColumn<>("Number of Guests");
@@ -72,14 +72,8 @@ public class ReservationListController extends ApplicationController {
         numberOfGuestsCol.setCellValueFactory(new PropertyValueFactory<>("numberOfGuests"));
 
 
-        editCol.setCellValueFactory(new PropertyValueFactory<>("reservation"));
-//        editCol.setCellFactory(new ButtonCellFactory( e -> onTableButtonClick(e)));
-        editCol.setCellFactory(new Callback<TableColumn<ReservationList, String>, TableCell<ReservationList, String>>() {
-            @Override
-            public TableCell<ReservationList, String> call(TableColumn<ReservationList, String> arg0) {
-                return new ButtonCellFactory(e -> onTableButtonClick(e));
-            }
-        });
+        editCol.setCellValueFactory(new PropertyValueFactory<>("reservationList"));
+        editCol.setCellFactory(getCellFactory());
 
     }
 
@@ -221,33 +215,30 @@ public class ReservationListController extends ApplicationController {
         System.out.println(selected.getRoomNumber());
     }
 
-
-}
-
-
-class ButtonCellFactory extends TableCell<ReservationList, String> {
-    private static final String TEXT = "Edit";
-    private final Button button;
-    private Consumer<ReservationList> onClick;
-
-    ButtonCellFactory(Consumer<ReservationList> onClick) {
-        button = new Button(TEXT);
-        this.onClick = onClick;
-        setText(null);
-    }
-
-    @Override
-    protected void updateItem(String item, boolean empty) {
-        super.updateItem(item, empty);
-        if (empty) {
-            setGraphic(null);
-        } else {
-            button.getStyleClass().add("button-edit");
-            button.setOnAction(event -> {
-                ReservationList value = getTableView().getItems().get(getIndex());
-                onClick.accept(value);
-            });
-            setGraphic(button);
-        }
+    private Callback<TableColumn<ReservationList, ReservationList>, TableCell<ReservationList, ReservationList>> getCellFactory() {
+        return col -> {
+            return new TableCell() {
+                @Override
+                protected void updateItem(Object item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (empty) {
+                        setGraphic(null);
+                    } else {
+                        Button button = new Button("Edit");
+                        setText(null);
+                        button.getStyleClass().add("button-edit");
+                        button.setOnAction(event -> {
+                            ReservationList value = (ReservationList)item;
+                            try {
+                                onClickCell(event, value);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        });
+                        setGraphic(button);
+                    }
+                }
+            };
+        };
     }
 }
