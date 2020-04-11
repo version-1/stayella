@@ -11,4 +11,11 @@ public class Parking extends HotelFacility {
   public String getLabel() {
     return label;
   }
+
+  @Override
+  public String toString() {
+    return "Parking{" +
+            "label='" + label +
+            '}';
+  }
 }

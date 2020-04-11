@@ -59,10 +59,12 @@ public class Guest {
         this.idNumber = idNumber;
     }
 
-    public void setPaymentMethod(CreditCard paymentMethod) {
+    public boolean setPaymentMethod(CreditCard paymentMethod) {
         if (paymentMethod.getCardHolderName() != null && nameCheck(paymentMethod.getCardHolderName())) {
             this.paymentMethod = paymentMethod;
+            return true;
         }
+        return false;
     }
 
     public void setLanguage(String language) {
@@ -106,8 +108,8 @@ public class Guest {
     }
 
     // name check
-    private boolean nameCheck(String name){
-        if( this.name.toUpperCase() == name.toUpperCase()){
+    public boolean nameCheck(String name){
+        if (this.name.toUpperCase().equals(name.toUpperCase())) {
             return true;
         } else {
             return false;

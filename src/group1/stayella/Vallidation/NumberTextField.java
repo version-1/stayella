@@ -51,7 +51,7 @@ public class NumberTextField extends TextField {
 
     public boolean expirationDateValidation(String text) {
         return (text.length() == 4 && Integer.parseInt(text.substring(0, 2)) <= 12 &&
-                ((Integer.parseInt(text.substring(2, 4)) > 21) ||
+                ((Integer.parseInt(text.substring(2, 4)) >= 21) ||
                         (Integer.parseInt(text.substring(2, 4)) == 20 && Integer.parseInt(text.substring(0, 2)) > 6)));
     }
 }

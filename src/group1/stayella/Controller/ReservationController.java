@@ -68,8 +68,6 @@ public class ReservationController extends ApplicationController {
     @FXML
     Button cancel;
     @FXML
-    Button reservation;
-    @FXML
     NumberTextField guestID;
     @FXML
     NumberTextField guestPhone;
@@ -104,8 +102,9 @@ public class ReservationController extends ApplicationController {
     public Label totalPrice;
 
     private Guest guest;
-    private Reservation newReservation;
     private int status = 0;
+
+    private Reservation reservation;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -147,6 +146,10 @@ public class ReservationController extends ApplicationController {
                 showCCInfo(creditCardInfo.get(0));
             }
         });
+    }
+
+    public void setReservation(Reservation reservation) {
+        this.reservation = reservation;
     }
 
     /**
@@ -261,23 +264,38 @@ public class ReservationController extends ApplicationController {
             Period period = Period.between(checkIN.getValue(), checkOUT.getValue());
             int lengthOfStay = (int) (period.getDays());
 
-            newReservation = new Reservation(guest, Integer.parseInt(numberOfGuests.getText()), status);
+            Reservation newReservation = new Reservation(guest, Integer.parseInt(numberOfGuests.getText()), status);
             Room room = this.getHotel().getRooms().get(1);
             newReservation.make(room, checkIN.getValue(), lengthOfStay);
-            if (newReservation.setCheckInTime(checkIN.getValue()) && newReservation.setCheckOutTime(checkOUT.getValue())) {
-                setGuestInformation();
+            if (newReservation.setCheckInTime(checkIN.getValue()) &&
+                    newReservation.setCheckOutTime(checkOUT.getValue()) && setGuestInformation()) {
+                newReservation.setCharges(charges);
                 System.out.println("RESERVATION WAS CREATED\n" + newReservation);
                 System.out.println(newReservation);
                 System.out.println(guest);
             } else {
-                alertMessage("Unconfirmed", "Important information is missing", "Invalid Check in / Check out date");
+                alertMessage("Unconfirmed", "Important information is missing",
+                        "Reservation was not created, please check the dates and the payment method");
             }
         }
     }
 
-    public void setGuestInformation() {
+    public boolean setGuestInformation() {
         guest = new Guest(id, guestName.getText(), guestAge.getText(), imageView.getImage(), guestPhone.getText(),
                 guestEmail.getText(), guestID.getText(), creditCard, guestLanguage.getText());
+        // guest's address should be added
+        if (creditCard == null) {
+            alertMessage("Unconfirmed", "This payment method cannot be confirmed",
+                    "Nothing was submit");
+            return false;
+        }
+        if (creditCard != null && !guest.nameCheck(creditCard.getCardHolderName())) {
+            alertMessage("Unconfirmed", "This payment method cannot be confirmed",
+                    "Cardholder name and guest name does not mach");
+            return false;
+        }
+        guest.setPaymentMethod(creditCard);
+        return true;
         // guest.setPaymentMethod(creditCard); -> close without saving causes error
     }
 
@@ -359,7 +377,7 @@ public class ReservationController extends ApplicationController {
         FXMLLoader loader = new FXMLLoader(url);
 
 
-        prepareController(loader, getHotel(), getSceneStack());
+        setDefaultControllerFactory(loader);
         Parent page = loader.load();
 
         ApplicationController controller = loader.getController();

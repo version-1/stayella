@@ -12,4 +12,11 @@ public class Gym extends HotelFacility {
     public String getLabel() {
         return label;
     }
+
+    @Override
+    public String toString() {
+        return "Gym{" +
+                "label='" + label +
+                '}';
+    }
 }
