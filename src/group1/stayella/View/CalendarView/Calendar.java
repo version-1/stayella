@@ -4,13 +4,17 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.function.Function;
 
 import group1.stayella.Model.Room;
 import group1.stayella.Model.Vacancy;
+import javafx.event.ActionEvent;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.util.Callback;
 
 public class Calendar {
     public final static int DATE_SPAN = 7;
@@ -57,7 +61,8 @@ public class Calendar {
         return calendar.getTime();
     }
 
-    public void buildVacanciesTable(TableView<Room> table) {
+    public void buildVacanciesTable(TableView<Room> table,
+            Callback<TableColumn<Room, HashMap<String, Vacancy>>, TableCell<Room, HashMap<String, Vacancy>>> cellFactory) {
         int count = 24 / HOUR_SPAN;
         for (Date date : getDateList()) {
             TableColumn<Room, HashMap<String, Vacancy>> col = new TableColumn<>(getDateString(date));
@@ -70,23 +75,7 @@ public class Calendar {
                 term.setCellValueFactory(new PropertyValueFactory<>("vacancyMap"));
 
                 // Custom rendering of the table cell.
-                term.setCellFactory(column -> {
-                    String key = (String) column.getUserData();
-                    return new TableCell() {
-                        @Override
-                        protected void updateItem(Object item, boolean empty) {
-                            super.updateItem(item, empty);
-                            HashMap<String, Vacancy> map = (HashMap<String, Vacancy>) item;
-                            if (map != null) {
-                                Vacancy v = map.get(key);
-                                if (v != null && v.isOccupied()) {
-                                    v.decorate(this);
-                                }
-                            }
-
-                        }
-                    };
-                });
+                term.setCellFactory(cellFactory);
                 col.getColumns().add(term);
             }
             table.getColumns().add(col);

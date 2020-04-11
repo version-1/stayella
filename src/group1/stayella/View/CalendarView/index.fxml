@@ -5,16 +5,18 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
+
 <GridPane fx:id="gridlayout" prefHeight="500" prefWidth="500" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="group1.stayella.Controller.CalendarController">
     <columnConstraints>
-      <ColumnConstraints prefWidth="250.0" />
-      <ColumnConstraints percentWidth="70.0" />
+      <!-- <ColumnConstraints prefWidth="250.0" />
+      <ColumnConstraints percentWidth="70.0" /> -->
+      <ColumnConstraints/>
    </columnConstraints>
    <rowConstraints>
       <RowConstraints vgrow="ALWAYS" />
    </rowConstraints>
    <children>
-      <VBox styleClass="sidebar" GridPane.columnIndex="0">
+      <!-- <VBox styleClass="sidebar" GridPane.columnIndex="0">
          <VBox styleClass="group" spacing="8">
             <Label styleClass="search-form-label" text="Boocking No."/>
             <TextField />
@@ -48,22 +50,11 @@
             </HBox>
          </VBox>
          <Button styleClass="button-search" text="Search" />
-      </VBox>
-      <VBox styleClass="main" GridPane.columnIndex="1">
+      </VBox> -->
+      <VBox styleClass="main">
          <HBox alignment="CENTER" styleClass="header">
             <HBox spacing="8" minWidth="150" alignment="CENTER_LEFT">
-               <ImageView
-                  fx:id="edit"
-                  fitWidth="32"
-                  fitHeight="32"
-               >
-                  <image>
-                     <Image
-                     url="group1/stayella/Resources/Images/Icons/edit-dark.png"
-                     backgroundLoading="true"
-                     />
-                  </image>
-               </ImageView>
+               <Button fx:id="edit" styleClass="button-icon" onAction="#onClickNewRervation"/>
                <ImageView
                   fx:id="datePicker"
                   fitWidth="46"
@@ -110,7 +101,7 @@
                </HBox>
             </HBox>
          </HBox>
-         <TableView minHeight="980" fx:id="table"/>
+         <TableView minHeight="640" fx:id="table"/>
          <Button
          fx:id="goBack"
          onAction="#goBack"
