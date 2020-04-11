@@ -14,9 +14,10 @@
 }
 
 .button {
-    -fx-padding: 4px 12px;
-    -fx-min-width: 120px;
-    -fx-alignment: center;
+    -fx-padding: 4px;
+    -fx-padding-left: 20px;
+    -fx-min-width: 50px;
+    -fx-text-alignment: right;
     -fx-font-weight: 800;
     -fx-text-fill: #000;
 }
@@ -31,8 +32,7 @@
     -fx-background-image: url("../../../Resources/Images/Icons/edit-dark.png");
     -fx-background-size: 20 20;
     -fx-background-repeat: no-repeat;
-    -fx-background-position: left;
-    -fx-padding: 2px 5px 4px 5px;
+    -fx-padding: 4px 5px 4px 20px;
 
 }
 
