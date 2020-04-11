@@ -111,36 +111,9 @@ public class ReservationController extends ApplicationController {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        if (status != 0) {}
-        /*
-         *****************************************************************************
-         */
-        status = 1;
-        guestName.setText("John Kuchar");
-        guestID.setText("123123123");
-        guestAge.setText("59");
-        guestLanguage.setText("Slovak");
-        guestEmail.setText("j.kuch@mail.com");
-        guestPhone.setText("123412341234");
-        reservationNumber.setText("12000000000021");
-        //checkIN.setValue(reservation.getCheckInTime());
-        //checkOUT.setValue(reservation.getCheckOutTime());
-        numberOfGuests.setText("2");
-        roomSelection.setValue("204");
-        if (status == 1) {
-            confirmed.isFocused();
-            confirmed.setStyle("-fx-border-color: #00ee00; -fx-border-width: 3px;");
-            unconfirmed.setStyle("-fx-border-color: #ee0000; -fx-border-width: 1px;");
-        } else {
-            unconfirmed.isFocused();
-            unconfirmed.setStyle("-fx-border-color: #00ee00; -fx-border-width: 3px;");
-            confirmed.setStyle("-fx-border-color: #ee0000; -fx-border-width: 1px;");
+        if (reservation != null) {
+            editReservation(reservation);
         }
-        reserve.setText("APPLY");
-        /*
-         ********************************************************************************
-         */
-
         String[] categories = {"CategoryA", "CategoryB", "CategoryC", "CategoryD"};
         categorySelection.getItems().addAll(categories);
 
