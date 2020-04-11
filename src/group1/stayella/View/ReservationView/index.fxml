@@ -29,17 +29,6 @@
         <Button fx:id="checkOut" styleClass="button-3d" prefHeight="27.0" prefWidth="136.0" text="CHECK OUT"/>
         <Button fx:id="close" styleClass="button-3d" onAction="#goBack" prefHeight="27.0" prefWidth="136.0" text="CLOSE"/>
     </HBox>
-    <HBox prefHeight="27.0" prefWidth="607.0" spacing="38" GridPane.columnIndex="1" GridPane.columnSpan="10"
-          GridPane.rowIndex="17">
-        <Label prefHeight="17.0" prefWidth="100.0" text="Time / Date:" styleClass="label-title" />
-        <DatePicker prefHeight="27.0" prefWidth="140" showWeekNumbers="true"/>
-        <Label prefHeight="17.0" prefWidth="100" text="Time / Date:" styleClass="label-title" />
-        <DatePicker prefHeight="27.0" prefWidth="140"/>
-    </HBox>
-    <Label alignment="CENTER" prefHeight="17.0" prefWidth="181.0" text="Credit Card Number:" styleClass="label-title" textFill="darkgreen"
-           GridPane.columnIndex="6" GridPane.columnSpan="2" GridPane.rowIndex="26"/>
-    <Label fx:id="cardNumberLabel" alignment="CENTER" prefHeight="17.0" prefWidth="181.0" text="XXXX-XXXX-XXXX"
-           textFill="darkgreen" GridPane.columnIndex="6" GridPane.columnSpan="2" GridPane.rowIndex="27"/>
     <Label text="Credit Card Information" styleClass="label-title" GridPane.columnIndex="8" GridPane.columnSpan="10" GridPane.rowIndex="2"/>
     <Label text="Contact" styleClass="label-title" GridPane.columnIndex="1" GridPane.rowIndex="7"/>
     <Label text="E-mail:" styleClass="label-title" GridPane.columnIndex="1" GridPane.rowIndex="8"/>
@@ -86,8 +75,6 @@
     <Label alignment="CENTER" prefHeight="17.0" prefWidth="155.0" text="Room Additions:" styleClass="label-title" GridPane.columnIndex="7"
            GridPane.columnSpan="3"
            GridPane.rowIndex="12"/>
-    <Label prefHeight="17.0" prefWidth="219.0" text="Comments and special requests:" styleClass="label-title" GridPane.columnIndex="1"
-           GridPane.columnSpan="4" GridPane.rowIndex="18"/>
     <Label text="Total Price:" styleClass="reservation-sec-title" GridPane.columnIndex="1" GridPane.columnSpan="3"
            GridPane.rowIndex="28"/>
     <Label fx:id="totalPrice" text="[$] 00.00" GridPane.columnIndex="4" GridPane.rowIndex="28"/>
@@ -110,8 +97,18 @@
                      GridPane.columnSpan="2" GridPane.rowIndex="14"/>
     <TextArea prefHeight="2" prefWidth="2" promptText="Enter Guest's Address" GridPane.columnIndex="7"
               GridPane.columnSpan="3" GridPane.rowIndex="8" GridPane.rowSpan="2"/>
-    <TextArea maxHeight="1.7976931348623157E308" prefHeight="54.0" prefWidth="220.0" GridPane.columnIndex="1"
-              GridPane.columnSpan="4" GridPane.rowIndex="19" GridPane.rowSpan="4"/>
+
+    <HBox GridPane.columnIndex="1" GridPane.columnSpan="10" GridPane.rowIndex="19" GridPane.rowSpan="4" spacing="70">
+        <VBox>
+            <Label prefHeight="17.0" prefWidth="219.0" text="Comments and special requests:" styleClass="label-title"/>
+            <TextArea maxHeight="1.7976931348623157E308" prefHeight="54.0" prefWidth="220.0" GridPane.columnIndex="1"
+                      GridPane.columnSpan="4" GridPane.rowIndex="19" GridPane.rowSpan="4"/>
+        </VBox>
+        <VBox>
+            <Label alignment="CENTER" prefHeight="17.0" prefWidth="181.0" text="Credit Card Number:" styleClass="label-title" textFill="darkgreen"/>
+            <Label fx:id="cardNumberLabel" alignment="CENTER" prefHeight="17.0" prefWidth="181.0" text="XXXX-XXXX-XXXX" textFill="darkgreen"/>
+        </VBox>
+    </HBox>
 
     <columnConstraints>
         <ColumnConstraints/>
