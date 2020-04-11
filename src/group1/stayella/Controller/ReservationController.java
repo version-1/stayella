@@ -277,7 +277,8 @@ public class ReservationController extends ApplicationController {
                 System.out.println("RESERVATION WAS CREATED\n" + newReservation);
                 System.out.println(guest);
             } else {
-                alertMessage("Unconfirmed", "Important information is missing", "Invalid Check in / Check out date");
+                alertMessage("Unconfirmed", "Important information is missing",
+                        "Reservation was not created, please check the dates and the payment method");
             }
         }
     }
