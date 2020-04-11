@@ -14,6 +14,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Callback;
 
+import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
@@ -71,7 +72,7 @@ public class ReservationListController extends ApplicationController {
         numberOfGuestsCol.setCellValueFactory(new PropertyValueFactory<>("numberOfGuests"));
 
 
-        editCol.setCellValueFactory(new PropertyValueFactory<>("DUMMY"));
+        editCol.setCellValueFactory(new PropertyValueFactory<>("reservation"));
 //        editCol.setCellFactory(new ButtonCellFactory( e -> onTableButtonClick(e)));
         editCol.setCellFactory(new Callback<TableColumn<ReservationList, String>, TableCell<ReservationList, String>>() {
             @Override
@@ -83,16 +84,7 @@ public class ReservationListController extends ApplicationController {
     }
 
     // make list
-    private boolean checkSameReservation(int reservationId, ObservableList<ReservationList> data) {
-        boolean answer = true;
-        for (int i = 0; i < data.size(); i++) {
-            if (data.get(i).getReservationId() == reservationId) {
-                answer = false;
-                break;
-            }
-        }
-        return answer;
-    }
+
 
     private void setDataList() {
         for (int i = 0; i < getHotel().getRooms().size(); i++) {
@@ -101,6 +93,7 @@ public class ReservationListController extends ApplicationController {
             for (int k = 0; k < room.getVacancies().size(); k++) {
                 Reservation reservation = room.getVacancies().get(k).getReservation();
                 if (reservation != null) {
+
                     int reservationId = reservation.getId();
                     String reservationNo = reservation.getReservationNo();
                     String guestName = reservation.getMainGuest().getName();
@@ -126,13 +119,24 @@ public class ReservationListController extends ApplicationController {
                             roomAddition
                     );
 
-                    if (checkSameReservation(reservationId, data)) {
+                    if (!haveSameReservation(reservationId, data)) {
                         data.add(list);
                     }
                 }
             }
 
         }
+    }
+
+    private boolean haveSameReservation(int reservationId, ObservableList<ReservationList> data) {
+        boolean answer = false;
+        for (int i = 0; i < data.size(); i++) {
+            if (data.get(i).getReservationId() == reservationId) {
+                answer = true;
+                break;
+            }
+        }
+        return answer;
     }
 
 
@@ -171,16 +175,32 @@ public class ReservationListController extends ApplicationController {
     }
 
 
+    public void onClickCell(ActionEvent event, ReservationList selected) throws IOException {
+        Callback<Class<?>, Object> factory = c -> {
+            try {
+                ReservationController controller = (ReservationController) c.newInstance();
+                String roomNumber = selected.getRoomNumber();
+                String reservationNo = selected.getReservationNo();
+                controller.setReservation(getReservation(roomNumber, reservationNo));
+                controller.setSceneStack(getSceneStack());
+                return controller;
+            } catch (InstantiationException e) {
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+            return null;
+        };
+
+        popUpAs(event, factory, "/ReservationView/index.fxml", 700, 800);
+    }
+
+
     @FXML
     public void transitToHome(ActionEvent actionEvent) throws IOException {
         transitTo(actionEvent, "index.fxml", 500, 500);
     }
 
-
-    @FXML
-    public void transitToReservationList(ActionEvent actionEvent) throws IOException {
-        transitTo(actionEvent, "ReservationListView/index.fxml", 800, 600);
-    }
 
 
     private void onMouseSetReservation(TableView table) {
@@ -188,9 +208,9 @@ public class ReservationListController extends ApplicationController {
             TableRow<ReservationList> row = new TableRow<>();
             row.setOnMouseClicked(event -> {
                 if (event.getClickCount() == 2 && (!row.isEmpty())) {
-                    String roomNumber = row.getItem().getRoomNumber();
-                    String reservationNo = row.getItem().getReservationNo();
-                    this.reservation = getReservation(roomNumber, reservationNo);
+                    ReservationList reservationList = row.getItem();
+//                    onClickCell(event, reservationList);
+
                 }
             });
             return row;

@@ -1,5 +1,6 @@
 package group1.stayella.View.ReservationListView;
 
+import group1.stayella.Model.Reservation;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import sun.awt.XSettings;
@@ -21,6 +22,7 @@ public class ReservationList {
 
     private final SimpleStringProperty guestName;
     private final SimpleIntegerProperty numberOfGuests;
+
 
 
     public ReservationList(
@@ -81,6 +83,7 @@ public class ReservationList {
     public int getNumberOfGuests() {
         return numberOfGuests.get();
     }
+
 
 
     // setter
