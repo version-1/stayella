@@ -23,4 +23,10 @@ public class Charge {
     public Facility getFacility() {
         return facility;
     }
+
+    @Override
+    public String toString() {
+        return "facility=" + facility +
+                ", ";
+    }
 }
