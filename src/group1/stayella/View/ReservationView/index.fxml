@@ -80,7 +80,7 @@
             </font>
         </Label>
     </HBox>
-    <Label text="Reservation Number:" styleClass="label-title" GridPane.columnIndex="1" GridPane.columnSpan="4" GridPane.rowIndex="12"/>
+    <Label text="Reservation Number:" styleClass="label-title" GridPane.columnIndex="1" GridPane.columnSpan="5" GridPane.rowIndex="12"/>
     <Label text="[Check In] - [Check Out]:" styleClass="label-title" GridPane.columnIndex="1" GridPane.columnSpan="4" GridPane.rowIndex="13"/>
     <Label text="Number of Guests:" styleClass="label-title" GridPane.columnIndex="1" GridPane.columnSpan="4" GridPane.rowIndex="14"/>
     <Label alignment="CENTER" prefHeight="17.0" prefWidth="155.0" text="Room Additions:" styleClass="label-title" GridPane.columnIndex="7"
@@ -95,7 +95,6 @@
            GridPane.columnIndex="6" GridPane.columnSpan="2" GridPane.rowIndex="28"/>
     <Label fx:id="deposit" prefHeight="17.0" prefWidth="116.0" GridPane.columnIndex="8" GridPane.rowIndex="28"/>
 
-
     <DatePicker fx:id="checkIN" prefHeight="27.0" prefWidth="120.0" GridPane.columnIndex="4" GridPane.columnSpan="2"
                 GridPane.rowIndex="13"/>
     <DatePicker fx:id="checkOUT" prefHeight="27.0" prefWidth="120.0" GridPane.columnIndex="6" GridPane.columnSpan="2"
@@ -106,7 +105,7 @@
     <NumberTextField fx:id="guestPhone" alignment="TOP_RIGHT" promptText="Enter Guest's Phone" scaleY="0.8"
                      GridPane.columnIndex="2" GridPane.columnSpan="3" GridPane.rowIndex="9"/>
     <Label fx:id="reservationNumber" alignment="TOP_RIGHT" scaleY="0.8" GridPane.columnIndex="4"
-               GridPane.columnSpan="2" GridPane.rowIndex="12"/>
+               GridPane.columnSpan="3" GridPane.rowIndex="12"/>
     <NumberTextField fx:id="numberOfGuests" alignment="TOP_RIGHT" promptText="Number of Guests" scaleY="0.8" GridPane.columnIndex="4"
                      GridPane.columnSpan="2" GridPane.rowIndex="14"/>
     <TextArea prefHeight="2" prefWidth="2" promptText="Enter Guest's Address" GridPane.columnIndex="7"

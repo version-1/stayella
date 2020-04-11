@@ -252,10 +252,6 @@ public class ReservationController extends ApplicationController {
      *
      **************** Reservation Methods ****************
      *
-     * With the getters we can set all the text field in 'initialize' if the status is
-     * either confirmed or unconfirmed. Can we send some information about particular
-     * reservation from the source?
-     *
      * */
 
     public boolean submit() {
@@ -340,6 +336,13 @@ public class ReservationController extends ApplicationController {
         return true;
     }
 
+    /**
+     *
+     * Previous reservation can be displayed by setting all the text fields, controller is displayed based on
+     * the reservation status is either confirmed or unconfirmed.
+     * Data is passed from Calendar controller as an object.
+     * @param reservation
+     */
     public void editReservation(Reservation reservation) {
         guestName.setText(reservation.getMainGuest().getName());
         guestID.setText(String.valueOf(reservation.getMainGuest().getId()));
