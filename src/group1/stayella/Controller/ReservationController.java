@@ -208,12 +208,12 @@ public class ReservationController extends ApplicationController {
     public void setCreditCard(String cardNumber, String name, String cvv, String expirationDate) {
         creditCard = new CreditCard(id, cardNumber, name, cvv, expirationDate);
         System.out.println(creditCard);
+//        creditCard.setId(id);
+//        creditCard.setCardNumber(cardNumber);
+//        creditCard.setCardHolderName(name);
+//        creditCard.setCardSecurityNumber(cvv);
+//        creditCard.setExpired(expirationDate);
     }
-
-//    public void setCharges(List<Charge> charges) {
-//        if (charges.i)
-//
-//    }
 
     public void setTotalPriceToLabel() {
         double total = 0;
@@ -271,8 +271,8 @@ public class ReservationController extends ApplicationController {
             newReservation = new Reservation(guest, Integer.parseInt(numberOfGuests.getText()), status);
             Room room = this.getHotel().getRooms().get(1);
             newReservation.make(room, checkIN.getValue(), lengthOfStay);
-            if (newReservation.setCheckInTime(checkIN.getValue()) && newReservation.setCheckOutTime(checkOUT.getValue())) {
-                setGuestInformation();
+            if (newReservation.setCheckInTime(checkIN.getValue()) &&
+                    newReservation.setCheckOutTime(checkOUT.getValue()) && setGuestInformation()) {
                 newReservation.setCharges(charges);
                 System.out.println("RESERVATION WAS CREATED\n" + newReservation);
                 System.out.println(guest);
@@ -282,11 +282,22 @@ public class ReservationController extends ApplicationController {
         }
     }
 
-    public void setGuestInformation() {
+    public boolean setGuestInformation() {
         guest = new Guest(id, guestName.getText(), guestAge.getText(), imageView.getImage(), guestPhone.getText(),
                 guestEmail.getText(), guestID.getText(), creditCard, guestLanguage.getText());
         // guest's address should be added
-        // guest.setPaymentMethod(creditCard); -> close without saving causes error
+        if (creditCard == null) {
+            alertMessage("Unconfirmed", "This payment method cannot be confirmed",
+                    "Nothing was submit");
+            return false;
+        }
+        if (creditCard != null && !guest.nameCheck(creditCard.getCardHolderName())) {
+            alertMessage("Unconfirmed", "This payment method cannot be confirmed",
+                    "Cardholder name and guest name does not mach");
+            return false;
+        }
+        guest.setPaymentMethod(creditCard);
+        return true;
     }
 
     public void alertMessage(String tittle, String message, String content) {

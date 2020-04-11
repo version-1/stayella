@@ -35,6 +35,10 @@ public class CreditCard {
         this.expired = expired;
     }
 
+    public void setCardHolderName(String cardHolderName) {
+        this.cardHolderName = cardHolderName;
+    }
+
     // getter
     public int getId() {
         return id;
@@ -61,17 +65,6 @@ public class CreditCard {
     }
 
     //method
-    // check the digits
-    private boolean checkDigits(String cardNumber){
-        int digit = cardNumber.length();
-        if(digit < 14 || digit > 16) {
-            System.out.println("Valid Input");
-            return false;
-        } else {
-            return true;
-        }
-    }
-
     // check the digits
     private boolean checkSecurityNumber(String cardSecurityNumber) {
         int cardDigit = cardNumber.length();
