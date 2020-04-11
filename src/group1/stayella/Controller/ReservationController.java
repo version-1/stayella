@@ -227,7 +227,6 @@ public class ReservationController extends ApplicationController {
      *
      * */
 
-
     public boolean submit() {
         String message = "";
         if (!guestName.nameValidation(guestName.getText())) {
@@ -258,6 +257,13 @@ public class ReservationController extends ApplicationController {
         return true;
     }
 
+
+    /**
+     * After pressing a button 'Reserve' it will be created a new reservation with the new data.
+     * Most of a necessary fields have to be filled to be the action done.
+     *
+     * @param actionEvent
+     */
     @FXML
     public void makeAReservation(ActionEvent actionEvent) {
         if (submit()) {
@@ -270,6 +276,7 @@ public class ReservationController extends ApplicationController {
             if (newReservation.setCheckInTime(checkIN.getValue()) &&
                     newReservation.setCheckOutTime(checkOUT.getValue()) && setGuestInformation()) {
                 newReservation.setCharges(charges);
+                newReservation.setRoom(availableRooms.get(roomSelection.getValue()));
                 System.out.println("RESERVATION WAS CREATED\n" + newReservation);
                 System.out.println(newReservation);
                 System.out.println(guest);
@@ -280,6 +287,10 @@ public class ReservationController extends ApplicationController {
         }
     }
 
+    /**
+     * If everything is filled properly and the data pass all the validations, the new Guest will be created.
+     * @return
+     */
     public boolean setGuestInformation() {
         guest = new Guest(id, guestName.getText(), guestAge.getText(), imageView.getImage(), guestPhone.getText(),
                 guestEmail.getText(), guestID.getText(), creditCard, guestLanguage.getText());
@@ -296,8 +307,40 @@ public class ReservationController extends ApplicationController {
         }
         guest.setPaymentMethod(creditCard);
         return true;
-        // guest.setPaymentMethod(creditCard); -> close without saving causes error
     }
+
+    public void editReservation(Reservation reservation) {
+        guestName.setText(reservation.getMainGuest().getName());
+        guestID.setText(String.valueOf(reservation.getMainGuest().getId()));
+        guestAge.setText(reservation.getMainGuest().getAge());
+        guestLanguage.setText(reservation.getMainGuest().getLanguage());
+        guestEmail.setText(reservation.getMainGuest().getEmailAddress());
+        guestPhone.setText(reservation.getMainGuest().getPhoneNumber());
+        // reservation number
+        checkIN.setValue(reservation.getCheckInTime());
+        checkOUT.setValue(reservation.getCheckOutTime());
+        numberOfGuests.setText(String.valueOf(reservation.getNumberOfGuest()));
+        roomSelection.setValue(reservation.getRoom().getRoomNumber());
+        // status
+        // Payment
+        creditCard = reservation.getMainGuest().getPaymentMethod();
+        charges = reservation.getCharges();
+        //////////////////////////////////
+//        guestName.setText("John Kuchar");
+//        guestID.setText("123123123");
+//        guestAge.setText("59");
+//        guestLanguage.setText("Slovak");
+//        guestEmail.setText("j.kuch@mail.com");
+//        guestPhone.setText("123412341234");
+//        // reservation number
+//        //checkIN.setValue(reservation.getCheckInTime());
+//        //checkOUT.setValue(reservation.getCheckOutTime());
+//        numberOfGuests.setText("2");
+//        roomSelection.setValue("204");
+//        // status
+          // Payment
+    }
+
 
     public void alertMessage(String tittle, String message, String content) {
         Alert alert = new Alert(Alert.AlertType.WARNING);

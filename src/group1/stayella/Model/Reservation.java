@@ -40,6 +40,10 @@ public class Reservation {
         index++;
     }
 
+    public Room getRoom() {
+        return room;
+    }
+
     public int getId() {
         return id;
     }
@@ -184,6 +188,7 @@ public class Reservation {
                 "id=" + id +
                 ", reservationNo='" + reservationNo + '\'' +
                 ", charges=" + charges +
+                ", room=" + room +
                 ", numberOfGuest=" + numberOfGuest +
                 ", checkInTime=" + checkInTime +
                 ", checkOutTime=" + checkOutTime +
