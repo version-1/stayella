@@ -23,7 +23,7 @@
     </HBox>
     <HBox styleClass="reservation-footer" prefHeight="27.0" prefWidth="607.0" spacing="2" GridPane.columnIndex="0" GridPane.columnSpan="10"
           GridPane.rowIndex="30">
-        <Button styleClass="button-3d" onAction="#makeAReservation" prefHeight="27.0" prefWidth="136.0" text="RESERVE"/>
+        <Button fx:id="reserve" styleClass="button-3d" onAction="#makeAReservation" prefHeight="27.0" prefWidth="136.0" text="RESERVE"/>
         <Button fx:id="cancel"  styleClass="button-3d" prefHeight="27.0" prefWidth="136.0" text="CANCEL"/>
         <Button fx:id="checkIn"  styleClass="button-3d" prefHeight="27.0" prefWidth="136.0" text="CHECK IN"/>
         <Button fx:id="checkOut" styleClass="button-3d" prefHeight="27.0" prefWidth="136.0" text="CHECK OUT"/>
@@ -105,7 +105,7 @@
                    GridPane.columnIndex="2" GridPane.columnSpan="3" GridPane.rowIndex="8"/>
     <NumberTextField fx:id="guestPhone" alignment="TOP_RIGHT" promptText="Enter Guest's Phone" scaleY="0.8"
                      GridPane.columnIndex="2" GridPane.columnSpan="3" GridPane.rowIndex="9"/>
-    <TextField alignment="TOP_RIGHT" promptText="Reservation Number" scaleY="0.8" GridPane.columnIndex="4"
+    <Label fx:id="reservationNumber" alignment="TOP_RIGHT" scaleY="0.8" GridPane.columnIndex="4"
                GridPane.columnSpan="2" GridPane.rowIndex="12"/>
     <NumberTextField fx:id="numberOfGuests" alignment="TOP_RIGHT" promptText="Number of Guests" scaleY="0.8" GridPane.columnIndex="4"
                      GridPane.columnSpan="2" GridPane.rowIndex="14"/>
