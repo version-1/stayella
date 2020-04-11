@@ -68,6 +68,8 @@ public class ReservationController extends ApplicationController {
     @FXML
     Button cancel;
     @FXML
+    Button reserve;
+    @FXML
     NumberTextField guestID;
     @FXML
     NumberTextField guestPhone;
@@ -85,6 +87,10 @@ public class ReservationController extends ApplicationController {
     DatePicker checkIN;
     @FXML
     DatePicker checkOUT;
+    @FXML
+    Label totalPrice;
+    @FXML
+    Label reservationNumber;
 
     @FXML
     ComboBox<String> categorySelection;
@@ -98,9 +104,6 @@ public class ReservationController extends ApplicationController {
     private List<Charge> charges = new ArrayList<>();
     private HashMap<String, Room> availableRooms = new HashMap<>();
 
-    @FXML
-    public Label totalPrice;
-
     private Guest guest;
     private int status = 0;
 
@@ -108,8 +111,9 @@ public class ReservationController extends ApplicationController {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        if (status != 0) {}
-
+        if (reservation != null) {
+            editReservation(reservation);
+        }
         String[] categories = {"CategoryA", "CategoryB", "CategoryC", "CategoryD"};
         categorySelection.getItems().addAll(categories);
 
@@ -221,12 +225,7 @@ public class ReservationController extends ApplicationController {
      *
      **************** Reservation Methods ****************
      *
-     * With the getters we can set all the text field in 'initialize' if the status is
-     * either confirmed or unconfirmed. Can we send some information about particular
-     * reservation from the source?
-     *
      * */
-
 
     public boolean submit() {
         String message = "";
@@ -258,6 +257,13 @@ public class ReservationController extends ApplicationController {
         return true;
     }
 
+
+    /**
+     * After pressing a button 'Reserve' it will be created a new reservation with the new data.
+     * Most of a necessary fields have to be filled to be the action done.
+     *
+     * @param actionEvent
+     */
     @FXML
     public void makeAReservation(ActionEvent actionEvent) {
         if (submit()) {
@@ -270,6 +276,7 @@ public class ReservationController extends ApplicationController {
             if (newReservation.setCheckInTime(checkIN.getValue()) &&
                     newReservation.setCheckOutTime(checkOUT.getValue()) && setGuestInformation()) {
                 newReservation.setCharges(charges);
+                newReservation.setRoom(availableRooms.get(roomSelection.getValue()));
                 System.out.println("RESERVATION WAS CREATED\n" + newReservation);
                 System.out.println(newReservation);
                 System.out.println(guest);
@@ -280,6 +287,10 @@ public class ReservationController extends ApplicationController {
         }
     }
 
+    /**
+     * If everything is filled properly and the data pass all the validations, the new Guest will be created.
+     * @return
+     */
     public boolean setGuestInformation() {
         guest = new Guest(id, guestName.getText(), guestAge.getText(), imageView.getImage(), guestPhone.getText(),
                 guestEmail.getText(), guestID.getText(), creditCard, guestLanguage.getText());
@@ -296,8 +307,43 @@ public class ReservationController extends ApplicationController {
         }
         guest.setPaymentMethod(creditCard);
         return true;
-        // guest.setPaymentMethod(creditCard); -> close without saving causes error
     }
+
+    /**
+     *
+     * Previous reservation can be displayed by setting all the text fields, controller is displayed based on
+     * the reservation status is either confirmed or unconfirmed.
+     * Data is passed from Calendar controller as an object.
+     * @param reservation
+     */
+    public void editReservation(Reservation reservation) {
+        guestName.setText(reservation.getMainGuest().getName());
+        guestID.setText(String.valueOf(reservation.getMainGuest().getId()));
+        guestAge.setText(reservation.getMainGuest().getAge());
+        guestLanguage.setText(reservation.getMainGuest().getLanguage());
+        guestEmail.setText(reservation.getMainGuest().getEmailAddress());
+        guestPhone.setText(reservation.getMainGuest().getPhoneNumber());
+        reservationNumber.setText(reservation.getReservationNo());
+        checkIN.setValue(reservation.getCheckInTime());
+        checkOUT.setValue(reservation.getCheckOutTime());
+        numberOfGuests.setText(String.valueOf(reservation.getNumberOfGuest()));
+        roomSelection.setValue(reservation.getRoom().getRoomNumber());
+        if (reservation.getStatus() == 1) {
+                confirmed.isFocused();
+                confirmed.setStyle("-fx-border-color: #00ee00; -fx-border-width: 3px;");
+                unconfirmed.setStyle("-fx-border-color: #ee0000; -fx-border-width: 1px;");
+        } else {
+                unconfirmed.isFocused();
+                unconfirmed.setStyle("-fx-border-color: #00ee00; -fx-border-width: 3px;");
+                confirmed.setStyle("-fx-border-color: #ee0000; -fx-border-width: 1px;");
+        }
+        // Payment
+        creditCard = reservation.getMainGuest().getPaymentMethod();
+        // Charges
+        charges = reservation.getCharges();
+        reserve.setText("APPLY");
+    }
+
 
     public void alertMessage(String tittle, String message, String content) {
         Alert alert = new Alert(Alert.AlertType.WARNING);
