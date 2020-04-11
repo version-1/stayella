@@ -131,15 +131,15 @@ public class ReservationController extends ApplicationController {
 
         confirmed.setOnAction(e -> {
             confirmed.isFocused();
-            confirmed.setStyle("-fx-border-color: #00ee00; -fx-border-width: 3px;");
-            unconfirmed.setStyle("-fx-border-color: #ee0000; -fx-border-width: 1px;");
+            confirmed.setStyle("-fx-border-color: #20e2aa; -fx-border-width: 3px;");
+            unconfirmed.setStyle("-fx-border-color: #ffffff; -fx-border-width: 1px;");
             status = 2;
         });
 
         unconfirmed.setOnAction(e -> {
             unconfirmed.isFocused();
-            unconfirmed.setStyle("-fx-border-color: #00ee00; -fx-border-width: 3px;");
-            confirmed.setStyle("-fx-border-color: #ee0000; -fx-border-width: 1px;");
+            unconfirmed.setStyle("-fx-border-color: #20e2aa; -fx-border-width: 3px;");
+            confirmed.setStyle("-fx-border-color: #ffffff; -fx-border-width: 1px;");
             status = 1;
         });
 
@@ -330,11 +330,11 @@ public class ReservationController extends ApplicationController {
         roomSelection.setValue(reservation.getRoom().getRoomNumber());
         if (reservation.getStatus() == 1) {
                 confirmed.isFocused();
-                confirmed.setStyle("-fx-border-color: #00ee00; -fx-border-width: 3px;");
+                confirmed.setStyle("-fx-border-color: #20e2aa; -fx-border-width: 3px;");
                 unconfirmed.setStyle("-fx-border-color: #ee0000; -fx-border-width: 1px;");
         } else {
                 unconfirmed.isFocused();
-                unconfirmed.setStyle("-fx-border-color: #00ee00; -fx-border-width: 3px;");
+                unconfirmed.setStyle("-fx-border-color: #20e2aa; -fx-border-width: 3px;");
                 confirmed.setStyle("-fx-border-color: #ee0000; -fx-border-width: 1px;");
         }
         // Payment
