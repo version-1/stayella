@@ -28,6 +28,7 @@
 }
 
 .arrow {
+  -fx-cursor: pointer;
   -fx-padding: 8px;
   -fx-text-fill: #666666;
   -fx-font-weight: 900;
@@ -45,10 +46,12 @@
 }
 
 .button-icon {
+  -fx-cursor: pointer;
   -fx-background-color: transparent;
   -fx-border-color: transparent;
 }
 .button-cell {
+  -fx-cursor: pointer;
   -fx-min-width: 64px;
   -fx-background-color: transparent;
   -fx-border-color: transparent;
