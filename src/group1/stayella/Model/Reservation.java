@@ -5,6 +5,7 @@ import java.time.ZoneId;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 
 
@@ -164,6 +165,7 @@ public class Reservation {
                 this.vacancies.add(vacancy);
             }
         }
+        this.vacancies.sort((a, b) -> { return a.compareTo(b); });
         assignReservationNo();
         return true;
     }
