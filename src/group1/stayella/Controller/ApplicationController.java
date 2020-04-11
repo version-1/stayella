@@ -16,7 +16,6 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Stack;
-import java.util.function.Function;
 
 import group1.stayella.Model.Hotel;
 import group1.stayella.Model.Room;
@@ -81,8 +80,19 @@ public class ApplicationController implements Initializable {
         return transit(event, null, fxml, 500, 500);
     }
 
+    public Stage transitTo(ActionEvent event, Callback<Class<?>, Object> cFactory, String fxml, Integer width, Integer height)
+            throws IOException {
+        return transit(event, cFactory, fxml, 500, 500);
+    }
+
     public void popUpAs(ActionEvent event, String fxml, Integer with, Integer height) throws IOException {
         Stage newPopup = popup(event, null, fxml, with, height);
+        newPopup.showAndWait();
+    }
+
+    public void popUpAs(ActionEvent event, Callback<Class<?>, Object> factory, String fxml, Integer width, Integer height)
+            throws IOException {
+        Stage newPopup = popup(event, factory, fxml, width, height);
         newPopup.showAndWait();
     }
 

@@ -14,10 +14,13 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
+import javafx.stage.Stage;
+import javafx.util.Callback;
 
 public class CalendarController extends ApplicationController {
     @FXML
@@ -78,20 +81,42 @@ public class CalendarController extends ApplicationController {
         this.table.getColumns().add(col5);
         this.table.getColumns().add(col6);
 
-        Function<ActionEvent, ?> onClickCell = (event) -> {
-            try {
-                popUpAs(event, "ReservationView/index.fxml", 700, 700);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return null;
-         };
-        calendar.buildVacanciesTable(table, onClickCell);
-
+        calendar.buildVacanciesTable(table, getCellFactory());
 
         for (Room room : getRooms()) {
             this.table.getItems().add(room);
         }
+    }
+
+    private Callback<TableColumn<Room, HashMap<String, Vacancy>>, TableCell<Room, HashMap<String, Vacancy>>> getCellFactory() {
+        return col -> {
+            String key = (String) col.getUserData();
+            return new TableCell() {
+                @Override
+                protected void updateItem(Object item, boolean empty) {
+                    super.updateItem(item, empty);
+                    HashMap<String, Vacancy> map = (HashMap<String, Vacancy>) item;
+                    if (map != null) {
+                        Vacancy v = map.get(key);
+                        if (v != null && v.isOccupied()) {
+                            v.decorate(this);
+                        }
+                        Button btn = new Button("");
+                        btn.getStyleClass().add("button-cell");
+                        btn.setOnAction(e -> {
+                            try {
+                                onClickCell(e, v);
+                            } catch (IOException e1) {
+                                e1.printStackTrace();
+                            }
+                        });
+                        setGraphic(btn);
+                    }
+
+                }
+            };
+        };
+
     }
 
     public void refreshCalendar() {
@@ -120,10 +145,27 @@ public class CalendarController extends ApplicationController {
 
     @FXML
     public void onClickNewRervation(ActionEvent event) throws IOException {
-        popUpAs(event, "/ReservationView/index.fxml", 700, 700);
+        popUpAs(event, "/ReservationView/index.fxml", 700, 800);
     }
 
     public void onClickCell(ActionEvent event, Vacancy vacancy) throws IOException {
-        popUpAs(event, "/ReservationView/index.fxml", 700, 700);
+        if (!vacancy.isOccupied()) {
+            return;
+        }
+        Callback<Class<?>, Object> factory = c -> {
+            try {
+                ReservationController controller = (ReservationController) c.newInstance();
+                controller.setHotel(getHotel());
+                controller.setReservation(vacancy.getReservation());
+                controller.setSceneStack(getSceneStack());
+                return controller;
+            } catch (InstantiationException e) {
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+            return null;
+        };
+        popUpAs(event, factory, "/ReservationView/index.fxml", 700, 800);
     }
 }

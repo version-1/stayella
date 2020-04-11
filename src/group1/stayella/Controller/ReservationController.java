@@ -68,8 +68,6 @@ public class ReservationController extends ApplicationController {
     @FXML
     Button cancel;
     @FXML
-    Button reservation;
-    @FXML
     NumberTextField guestID;
     @FXML
     NumberTextField guestPhone;
@@ -104,8 +102,9 @@ public class ReservationController extends ApplicationController {
     public Label totalPrice;
 
     private Guest guest;
-    private Reservation newReservation;
     private int status = 0;
+
+    private Reservation reservation;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -147,6 +146,10 @@ public class ReservationController extends ApplicationController {
                 showCCInfo(creditCardInfo.get(0));
             }
         });
+    }
+
+    public void setReservation(Reservation reservation) {
+        this.reservation = reservation;
     }
 
     /**
@@ -261,7 +264,7 @@ public class ReservationController extends ApplicationController {
             Period period = Period.between(checkIN.getValue(), checkOUT.getValue());
             int lengthOfStay = (int) (period.getDays());
 
-            newReservation = new Reservation(guest, Integer.parseInt(numberOfGuests.getText()), status);
+            Reservation newReservation = new Reservation(guest, Integer.parseInt(numberOfGuests.getText()), status);
             Room room = this.getHotel().getRooms().get(1);
             newReservation.make(room, checkIN.getValue(), lengthOfStay);
             if (newReservation.setCheckInTime(checkIN.getValue()) && newReservation.setCheckOutTime(checkOUT.getValue())) {

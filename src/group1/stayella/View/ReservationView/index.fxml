@@ -24,7 +24,7 @@
     </HBox>
     <HBox styleClass="reservation-footer" prefHeight="27.0" prefWidth="607.0" spacing="2" GridPane.columnIndex="0" GridPane.columnSpan="10"
           GridPane.rowIndex="30">
-        <Button fx:id="reservation" styleClass="button-3d" onAction="#makeAReservation" prefHeight="27.0" prefWidth="136.0" text="RESERVE"/>
+        <Button styleClass="button-3d" onAction="#makeAReservation" prefHeight="27.0" prefWidth="136.0" text="RESERVE"/>
         <Button fx:id="cancel"  styleClass="button-3d" prefHeight="27.0" prefWidth="136.0" text="CANCEL"/>
         <Button fx:id="checkIn"  styleClass="button-3d" prefHeight="27.0" prefWidth="136.0" text="CHECK IN"/>
         <Button fx:id="checkOut" styleClass="button-3d" prefHeight="27.0" prefWidth="136.0" text="CHECK OUT"/>
