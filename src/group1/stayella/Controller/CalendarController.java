@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.ResourceBundle;
-import java.util.function.Function;
 
 import group1.stayella.Model.Room;
 import group1.stayella.Model.Vacancy;
@@ -19,7 +18,11 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
-import javafx.stage.Stage;
+import javafx.scene.layout.Border;
+import javafx.scene.layout.BorderStroke;
+import javafx.scene.layout.BorderStrokeStyle;
+import javafx.scene.layout.BorderWidths;
+import javafx.scene.paint.Color;
 import javafx.util.Callback;
 
 public class CalendarController extends ApplicationController {
@@ -98,25 +101,16 @@ public class CalendarController extends ApplicationController {
                     HashMap<String, Vacancy> map = (HashMap<String, Vacancy>) item;
                     if (map != null) {
                         Vacancy v = map.get(key);
-                        if (v != null && v.isOccupied()) {
-                            v.decorate(this);
+                        if (v == null) {
+                          getStyleClass().add("closed-cell");
+                        } else {
+                          decorateCell(this, v);
                         }
-                        Button btn = new Button("");
-                        btn.getStyleClass().add("button-cell");
-                        btn.setOnAction(e -> {
-                            try {
-                                onClickCell(e, v);
-                            } catch (IOException e1) {
-                                e1.printStackTrace();
-                            }
-                        });
-                        setGraphic(btn);
                     }
 
                 }
             };
         };
-
     }
 
     public void refreshCalendar() {
@@ -167,5 +161,43 @@ public class CalendarController extends ApplicationController {
             return null;
         };
         popUpAs(event, factory, "/ReservationView/index.fxml", 700, 800);
+    }
+
+    private void decorateCell(TableCell cell, Vacancy v) {
+        if (!v.isOccupied()) {
+            return;
+        }
+
+        cell.getStyleClass().add(v.getFilledClass());
+        String buttonText = "";
+        if (v.isFirstVacantForRervation()) {
+            BorderStroke stroke = new BorderStroke(
+                null,
+                null,
+                null,
+                Color.ORANGE,
+                null,
+                null,
+                null,
+                BorderStrokeStyle.SOLID,
+                null,
+                new BorderWidths(5),
+                null
+            );
+            cell.setBorder(new Border(stroke));
+            buttonText = v.getReservationText();
+        }
+        cell.getStyleClass().add(v.getFilledClass());
+        cell.setId(v.getReservationNo());
+        Button btn = new Button(buttonText);
+        btn.getStyleClass().add("button-cell");
+        btn.setOnAction(e -> {
+              try {
+                  onClickCell(e, v);
+              } catch (IOException e1) {
+                  e1.printStackTrace();
+              }
+        });
+        cell.setGraphic(btn);
     }
 }

@@ -150,6 +150,11 @@ public class ReservationController extends ApplicationController {
                 showCCInfo(creditCardInfo.get(0));
             }
         });
+
+        reserve.setOnAction(e -> {
+            makeAReservation();
+            goBack(e);
+        });
     }
 
     public void setReservation(Reservation reservation) {
@@ -263,11 +268,9 @@ public class ReservationController extends ApplicationController {
     /**
      * After pressing a button 'Reserve' it will be created a new reservation with the new data.
      * Most of a necessary fields have to be filled to be the action done.
-     *
-     * @param actionEvent
      */
     @FXML
-    public void makeAReservation(ActionEvent actionEvent) {
+    public void makeAReservation() {
         if (submit()) {
             Period period = Period.between(checkIN.getValue(), checkOUT.getValue());
             int lengthOfStay = (int) (period.getDays());
@@ -287,6 +290,7 @@ public class ReservationController extends ApplicationController {
                         "Reservation was not created, please check the dates and the payment method");
             }
         }
+
     }
 
     /**

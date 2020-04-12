@@ -9,32 +9,7 @@
 <GridPane fx:id="gridlayout" stylesheets="@../css/reservation/style.css" alignment="TOP_LEFT" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="group1.stayella.Controller.ReservationController">
    <ImageView fx:id="imageView" scaleX="1.2" scaleY="1.2" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="1" GridPane.rowSpan="5" />
     <Button fx:id="imageUpload" styleClass="button-image" onAction="#onUploadImage" GridPane.columnIndex="1" text="Upload" GridPane.columnSpan="2" GridPane.rowIndex="6" GridPane.rowSpan="1" />
-   <Button fx:id="buttonCard" styleClass="button-image" GridPane.columnIndex="8" GridPane.columnSpan="5" GridPane.rowIndex="2" GridPane.rowSpan="6" />
-   <Button fx:id="buttonAdditions" styleClass="button-image" onAction="#popupAsCharge" GridPane.columnIndex="10" GridPane.columnSpan="2" GridPane.rowIndex="12" />
-
-    <HBox styleClass="reservation-sec-status" prefHeight="27.0" alignment="CENTER" GridPane.columnIndex="0" GridPane.columnSpan="10" GridPane.rowIndex="15">
-        <Button fx:id="confirmed" styleClass="button-3d" prefHeight="27.0" prefWidth="200.0" text="Confirmed" textAlignment="CENTER"/>
-        <Button fx:id="unconfirmed" styleClass="button-3d" prefHeight="27.0" prefWidth="200.0" text="Unconfirmed" textAlignment="CENTER"/>
-    </HBox>
-    <HBox styleClass="reservation-sec-status" prefHeight="27.0" spacing="8"  GridPane.columnIndex="5" GridPane.columnSpan="6" GridPane.rowIndex="14">
-        <Label text="Room Category:" styleClass="label-title" prefWidth="200.0"/>
-        <ComboBox fx:id="categorySelection" onAction="#categorySelected" prefWidth="210.0" />
-        <ComboBox fx:id="roomSelection" onAction="#setTotalPriceToLabel" prefWidth="180.0"/>
-    </HBox>
-    <HBox styleClass="reservation-footer" prefHeight="27.0" prefWidth="607.0" spacing="2" GridPane.columnIndex="0" GridPane.columnSpan="10"
-          GridPane.rowIndex="30">
-        <Button fx:id="reserve" styleClass="button-3d" onAction="#makeAReservation" prefHeight="27.0" prefWidth="136.0" text="RESERVE"/>
-        <Button fx:id="cancel"  styleClass="button-3d" prefHeight="27.0" prefWidth="136.0" text="CANCEL"/>
-        <Button fx:id="checkIn"  styleClass="button-3d" prefHeight="27.0" prefWidth="136.0" text="CHECK IN"/>
-        <Button fx:id="checkOut" styleClass="button-3d" prefHeight="27.0" prefWidth="136.0" text="CHECK OUT"/>
-        <Button fx:id="close" styleClass="button-3d" onAction="#goBack" prefHeight="27.0" prefWidth="136.0" text="CLOSE"/>
-    </HBox>
-    <Label text="Credit Card Information" styleClass="label-title" GridPane.columnIndex="8" GridPane.columnSpan="10" GridPane.rowIndex="2"/>
-    <Label text="Contact" styleClass="label-title" GridPane.columnIndex="1" GridPane.rowIndex="7"/>
-    <Label text="E-mail:" styleClass="label-title" GridPane.columnIndex="1" GridPane.rowIndex="8"/>
-    <Label text="Phone:" styleClass="label-title" GridPane.columnIndex="1" GridPane.rowIndex="9"/>
-    <Label text="Home Address:" styleClass="label-title" GridPane.columnIndex="6" GridPane.rowIndex="8"/>
-    <HBox GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.columnSpan="13" alignment="CENTER">
+    <HBox GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.columnSpan="10" alignment="CENTER">
         <Label text="GUEST INFO" styleClass="reservation-sec-title" />
     </HBox>
     <children>
@@ -55,48 +30,83 @@
                            GridPane.rowIndex="5"/>
         </VBox>
     </children>
-    <HBox GridPane.columnIndex="1" GridPane.rowIndex="11" GridPane.columnSpan="13" alignment="CENTER">
+
+    <VBox GridPane.columnIndex="8" GridPane.columnSpan="3" GridPane.rowIndex="2" GridPane.rowSpan="5" spacing="13" alignment="CENTER">
+        <Label text="Credit Card Information" styleClass="label-title" />
+        <Button fx:id="buttonCard" styleClass="button-image" />
+    </VBox>
+
+    <TextTextField fx:id="guestEmail" alignment="TOP_RIGHT" promptText="Enter Guest's E-mail" scaleY="0.8"
+                   GridPane.columnIndex="2" GridPane.columnSpan="3" GridPane.rowIndex="8"/>
+    <NumberTextField fx:id="guestPhone" alignment="TOP_RIGHT" promptText="Enter Guest's Phone" scaleY="0.8"
+                     GridPane.columnIndex="2" GridPane.columnSpan="3" GridPane.rowIndex="9"/>
+    <TextArea prefHeight="2" prefWidth="2" promptText="Enter Guest's Address" GridPane.columnIndex="7"
+              GridPane.columnSpan="3" GridPane.rowIndex="8" GridPane.rowSpan="2"/>
+    <Label text="Contact" styleClass="label-title" GridPane.columnIndex="1" GridPane.rowIndex="7"/>
+    <Label text="E-mail:" styleClass="label-title" GridPane.columnIndex="1" GridPane.rowIndex="8"/>
+    <Label text="Phone:" styleClass="label-title" GridPane.columnIndex="1" GridPane.rowIndex="9"/>
+    <Label text="Home Address:" styleClass="label-title" GridPane.columnIndex="6" GridPane.rowIndex="8"/>
+
+    <HBox GridPane.columnIndex="1" GridPane.rowIndex="11" GridPane.columnSpan="10" alignment="CENTER">
         <Label alignment="CENTER" prefHeight="18.0" prefWidth="635.0" text="RESERVATION" styleClass="reservation-sec-title">
             <font>
                 <Font name="System Bold" size="14.0"/>
             </font>
         </Label>
     </HBox>
-    <HBox GridPane.columnIndex="1" GridPane.rowIndex="16" GridPane.columnSpan="13" alignment="CENTER">
+    <HBox GridPane.columnIndex="1" GridPane.columnSpan="5" GridPane.rowIndex="12" >
+        <Label text="Reservation Number:" styleClass="label-title" />
+        <Label fx:id="reservationNumber" alignment="TOP_RIGHT" scaleY="0.8" />
+    </HBox>
+    <HBox GridPane.columnIndex="7" GridPane.columnSpan="3" GridPane.rowIndex="12">
+        <Label alignment="CENTER" prefHeight="17.0" prefWidth="155.0" text="Room Additions:" styleClass="label-title" />
+        <Button fx:id="buttonAdditions" styleClass="button-image" onAction="#popupAsCharge" />
+    </HBox>
+
+    <HBox GridPane.columnIndex="1" GridPane.columnSpan="10" GridPane.rowIndex="13" spacing="15">
+        <Label text="[Check In] - [Check Out]:" />
+        <DatePicker fx:id="checkOUT" prefHeight="27.0" prefWidth="120.0" />
+        <DatePicker fx:id="checkIN" prefHeight="27.0" prefWidth="120.0" />
+    </HBox>
+
+    <HBox GridPane.columnIndex="1" GridPane.columnSpan="10" GridPane.rowIndex="14" spacing="15" prefHeight="27.0">
+        <Label text="Number of Guests:" styleClass="label-title" />
+        <NumberTextField fx:id="numberOfGuests" alignment="TOP_RIGHT" promptText="No of Guests" scaleY="0.8" prefWidth="100"/>
+        <Label text="Room Category:" styleClass="label-title" prefWidth="120.0"/>
+        <ComboBox fx:id="categorySelection" onAction="#categorySelected" prefWidth="120.0" />
+        <ComboBox fx:id="roomSelection" onAction="#setTotalPriceToLabel" prefWidth="70.0"/>
+    </HBox>
+    <HBox styleClass="reservation-sec-status" prefHeight="27.0" alignment="CENTER" GridPane.columnIndex="0" GridPane.columnSpan="10" GridPane.rowIndex="16">
+        <Button fx:id="confirmed" styleClass="button-3d" prefHeight="27.0" prefWidth="200.0" text="Confirmed" textAlignment="CENTER"/>
+        <Button fx:id="unconfirmed" styleClass="button-3d" prefHeight="27.0" prefWidth="200.0" text="Unconfirmed" textAlignment="CENTER"/>
+    </HBox>
+
+    <HBox GridPane.columnIndex="1" GridPane.rowIndex="18" GridPane.columnSpan="10" alignment="CENTER">
         <Label alignment="CENTER" prefHeight="18.0" prefWidth="709.0" text="CHECK IN   |   CHECK OUT" styleClass="reservation-sec-title" >
             <font>
                 <Font name="System Bold" size="14.0"/>
             </font>
         </Label>
     </HBox>
-    <Label text="Reservation Number:" styleClass="label-title" GridPane.columnIndex="1" GridPane.columnSpan="5" GridPane.rowIndex="12"/>
-    <Label text="[Check In] - [Check Out]:" styleClass="label-title" GridPane.columnIndex="1" GridPane.columnSpan="4" GridPane.rowIndex="13"/>
-    <Label text="Number of Guests:" styleClass="label-title" GridPane.columnIndex="1" GridPane.columnSpan="4" GridPane.rowIndex="14"/>
-    <Label alignment="CENTER" prefHeight="17.0" prefWidth="155.0" text="Room Additions:" styleClass="label-title" GridPane.columnIndex="7"
-           GridPane.columnSpan="3"
-           GridPane.rowIndex="12"/>
-    <Label text="Total Price:" styleClass="reservation-sec-title" GridPane.columnIndex="1" GridPane.columnSpan="3"
-           GridPane.rowIndex="28"/>
-    <Label fx:id="totalPrice" text="[$] 00.00" GridPane.columnIndex="4" GridPane.rowIndex="28"/>
-    <Label alignment="CENTER" prefHeight="17.0" prefWidth="121.0" text="Deposit" styleClass="reservation-sec-title"
-           GridPane.columnIndex="6" GridPane.columnSpan="2" GridPane.rowIndex="28"/>
-    <Label fx:id="deposit" prefHeight="17.0" prefWidth="116.0" GridPane.columnIndex="8" GridPane.rowIndex="28"/>
 
-    <DatePicker fx:id="checkIN" prefHeight="27.0" prefWidth="120.0" GridPane.columnIndex="4" GridPane.columnSpan="2"
-                GridPane.rowIndex="13"/>
-    <DatePicker fx:id="checkOUT" prefHeight="27.0" prefWidth="120.0" GridPane.columnIndex="6" GridPane.columnSpan="2"
-                GridPane.rowIndex="13"/>
+    <HBox GridPane.columnIndex="0" GridPane.columnSpan="5" spacing="20" GridPane.rowIndex="28">
+        <Label text="Total Price:" styleClass="reservation-sec-title" />
+        <Label fx:id="totalPrice" text="[$] 00.00" />
+    </HBox>
+    <HBox GridPane.columnIndex="7" GridPane.columnSpan="4" GridPane.rowIndex="28" spacing="10" alignment="CENTER_RIGHT">
+        <Label alignment="CENTER" prefHeight="17.0" prefWidth="121.0" text="Deposit:" styleClass="reservation-sec-title"/>
+        <Label fx:id="deposit" text="[$] 00.00" prefHeight="17.0" prefWidth="116.0" />
+    </HBox>
 
-    <TextTextField fx:id="guestEmail" alignment="TOP_RIGHT" promptText="Enter Guest's E-mail" scaleY="0.8"
-                   GridPane.columnIndex="2" GridPane.columnSpan="3" GridPane.rowIndex="8"/>
-    <NumberTextField fx:id="guestPhone" alignment="TOP_RIGHT" promptText="Enter Guest's Phone" scaleY="0.8"
-                     GridPane.columnIndex="2" GridPane.columnSpan="3" GridPane.rowIndex="9"/>
-    <Label fx:id="reservationNumber" alignment="TOP_RIGHT" scaleY="0.8" GridPane.columnIndex="4"
-               GridPane.columnSpan="3" GridPane.rowIndex="12"/>
-    <NumberTextField fx:id="numberOfGuests" alignment="TOP_RIGHT" promptText="Number of Guests" scaleY="0.8" GridPane.columnIndex="4"
-                     GridPane.columnSpan="2" GridPane.rowIndex="14"/>
-    <TextArea prefHeight="2" prefWidth="2" promptText="Enter Guest's Address" GridPane.columnIndex="7"
-              GridPane.columnSpan="3" GridPane.rowIndex="8" GridPane.rowSpan="2"/>
+    <HBox styleClass="reservation-footer" prefHeight="27.0"  spacing="2" GridPane.columnIndex="0" GridPane.columnSpan="9"
+          GridPane.rowIndex="30">
+        <Button fx:id="reserve" styleClass="button-3d" onAction="#goBack" prefHeight="27.0" prefWidth="100.0" text="RESERVE"/>
+        <Button fx:id="cancel"  styleClass="button-3d" prefHeight="27.0" prefWidth="100.0" text="CANCEL"/>
+        <Button fx:id="checkIn"  styleClass="button-3d" prefHeight="27.0" prefWidth="100.0" text="CHECK IN"/>
+        <Button fx:id="checkOut" styleClass="button-3d" prefHeight="27.0" prefWidth="100.0" text="CHECK OUT"/>
+        <Button fx:id="close" styleClass="button-3d" onAction="#goBack" prefHeight="27.0" prefWidth="100.0" text="CLOSE"/>
+    </HBox>
+
 
     <HBox GridPane.columnIndex="1" GridPane.columnSpan="10" GridPane.rowIndex="19" GridPane.rowSpan="4" spacing="70">
         <VBox spacing="6">
@@ -136,13 +146,13 @@
         <RowConstraints/>
         <RowConstraints/>
         <RowConstraints/>
-        <RowConstraints maxHeight="0.0" minHeight="0.0" prefHeight="0.0"/>
-        <RowConstraints maxHeight="25.0" minHeight="18.0" prefHeight="22.0"/>
-        <RowConstraints maxHeight="27.0" minHeight="17.0" prefHeight="22.0"/>
-        <RowConstraints maxHeight="27.0" minHeight="19.0" prefHeight="23.0"/>
-        <RowConstraints maxHeight="27.0" minHeight="20.0" prefHeight="24.0"/>
-        <RowConstraints maxHeight="32.0" minHeight="24.0" prefHeight="25.0"/>
-        <RowConstraints maxHeight="32.0" minHeight="24.0" prefHeight="25.0"/>
+        <RowConstraints/>
+        <RowConstraints maxHeight="27.0" minHeight="27.0" prefHeight="27.0"/>
+        <RowConstraints maxHeight="27.0" minHeight="27.0" prefHeight="27.0"/>
+        <RowConstraints maxHeight="27.0" minHeight="27.0" prefHeight="27.0"/>
+        <RowConstraints maxHeight="27.0" minHeight="27.0" prefHeight="27.0"/>
+        <RowConstraints maxHeight="8.0" minHeight="8.0" prefHeight="8.0"/>
+        <RowConstraints maxHeight="27.0" minHeight="27.0" prefHeight="27.0"/>
         <RowConstraints/>
         <RowConstraints/>
         <RowConstraints/>

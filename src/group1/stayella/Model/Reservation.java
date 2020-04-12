@@ -11,8 +11,8 @@ import java.util.Date;
 
 public class Reservation {
     private final static int CANCEL = 0;
-    private final static int UNCONFIRMED = 0;
-    private final static int CONFIRMED = 0;
+    private final static int UNCONFIRMED = 1;
+    private final static int CONFIRMED = 2;
 
     private static int index = 1;
     private int id;
@@ -75,6 +75,20 @@ public class Reservation {
 
     public List<Vacancy> getVacancies() {
         return vacancies;
+    }
+
+    public Date getStartDate() {
+        if (vacancies == null || vacancies.size() == 0) {
+            return null;
+        }
+        return this.vacancies.get(0).getStartTime();
+    }
+
+    public Date getEndDate() {
+        if (vacancies == null || vacancies.size() == 0) {
+            return null;
+        }
+        return vacancies.get(vacancies.size() - 1).getEndTime();
     }
 
     public void setId(int id) {
@@ -140,11 +154,7 @@ public class Reservation {
     }
 
     public boolean make(Room room, LocalDate start, int lengthOfStay) {
-       boolean res = reserve(room.getVacancies(), start, lengthOfStay);
-       if (res) {
-         setRoom(room);
-       }
-       return res;
+       return reserve(room.getVacancies(), start, lengthOfStay);
     }
 
     private boolean reserve(List<Vacancy> vacancies, LocalDate start, int lengthOfStay) {
@@ -158,18 +168,31 @@ public class Reservation {
         calendar.setTime(date);
         calendar.add(Calendar.DATE, lengthOfStay);
         Date end = calendar.getTime();
+
+        List<Vacancy> reservingVacancies = new ArrayList<Vacancy>();
         for (Vacancy vacancy: vacancies) {
-            boolean isInclude = date.compareTo(vacancy.getEndTime()) <= 0 &&
-                end.compareTo(vacancy.getStartTime()) >= 0;
+            boolean isInclude = date.compareTo(vacancy.getEndTime()) < 0 &&
+                end.compareTo(vacancy.getStartTime()) > 0;
             if (isInclude) {
                 if (vacancy.isOccupied()) {
+                    // reservation fail
                     return false;
                 }
-                vacancy.setReservation(this);
-                this.vacancies.add(vacancy);
+                reservingVacancies.add(vacancy);
             }
         }
-        this.vacancies.sort((a, b) -> { return a.compareTo(b); });
+
+        // check if vacancies are enough to reserve
+        reservingVacancies.sort((a, b) -> { return a.compareTo(b); });
+        if (reservingVacancies.size() != lengthOfStay * Vacancy.NUMBER_OF_VACANCY_PER_DAY ) {
+            return false;
+        }
+
+        for (Vacancy v: reservingVacancies) {
+            v.setReservation(this);
+        }
+        this.vacancies = reservingVacancies;
+        setRoom(this.vacancies.get(0).getRoom());
         assignReservationNo();
         return true;
     }

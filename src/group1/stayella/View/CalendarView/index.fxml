@@ -6,7 +6,7 @@
 <?import javafx.scene.text.*?>
 
 
-<GridPane fx:id="gridlayout" prefHeight="500" prefWidth="500" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="group1.stayella.Controller.CalendarController">
+<GridPane fx:id="gridlayout" stylesheets="@../css/calendar/style.css" prefHeight="500" prefWidth="500" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="group1.stayella.Controller.CalendarController">
     <columnConstraints>
       <!-- <ColumnConstraints prefWidth="250.0" />
       <ColumnConstraints percentWidth="70.0" /> -->
@@ -104,8 +104,9 @@
          <TableView minHeight="640" fx:id="table"/>
          <Button
          fx:id="goBack"
+         styleClass="button-3d"
          onAction="#goBack"
-         text="go back"
+         text="Back"
          GridPane.columnIndex="1"
          GridPane.rowIndex="3"
          />

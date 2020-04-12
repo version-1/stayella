@@ -3,7 +3,6 @@ package group1.stayella.Controller;
 import group1.stayella.Resources.Images.Icon;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Label;
@@ -74,13 +73,12 @@ public class HomeController extends ApplicationController {
     @FXML
     public void transitToReservation(ActionEvent actionEvent) throws IOException {
         popUpAs(actionEvent, "ReservationView/index.fxml", 690, 800);
+
     }
 
     @FXML
     public void transitToCalendar(ActionEvent actionEvent) throws IOException {
-        Stage stage = transitTo(actionEvent, "CalendarView/index.fxml", 1200, 980);
-        Scene scene = stage.getScene();
-        scene.getStylesheets().add("group1/stayella/View/css/calendar/style.css");
+        transitTo(actionEvent, "CalendarView/index.fxml", 1200, 980);
     }
 
     @FXML
