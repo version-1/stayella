@@ -305,10 +305,11 @@ public class ReservationController extends ApplicationController {
         if (submit()) {
             Period period = Period.between(checkIN.getValue(), checkOUT.getValue());
             int lengthOfStay = (int) (period.getDays());
-
+            setGuestInformation();
             Reservation newReservation = new Reservation(guest, Integer.parseInt(numberOfGuests.getText()), status);
             Room room = this.getHotel().getRooms().get(1);
             newReservation.make(room, checkIN.getValue(), lengthOfStay);
+
             if (newReservation.setCheckInTime(checkIN.getValue()) &&
                     newReservation.setCheckOutTime(checkOUT.getValue()) && setGuestInformation()) {
                 newReservation.setCharges(charges);
@@ -368,6 +369,7 @@ public class ReservationController extends ApplicationController {
         checkOUT.setValue(reservation.getEndDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
         numberOfGuests.setText(String.valueOf(reservation.getNumberOfGuest()));
         roomSelection.setValue(reservation.getRoom().getRoomNumber());
+
         if (reservation.getStatus() == 1) {
             confirmed.isFocused();
             confirmed.setStyle("-fx-border-color: #20e2aa; -fx-border-width: 3px;");
@@ -454,8 +456,7 @@ public class ReservationController extends ApplicationController {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            String url = "group1/stayella/Resources/Images/Guests/"+ timestamp + "-"  + fromPath.getFileName();
-            System.out.println(url);
+            String url =  "file:///" + target.toString();
             Image imageOfGuest = new Image(url, 112, 112, true, false);
             return imageOfGuest;
         }
