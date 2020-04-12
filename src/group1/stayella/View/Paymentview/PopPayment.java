@@ -18,20 +18,26 @@ import java.util.ArrayList;
 public class PopPayment extends ApplicationController implements Initializable {
     static ArrayList<String> creditCard;
 
-    public static ArrayList<String> display(String title) {
+    public static ArrayList<String> display(String number, String name, String code) {
         NumberTextField fieldCardNumber = new NumberTextField();
         TextTextField fieldCardHolderName = new TextTextField();
         NumberTextField fieldSecurityCode = new NumberTextField();
         NumberTextField fieldExpirationDate = new NumberTextField();
-        Button submit = new Button();
-        fieldCardNumber.setPromptText("Enter Card Number");
         fieldCardNumber.setMaxWidth(220);
-        fieldCardHolderName.setPromptText("Enter Card Holder Name");
         fieldCardHolderName.setPrefWidth(220);
-        fieldSecurityCode.setPromptText("CVV");
         fieldSecurityCode.setPrefWidth(70);
-        fieldExpirationDate.setPromptText("MMYY");
         fieldExpirationDate.setPrefWidth(70);
+        Button submit = new Button();
+        if (number != null && name != null && code != null) {
+            fieldCardNumber.setText(number);
+            fieldCardHolderName.setText(name);
+            fieldSecurityCode.setText(code);
+        } else {
+            fieldCardNumber.setPromptText("Enter Card Number");
+            fieldCardHolderName.setPromptText("Enter Card Holder Name");
+            fieldSecurityCode.setPromptText("CVV");
+        }
+        fieldExpirationDate.setPromptText("MMYY");
         submit.setText("SUBMIT");
         submit.setPrefWidth(70);
         HBox hbox = new HBox();
@@ -44,7 +50,6 @@ public class PopPayment extends ApplicationController implements Initializable {
 
         Stage window = new Stage();
         window.initModality(Modality.APPLICATION_MODAL);
-        window.setTitle(title);
 
         submit.setOnAction(e ->  {
             String message = "";
