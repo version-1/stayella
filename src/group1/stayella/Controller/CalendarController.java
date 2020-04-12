@@ -149,7 +149,7 @@ public class CalendarController extends ApplicationController {
 
     @FXML
     public void onClickNewRervation(ActionEvent event) throws IOException {
-        popUpAs(event, "/ReservationView/index.fxml", 700, 800);
+        popUpAs(event, "/ReservationView/index.fxml", 650, 790);
     }
 
     public void onClickCell(ActionEvent event, Vacancy vacancy) throws IOException {

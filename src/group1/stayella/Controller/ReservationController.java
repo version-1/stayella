@@ -113,6 +113,21 @@ public class ReservationController extends ApplicationController {
     public void initialize(URL location, ResourceBundle resources) {
         if (reservation != null) {
             editReservation(reservation);
+            reserve.setOnAction(e -> {
+                if (makeAReservation()) {
+                    try {
+                        transitTo(e, "/CalendarView/index.fxml", 1200, 980);
+                    } catch (Exception exception) {
+                        System.out.println("Invalid Address.");
+                    }
+                }
+            });
+        } else {
+            reserve.setOnAction(e -> {
+                if (makeAReservation()) {
+                    goBack(e);
+                }
+            });
         }
         String[] categories = {"CategoryA", "CategoryB", "CategoryC", "CategoryD"};
         categorySelection.getItems().addAll(categories);
@@ -149,11 +164,6 @@ public class ReservationController extends ApplicationController {
                 setCreditCard(creditCardInfo.get(0), creditCardInfo.get(1), creditCardInfo.get(2), creditCardInfo.get(3));
                 showCCInfo(creditCardInfo.get(0));
             }
-        });
-
-        reserve.setOnAction(e -> {
-            makeAReservation();
-            goBack(e);
         });
     }
 
@@ -270,7 +280,7 @@ public class ReservationController extends ApplicationController {
      * Most of a necessary fields have to be filled to be the action done.
      */
     @FXML
-    public void makeAReservation() {
+    public boolean makeAReservation() {
         if (submit()) {
             Period period = Period.between(checkIN.getValue(), checkOUT.getValue());
             int lengthOfStay = (int) (period.getDays());
@@ -285,12 +295,14 @@ public class ReservationController extends ApplicationController {
                 System.out.println("RESERVATION WAS CREATED\n" + newReservation);
                 System.out.println(newReservation);
                 System.out.println(guest);
+                return true;
             } else {
                 alertMessage("Unconfirmed", "Important information is missing",
                         "Reservation was not created, please check the dates and the payment method");
+                return false;
             }
         }
-
+        return false;
     }
 
     /**
