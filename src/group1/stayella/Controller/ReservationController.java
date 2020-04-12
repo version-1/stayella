@@ -114,7 +114,6 @@ public class ReservationController extends ApplicationController {
 
     private Reservation reservation;
 
-    private static File imageFile;
     private static boolean IMAGE_UPLOADED = false;
 
     @Override
@@ -420,15 +419,15 @@ public class ReservationController extends ApplicationController {
 
     @FXML
     public void onUploadImage(ActionEvent actionEvent) throws IOException {
-        setFileOfImage();
-        String url = "file:///" + imageFile.getPath();
+        File file = getFileOfImage();
+        String url = "file:///" + file.getPath();
         Image imageOfGuest = new Image(url, 112, 112, true, false);
         imageView.setImage(imageOfGuest);
         IMAGE_UPLOADED = true;
-        saveFile();
+        saveFile(file);
     }
 
-    public void setFileOfImage() throws IOException {
+    public File getFileOfImage() throws IOException {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open the image");
         fileChooser.getExtensionFilters().add(
@@ -438,14 +437,14 @@ public class ReservationController extends ApplicationController {
                 new File(System.getProperty("user.home"))
         );
         File file = fileChooser.showOpenDialog(null);
-        imageFile = file;
+        return file;
     }
 
-    private void saveFile() throws IOException {
+    private void saveFile(File file) throws IOException {
         if(IMAGE_UPLOADED) {
-            Path from = imageFile.toPath();
+            Path from = file.toPath();
             System.out.println(from);
-            Path target = Paths.get("src/group1/stayella/Resources/Images/Guests/" + imageFile.getName());
+            Path target = Paths.get("src/group1/stayella/Resources/Images/Guests/" + file.getName());
             System.out.println(target);
             Files.copy(from, target);
         }
