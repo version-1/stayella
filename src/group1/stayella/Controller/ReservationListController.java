@@ -110,7 +110,8 @@ public class ReservationListController extends ApplicationController {
                             checkIn,
                             checkOut,
                             roomNumber,
-                            roomAddition
+                            roomAddition,
+                            reservation
                     );
 
                     if (!haveSameReservation(reservationId, data)) {
@@ -133,49 +134,13 @@ public class ReservationListController extends ApplicationController {
         return answer;
     }
 
-
-    /**
-     * Get a specific Room object by roomNumber
-     *
-     * @param roomNumber
-     * @return room
-     */
-    private Room getRoom(String roomNumber) {
-        List<Room> rooms = getHotel().getRooms();
-        for (int i = 0; i < rooms.size(); i++) {
-            if (rooms.get(i).getRoomNumber() == roomNumber) {
-                return rooms.get(i);
-            }
-        }
-        return null;
-    }
-
-    /**
-     * Get a specific Reservation object by roomNumber and reservationNo
-     *
-     * @param roomNumber
-     * @param reservationNo
-     * @return Reservation
-     */
-    private Reservation getReservation(String roomNumber, String reservationNo) {
-        Room room = getRoom(roomNumber);
-        for (int i = 0; i < room.getVacancies().size(); i++) {
-            Reservation reservation = room.getVacancies().get(i).getReservation();
-            if (reservation != null && reservation.getReservationNo() == reservationNo) {
-                return reservation;
-            }
-        }
-        return null;
-    }
-
-
     public void onClickCell(ActionEvent event, ReservationList selected) throws IOException {
         Callback<Class<?>, Object> factory = c -> {
             try {
                 ReservationController controller = (ReservationController) c.newInstance();
                 String roomNumber = selected.getRoomNumber();
                 String reservationNo = selected.getReservationNo();
-                controller.setReservation(getReservation(roomNumber, reservationNo));
+                controller.setReservation(selected.getReservation());
                 controller.setSceneStack(getSceneStack());
                 return controller;
             } catch (InstantiationException e) {

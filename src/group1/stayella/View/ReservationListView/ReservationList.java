@@ -23,6 +23,8 @@ public class ReservationList {
     private final SimpleStringProperty guestName;
     private final SimpleIntegerProperty numberOfGuests;
 
+    private Reservation reservation;
+
 
 
     public ReservationList(
@@ -34,7 +36,8 @@ public class ReservationList {
             String checkIn,
             String checkOut,
             String roomNumber,
-            int roomAddition
+            int roomAddition,
+            Reservation reservation
     ) {
         this.reservationId = new SimpleIntegerProperty(reservationId);
         this.reservationNo = new SimpleStringProperty(reservationNo);
@@ -45,6 +48,7 @@ public class ReservationList {
         this.checkOut = new SimpleStringProperty(checkOut);
         this.roomNumber = new SimpleStringProperty(roomNumber);
         this.roomAddition = new SimpleIntegerProperty(roomAddition);
+        this.reservation = reservation;
 
     }
 
@@ -88,7 +92,9 @@ public class ReservationList {
         return this;
     }
 
-
+    public Reservation getReservation() {
+        return reservation;
+    }
 
     // setter
     public void setReservationId(int reservationId) {
@@ -127,6 +133,9 @@ public class ReservationList {
         this.numberOfGuests.set(numberOfGuests);
     }
 
+    public void setReservation(Reservation reservation) {
+        this.reservation = reservation;
+    }
 
     //
 

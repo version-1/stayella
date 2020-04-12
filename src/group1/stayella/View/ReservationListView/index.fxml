@@ -8,19 +8,19 @@
 
 <GridPane  xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1"
            fx:controller="group1.stayella.Controller.ReservationListController"
-            prefHeight="400.0" prefWidth="600.0"
+            prefHeight="500.0" prefWidth="600.0"
            stylesheets="@../css/reservationList/style.css">
     <HBox GridPane.rowIndex="0" GridPane.columnIndex="0" spacing="20" >
         <Label fx:id="title" text="Reservation List" styleClass="title"/>
     </HBox>
     <TableView fx:id="table" GridPane.rowIndex="1" GridPane.columnIndex="0" />
-    <Button fx:id="back" text="Back" styleClass="button-back" onAction="#transitToHome" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+        <Button fx:id="back" text="Back" styleClass="button-back" onAction="#transitToHome" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
     <columnConstraints>
         <ColumnConstraints percentWidth="400" />
     </columnConstraints>
     <rowConstraints>
         <RowConstraints prefHeight="50" />
         <RowConstraints />
-        <RowConstraints />
+        <RowConstraints prefHeight="30" />
     </rowConstraints>
 </GridPane>
