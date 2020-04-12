@@ -101,6 +101,10 @@ public class CalendarController extends ApplicationController {
                         if (v != null && v.isOccupied()) {
                             v.decorate(this);
                         }
+
+                        if (v == null) {
+                          getStyleClass().add("closed-cell");
+                        }
                         Button btn = new Button("");
                         btn.getStyleClass().add("button-cell");
                         btn.setOnAction(e -> {
