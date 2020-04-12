@@ -1,5 +1,6 @@
 package group1.stayella.Model;
 
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 import java.awt.*;
@@ -8,7 +9,7 @@ public class Guest {
     private int id;
     private String name;
     private String age;
-    private javafx.scene.image.Image photo;
+    private Image photo;
     private String phoneNumber;
     private String emailAddress;
     private String idNumber;
@@ -71,6 +72,9 @@ public class Guest {
         this.language = language;
     }
 
+    public void setPhoto(Image photo) {
+        this.photo = photo;
+    }
 
     // getter
     public int getId() {
@@ -105,6 +109,10 @@ public class Guest {
 
     public CreditCard getPaymentMethod() {
         return paymentMethod;
+    }
+
+    public Image getPhoto() {
+        return photo;
     }
 
     // name check
