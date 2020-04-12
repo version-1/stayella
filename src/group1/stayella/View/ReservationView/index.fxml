@@ -104,7 +104,7 @@
         <Button fx:id="cancel"  styleClass="button-3d" prefHeight="27.0" prefWidth="100.0" text="CANCEL"/>
         <Button fx:id="checkIn"  styleClass="button-3d" prefHeight="27.0" prefWidth="100.0" text="CHECK IN"/>
         <Button fx:id="checkOut" styleClass="button-3d" prefHeight="27.0" prefWidth="100.0" text="CHECK OUT"/>
-        <Button fx:id="close" styleClass="button-3d" prefHeight="27.0" prefWidth="100.0" text="CLOSE" onAction="#goBack"/>
+        <Button fx:id="close" styleClass="button-3d" prefHeight="27.0" prefWidth="100.0" text="CLOSE" onAction="#close"/>
     </HBox>
 
 

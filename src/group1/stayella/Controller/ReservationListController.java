@@ -156,13 +156,6 @@ public class ReservationListController extends ApplicationController {
     }
 
 
-    @FXML
-    public void transitToHome(ActionEvent actionEvent) throws IOException {
-        transitTo(actionEvent, "index.fxml", 500, 500);
-    }
-
-
-
     private void onMouseSetReservation(TableView table) {
         table.setRowFactory(tv -> {
             TableRow<ReservationList> row = new TableRow<>();

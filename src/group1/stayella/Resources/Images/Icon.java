@@ -18,6 +18,10 @@ public class Icon {
   public final static String PET = BASE_PATH + "pet-dark.png";
   public final static String PET_LIGHT = BASE_PATH + "pet-light.png";
   public final static String RELOAD = BASE_PATH + "reload-dark.png";
+  public final static String EDIT_WHITE = BASE_PATH + "edit-white.png";
+  public final static String CALENDAR_WHITE= BASE_PATH + "calendar-white.png";
+  public final static String BOOK_WHITE = BASE_PATH + "book-white.png";
+
 
   public static ImageView get(String path) {
     ImageView imageView = new ImageView();
@@ -31,4 +35,7 @@ public class Icon {
     view.setFitHeight(height);
     return view;
   }
+
+
+
 }
