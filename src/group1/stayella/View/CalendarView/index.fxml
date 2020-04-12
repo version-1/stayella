@@ -6,7 +6,7 @@
 <?import javafx.scene.text.*?>
 
 
-<GridPane fx:id="gridlayout" stylesheets="@../css/calendar/style.css" prefHeight="500" prefWidth="500" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="group1.stayella.Controller.CalendarController">
+<GridPane fx:id="gridlayout" stylesheets="@../css/calendar/style.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="group1.stayella.Controller.CalendarController">
     <columnConstraints>
       <!-- <ColumnConstraints prefWidth="250.0" />
       <ColumnConstraints percentWidth="70.0" /> -->
@@ -55,7 +55,7 @@
          <HBox alignment="CENTER" styleClass="header">
             <HBox spacing="8" minWidth="150" alignment="CENTER_LEFT">
                <Button fx:id="edit" styleClass="button-icon" onAction="#onClickNewRervation"/>
-               <ImageView
+               <!-- <ImageView
                   fx:id="datePicker"
                   fitWidth="46"
                   fitHeight="35"
@@ -66,23 +66,23 @@
                      backgroundLoading="true"
                      />
                   </image>
-               </ImageView>
+               </ImageView> -->
             </HBox>
             <HBox minWidth="150" alignment="CENTER" spacing="8" fillHeight="true">
-               <HBox styleClass="border-box">
+               <HBox alignment="CENTER" styleClass="border-box">
                   <Label fx:id="prevDate" onMouseClicked="#previous" styleClass="arrow" text="&lt;" />
                </HBox>
-               <HBox styleClass="border-box">
-                  <Label fx:id="currentDate" styleClass="currentDate" />
+               <HBox alignment="CENTER" styleClass="border-box">
+                  <Label styleClass="current-date" fx:id="currentDate" />
                </HBox>
-               <HBox styleClass="border-box">
+               <HBox alignment="CENTER" styleClass="border-box">
                   <Label fx:id="nextDate" onMouseClicked="#next" styleClass="arrow" text="&gt;" />
                </HBox>
             </HBox>
             <HBox spacing="8" minWidth="150" alignment="CENTER_RIGHT">
                <HBox
                  onMouseClicked="#refresh"
-                 styleClass="border-box"
+                 styleClass="reload-image"
                  alignment="CENTER"
                  >
                   <ImageView
@@ -97,19 +97,22 @@
                         />
                      </image>
                   </ImageView>
-                  <Label text="Today" />
+                  <Label styleClass="reload-image-text" text="Today" />
                </HBox>
             </HBox>
          </HBox>
-         <TableView minHeight="640" fx:id="table"/>
-         <Button
-         fx:id="goBack"
-         styleClass="button-3d"
-         onAction="#goBack"
-         text="Back"
-         GridPane.columnIndex="1"
-         GridPane.rowIndex="3"
-         />
+         <HBox>
+           <TableView minHeight="640" fx:id="table"/>
+         </HBox>
+         <HBox styleClass="footer">
+            <Button
+            styleClass="button-3d"
+            onAction="#goBack"
+            text="Back"
+            GridPane.columnIndex="1"
+            GridPane.rowIndex="3"
+            />
+         </HBox>
       </VBox>
     </children>
 </GridPane>
