@@ -9,7 +9,7 @@
 <GridPane fx:id="gridlayout" stylesheets="@css/styles.css" styleClass="primary-background-color" hgap="5" vgap="5" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.172-ea" fx:controller="group1.stayella.Controller.HomeController">
     <Button
       fx:id="reservation"
-      onAction="#transitToReservaiton"
+      onAction="#transitToReservton"
       text="Reservation"
       GridPane.columnIndex="0"
       GridPane.rowIndex="3"
@@ -28,7 +28,7 @@
     <Button
       fx:id="reservationList"
       text="Reservation list"
-      onAction="#transitToReservationList"
+      onAction="#transitToReservton"
       GridPane.columnIndex="2"
       GridPane.rowIndex="3"
       alignment="CENTER_RIGHT"

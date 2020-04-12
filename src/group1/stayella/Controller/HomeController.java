@@ -35,7 +35,7 @@ public class HomeController extends ApplicationController {
     }
 
     @FXML
-    public void transitToReservaiton(ActionEvent actionEvent) throws IOException {
+    public void transitToReservton(ActionEvent actionEvent) throws IOException {
         transitTo(actionEvent, "ReservationView/index.fxml", 690, 800);
     }
 
