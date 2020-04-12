@@ -141,6 +141,7 @@ public class ReservationListController extends ApplicationController {
                 String roomNumber = selected.getRoomNumber();
                 String reservationNo = selected.getReservationNo();
                 controller.setReservation(selected.getReservation());
+                controller.setHotel(getHotel());
                 controller.setSceneStack(getSceneStack());
                 return controller;
             } catch (InstantiationException e) {
@@ -176,9 +177,6 @@ public class ReservationListController extends ApplicationController {
         });
     }
 
-    private void onTableButtonClick(ReservationList selected) {
-        System.out.println(selected.getRoomNumber());
-    }
 
     private Callback<TableColumn<ReservationList, ReservationList>, TableCell<ReservationList, ReservationList>> getCellFactory() {
         return col -> {
