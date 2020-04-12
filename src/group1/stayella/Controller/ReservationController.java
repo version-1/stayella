@@ -70,6 +70,8 @@ public class ReservationController extends ApplicationController {
     @FXML
     Button reserve;
     @FXML
+    Button close;
+    @FXML
     NumberTextField guestID;
     @FXML
     NumberTextField guestPhone;
@@ -113,7 +115,19 @@ public class ReservationController extends ApplicationController {
     public void initialize(URL location, ResourceBundle resources) {
         if (reservation != null) {
             editReservation(reservation);
+            reserve.setOnAction(e -> {
+                if (makeAReservation() != null) {
+                    closeAction(e);
+                }
+            });
+        } else {
+            reserve.setOnAction(e -> {
+                if (makeAReservation() != null) {
+                    goBack(e);
+                }
+            });
         }
+
         String[] categories = {"CategoryA", "CategoryB", "CategoryC", "CategoryD"};
         categorySelection.getItems().addAll(categories);
 
@@ -150,11 +164,6 @@ public class ReservationController extends ApplicationController {
                 showCCInfo(creditCardInfo.get(0));
             }
         });
-
-        reserve.setOnAction(e -> {
-            makeAReservation();
-            goBack(e);
-        });
     }
 
     public void setReservation(Reservation reservation) {
@@ -173,7 +182,6 @@ public class ReservationController extends ApplicationController {
             alertMessage("Not Allowed", "Important information is missing.", "Select number of guests");
         } else {
             List<Room> rooms = this.getHotel().getRooms();
-            List<Vacancy> vacancies = rooms.get(1).getVacancies();
             Date in = Date.from(checkIN.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant());
             Date out = Date.from(checkOUT.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant());
             for (int i = 0; i < rooms.size(); i++) {
@@ -222,7 +230,6 @@ public class ReservationController extends ApplicationController {
         this.cardNumberLabel.setText("XXXX-XXXX-" + text.substring(8));
     }
 
-    // do need credit card ID, guest ID?
     public void setCreditCard(String cardNumber, String name, String cvv, String expirationDate) {
         creditCard = new CreditCard(id, cardNumber, name, cvv, expirationDate);
         System.out.println(creditCard);
@@ -270,7 +277,7 @@ public class ReservationController extends ApplicationController {
      * Most of a necessary fields have to be filled to be the action done.
      */
     @FXML
-    public void makeAReservation() {
+    public Reservation makeAReservation() {
         if (submit()) {
             Period period = Period.between(checkIN.getValue(), checkOUT.getValue());
             int lengthOfStay = (int) (period.getDays());
@@ -285,12 +292,14 @@ public class ReservationController extends ApplicationController {
                 System.out.println("RESERVATION WAS CREATED\n" + newReservation);
                 System.out.println(newReservation);
                 System.out.println(guest);
+                return reservation;
             } else {
                 alertMessage("Unconfirmed", "Important information is missing",
                         "Reservation was not created, please check the dates and the payment method");
+                return null;
             }
         }
-
+        return null;
     }
 
     /**
@@ -324,24 +333,24 @@ public class ReservationController extends ApplicationController {
      */
     public void editReservation(Reservation reservation) {
         guestName.setText(reservation.getMainGuest().getName());
-        guestID.setText(String.valueOf(reservation.getMainGuest().getId()));
+        guestID.setText(String.valueOf(reservation.getMainGuest().getIdNumber()));
         guestAge.setText(reservation.getMainGuest().getAge());
         guestLanguage.setText(reservation.getMainGuest().getLanguage());
         guestEmail.setText(reservation.getMainGuest().getEmailAddress());
         guestPhone.setText(reservation.getMainGuest().getPhoneNumber());
         reservationNumber.setText(reservation.getReservationNo());
-        checkIN.setValue(reservation.getCheckInTime());
-        checkOUT.setValue(reservation.getCheckOutTime());
+        checkIN.setValue(reservation.getStartDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+        checkOUT.setValue(reservation.getEndDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
         numberOfGuests.setText(String.valueOf(reservation.getNumberOfGuest()));
         roomSelection.setValue(reservation.getRoom().getRoomNumber());
         if (reservation.getStatus() == 1) {
-                confirmed.isFocused();
-                confirmed.setStyle("-fx-border-color: #20e2aa; -fx-border-width: 3px;");
-                unconfirmed.setStyle("-fx-border-color: #ffffff; -fx-border-width: 1px;");
+            confirmed.isFocused();
+            confirmed.setStyle("-fx-border-color: #20e2aa; -fx-border-width: 3px;");
+            unconfirmed.setStyle("-fx-border-color: #ffffff; -fx-border-width: 1px;");
         } else {
-                unconfirmed.isFocused();
-                unconfirmed.setStyle("-fx-border-color: #20e2aa; -fx-border-width: 3px;");
-                confirmed.setStyle("-fx-border-color: #ffffff; -fx-border-width: 1px;");
+            unconfirmed.isFocused();
+            unconfirmed.setStyle("-fx-border-color: #20e2aa; -fx-border-width: 3px;");
+            confirmed.setStyle("-fx-border-color: #ffffff; -fx-border-width: 1px;");
         }
         // Payment
         creditCard = reservation.getMainGuest().getPaymentMethod();
@@ -350,6 +359,12 @@ public class ReservationController extends ApplicationController {
         // Charges
         charges = reservation.getCharges();
         reserve.setText("APPLY");
+        System.out.println(roomSelection.getValue());
+        for (Room room : getHotel().getRooms()) {
+            if (room.getRoomNumber().equals(roomSelection.getValue())) {
+                reservation.setRoom(room);
+            }
+        }
     }
 
 
@@ -395,7 +410,7 @@ public class ReservationController extends ApplicationController {
     }
 
     /**
-    ****************READ ROOM NUMBER, and ADD PRICE****************
+     ****************READ ROOM NUMBER, and ADD PRICE****************
      **/
     @FXML
     public void setCharges(List<Charge> charges){
@@ -406,7 +421,7 @@ public class ReservationController extends ApplicationController {
         double total = 0;
         if (roomSelection.getValue() != null &&
                 availableRooms.containsKey(roomSelection.getValue()) && reservation == null) {
-                total += availableRooms.get(roomSelection.getValue()).getRoomPrice();
+            total += availableRooms.get(roomSelection.getValue()).getRoomPrice();
         }
         if (!charges.isEmpty()) {
             for (Charge charge : charges) {
