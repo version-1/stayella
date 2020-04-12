@@ -1,0 +1,79 @@
+.root {
+    -fx-font-size: 13px;
+    -fx-font-family: "Arial";
+    -fx-text-fill: #859195;
+    -fx-padding: 20px;
+
+    -fx-background-color: linear-gradient(deep-blue, #41717D, #A7CACA);
+    turquoise-dark-blule: #34727D;
+    turquoise-blule: #40B5C9;
+    light-blue: #69BBC9;
+    light-brown: #C9732C;
+    brown: #7D5534;
+    deep-blue:  #1D5162;
+}
+
+.button {
+    -fx-min-width: 120px;
+    -fx-font-size: 20px;
+    -fx-font-weight: 800;
+    -fx-text-fill: #FFF;
+    -fx-border-style: solid;
+    -fx-border-color: linear-gradient( #78ADB9, #61A2B1);
+    -fx-border-width: 3px;
+    -fx-border-radius: 5px;
+    -fx-background-color: linear-gradient( #9FBFBF, #A7CACA, #9FBFBF);
+    -fx-background-radius: 6px;
+    -fx-effect: dropshadow( one-pass-box , deep-blue , 8 , 0.0 , 2 , 0 );
+}
+
+.button:hover {
+}
+
+
+.home-label-title {
+    -fx-font-size: 40px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #FFF;
+    -fx-effect: dropshadow( three-pass-box , #1f4049 , 8 , 0.2 , 0 , 2 );
+    }
+
+
+.home-main-button {
+    -fx-min-width: 200px;
+    -fx-min-height: 200px;
+    -fx-padding: 0px 20px 40px 20px;
+    -fx-alignment: bottom-center;
+}
+
+.home-sub-button {
+    -fx-min-width: 230px;
+    -fx-min-height: 95px;
+    -fx-padding: 10px;
+
+}
+
+
+.home-breakLine {
+    -fx-pre-height: 2px;
+    -fx-min-height: 2px;
+    -fx-max-height: 2px;
+    -fx-min-width: 200px;
+    -fx-max-width: 400px;
+    -fx-background-color: linear-gradient(to bottom right,#2F6170, #fff, #2F6170);
+
+}
+
+.home-text-version {
+    -fx-text-fill: #B2D7D7;
+    -fx-occupancy: 0.5;
+}
+
+
+
+/* (45, 45) (255, 255) */
+/*
+    -fx-padding: 10px;
+    -fx-pref-height: 90px;
+    -fx-pref-width: 90px;
+    */

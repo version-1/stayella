@@ -6,43 +6,56 @@
 <?import javafx.scene.layout.GridPane?>
 
 <?import javafx.scene.layout.HBox?>
-<GridPane fx:id="gridlayout" stylesheets="@css/styles.css" styleClass="home-background-color" hgap="5" vgap="5" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.172-ea" fx:controller="group1.stayella.Controller.HomeController">
-    <Button
-      fx:id="reservation"
-      onAction="#transitToReservation"
-      text="Reservation"
-      GridPane.columnIndex="0"
-      GridPane.rowIndex="3"
-      alignment="CENTER_LEFT"
-      styleClass="button-3d"
-      />
-    <Button
-        fx:id="calendar"
-        text="Calendar"
-        onAction="#transitToCalendar"
-        GridPane.columnIndex="1"
-        GridPane.rowIndex="3"
-        alignment="CENTER"
-        styleClass="button-3d"
-    />
-    <Button
-      fx:id="reservationList"
-      text="Reservation list"
-      onAction="#transitToReservationList"
-      GridPane.columnIndex="2"
-      GridPane.rowIndex="3"
-      alignment="CENTER_RIGHT"
-      styleClass="button-3d"
-    />
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Text?>
+<GridPane fx:id="gridlayout" stylesheets="@css/home/style.css" hgap="5" vgap="5"
+          xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.172-ea"
+          fx:controller="group1.stayella.Controller.HomeController">
+
+    <VBox GridPane.columnIndex="0"  GridPane.rowIndex="0" alignment="CENTER">
+        <Label fx:id="title" styleClass="home-label-title"/>
+    </VBox>
+    <HBox  styleClass="home-breakLine"  GridPane.rowIndex="1"/>
+    <HBox GridPane.columnIndex="0"  GridPane.rowIndex="3" alignment="CENTER" spacing="10">
+        <Button
+                fx:id="calendar"
+                text="Calendar"
+                onAction="#transitToCalendar"
+                styleClass="home-main-button"
+        />
+
+        <VBox spacing="10" alignment="TOP_LEFT">
+            <Button
+                    fx:id="reservation"
+                    onAction="#transitToReservation"
+                    text=""
+                    styleClass="home-sub-button"
+            />
+            <Button
+                    fx:id="reservationList"
+                    text=""
+                    onAction="#transitToReservationList"
+                    styleClass="home-sub-button"
+            />
+        </VBox>
+
+    </HBox>
 
 
-    <HBox GridPane.columnIndex="0" GridPane.columnSpan="3" GridPane.rowIndex="1" alignment="CENTER">
-        <Label fx:id="label" styleClass="home-label-title" text="STAYELLA\nVersion: 1.0" />
+    <HBox GridPane.columnIndex="0"  GridPane.rowIndex="4" alignment="BOTTOM_CENTER">
+        <Label fx:id="version" styleClass="home-text-version"/>
     </HBox>
     <columnConstraints>
-        <ColumnConstraints percentWidth="33" halignment="LEFT"/>
-        <ColumnConstraints percentWidth="33" halignment="CENTER"/>
-        <ColumnConstraints percentWidth="33" halignment="RIGHT"/>
+        <ColumnConstraints percentWidth="100" halignment="CENTER"/>
     </columnConstraints>
+    <rowConstraints>
+        <RowConstraints prefHeight="60" minHeight="60"/>
+        <RowConstraints prefHeight="20" minHeight="20"/>
+        <RowConstraints prefHeight="40" minHeight="40"/>
+        <RowConstraints prefHeight="200" minHeight="200"/>
+        <RowConstraints prefHeight="120" minHeight="120"/>
+    </rowConstraints>
 </GridPane>
-

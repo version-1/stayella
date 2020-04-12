@@ -28,7 +28,7 @@
 .button-back {
     -fx-padding: 4px 8px;
     -fx-border-style: solid;
-    -fx-border-color: #61a2b1;
+    -fx-border-color: linear-gradient(#a7caca, #61a2b1,  deep-blue);
     -fx-border-width: 3px;
     -fx-border-radius: 30px;
     -fx-background-color: linear-gradient(#ffffff, #a7caca, deep-blue);

@@ -40,7 +40,7 @@
 .button-3d {
     -fx-padding: 8px 16px;
     -fx-border-style: solid;
-    -fx-border-color: #61a2b1;
+    -fx-border-color: linear-gradient(#a7caca, #61a2b1,  deep-blue);
     -fx-border-width: 3px;
     -fx-border-radius: 30px;
     -fx-background-color: linear-gradient(#ffffff, #a7caca, deep-blue);
@@ -55,19 +55,6 @@
 .label-title {
     -fx-font-weight: bold;
     }
-
-.home-label-title {
-    -fx-font-size: 40px;
-    -fx-font-weight: bold;
-    -fx-text-fill: #ffffff;
-    }
-
-
-.home-background-color {
-    -fx-background-color: deep-blue;
-
-}
-
 
 .reservation-sec-title {
     -fx-text-fill: #C9732C;
