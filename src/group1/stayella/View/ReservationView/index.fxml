@@ -89,7 +89,7 @@
         </Label>
     </HBox>
 
-    <HBox GridPane.columnIndex="0" GridPane.columnSpan="5" spacing="20" GridPane.rowIndex="28">
+    <HBox GridPane.columnIndex="1" GridPane.columnSpan="5" spacing="20" GridPane.rowIndex="28">
         <Label text="Total Price:" styleClass="reservation-sec-title" />
         <Label fx:id="totalPrice" text="[$] 00.00" />
     </HBox>

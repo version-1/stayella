@@ -20,6 +20,7 @@ import javafx.stage.Stage;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
 import java.time.Period;
 import java.time.ZoneId;
 import java.util.*;
@@ -138,7 +139,7 @@ public class ReservationController extends ApplicationController {
         insertImage(imageEdit, imageEditView, buttonEdit, 25, 25);
 
         imageCard = new Image("https://www.nerdwallet.com/assets/blog/wp-content/uploads/2018/03/creditstacks.card_.front_.back-story-600x338.png");
-        insertImage(imageCard, imageCardView, buttonCard, 240, 120);
+        insertImage(imageCard, imageCardView, buttonCard, 280, 140);
 
         imageAdditions = new Image("https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRz2AEfespdhCgKtTN2R-o6maiMq1_SuKR7q9drWDi6NGJqxkhQ&usqp=CAU");
         insertImage(imageAdditions, imageAdditionsView, buttonAdditions, 30, 30);
@@ -157,14 +158,6 @@ public class ReservationController extends ApplicationController {
             status = 1;
         });
 
-        buttonCard.setOnAction(e -> {
-            creditCardInfo = PopPayment.display("Insert CC Info");
-            if (creditCardInfo != null && creditCardInfo.size() > 3) {
-                setCreditCard(creditCardInfo.get(0), creditCardInfo.get(1), creditCardInfo.get(2), creditCardInfo.get(3));
-                showCCInfo(creditCardInfo.get(0));
-            }
-        });
-
         cancel.setOnAction(e -> {
             if (reservation != null) {
                 Alert a = alertMessageConfirmation("Canceled", "Cancel of Reservation",
@@ -174,11 +167,47 @@ public class ReservationController extends ApplicationController {
                     reservation = null;
                     closeAction(e);
                 }
+            } else {
+                closeAction(e);
+            }
+        });
+
+        buttonCard.setOnAction(e -> {
+            creditCardInfo = PopPayment.display(null, null, null); // if we want to set a credit card from the previous reservations
+            if (creditCardInfo != null && creditCardInfo.size() > 3) {
+                setCreditCard(creditCardInfo.get(0), creditCardInfo.get(1), creditCardInfo.get(2), creditCardInfo.get(3));
+                showCCInfo(creditCardInfo.get(0));
             }
         });
 
         checkIn.setOnAction(e -> {
+            if (reservation != null) {
+                Alert a = alertMessageConfirmation("Check in", reservation.getMainGuest().getName() + "will be checked in",
+                        "Make sure the room is ready");
+                Optional<ButtonType> result = a.showAndWait();
+                if (result.get() == ButtonType.OK) {
+                    LocalDate dateCheckIn = LocalDate.now();
+                    reservation.setCheckInTime(dateCheckIn);
+                    closeAction(e);
+                }
+            } else {
+                alertMessage("Unconfirmed", "Empty reservation", "Cannot Check IN");
+            }
+        });
 
+        checkOut.setOnAction(e -> {
+            if (reservation != null && reservation.getCheckInTime() != null) {
+                Alert a = alertMessageConfirmation("Check out", reservation.getMainGuest().getName() + "will be checked out",
+                        "Make sure there is no damage on the room");
+                Optional<ButtonType> result = a.showAndWait();
+                if (result.get() == ButtonType.OK) {
+                    LocalDate dateCheckOUT = LocalDate.now();
+                    reservation.setCheckOutTime(dateCheckOUT);
+                    closeAction(e);
+                }
+            } else {
+                alertMessage("Unconfirmed", "Empty reservation", "Cannot Check OUT");
+            }
         });
     }
 
@@ -297,7 +326,6 @@ public class ReservationController extends ApplicationController {
         if (submit()) {
             Period period = Period.between(checkIN.getValue(), checkOUT.getValue());
             int lengthOfStay = (int) (period.getDays());
-
             Reservation newReservation = new Reservation(guest, Integer.parseInt(numberOfGuests.getText()), status);
             Room room = this.getHotel().getRooms().get(1);
             newReservation.make(room, checkIN.getValue(), lengthOfStay);
@@ -376,11 +404,6 @@ public class ReservationController extends ApplicationController {
         charges = reservation.getCharges();
         reserve.setText("APPLY");
         System.out.println(roomSelection.getValue());
-        for (Room room : getHotel().getRooms()) {
-            if (room.getRoomNumber().equals(roomSelection.getValue())) {
-                reservation.setRoom(room);
-            }
-        }
     }
 
 
