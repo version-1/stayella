@@ -20,6 +20,9 @@ import javafx.stage.Stage;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.Period;
 import java.time.ZoneId;
 import java.util.*;
@@ -110,6 +113,9 @@ public class ReservationController extends ApplicationController {
     private int status = 0;
 
     private Reservation reservation;
+
+    private static File imageFile;
+    private static boolean IMAGE_UPLOADED = false;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -414,12 +420,15 @@ public class ReservationController extends ApplicationController {
 
     @FXML
     public void onUploadImage(ActionEvent actionEvent) throws IOException {
-        String url = getFileOfImage();
+        setFileOfImage();
+        String url = "file:///" + imageFile.getPath();
         Image imageOfGuest = new Image(url, 112, 112, true, false);
         imageView.setImage(imageOfGuest);
+        IMAGE_UPLOADED = true;
+        saveFile();
     }
 
-    public String getFileOfImage() throws IOException {
+    public void setFileOfImage() throws IOException {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open the image");
         fileChooser.getExtensionFilters().add(
@@ -429,9 +438,19 @@ public class ReservationController extends ApplicationController {
                 new File(System.getProperty("user.home"))
         );
         File file = fileChooser.showOpenDialog(null);
-        String url = "file:///" + file.getPath();
-        return url;
+        imageFile = file;
     }
+
+    private void saveFile() throws IOException {
+        if(IMAGE_UPLOADED) {
+            Path from = imageFile.toPath();
+            System.out.println(from);
+            Path target = Paths.get("src/group1/stayella/Resources/Images/Guests/" + imageFile.getName());
+            System.out.println(target);
+            Files.copy(from, target);
+        }
+    }
+
 
     /**
      ****************READ ROOM NUMBER, and ADD PRICE****************
