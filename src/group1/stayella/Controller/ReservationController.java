@@ -131,7 +131,11 @@ public class ReservationController extends ApplicationController {
                     closeAction(e);
                 }
             });
-        } else {
+        }
+        else {
+            image = new Image("https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTqWGB5YLwdAKCrHNiw9_I5jXeWHDlGHh83anl58WuJ4WwhzslJ&usqp=CAU");
+            imageView.setImage(image);
+
             reserve.setOnAction(e -> {
                 if (makeAReservation() != null) {
                     goBack(e);
@@ -142,8 +146,6 @@ public class ReservationController extends ApplicationController {
         String[] categories = {"CategoryA", "CategoryB", "CategoryC", "CategoryD"};
         categorySelection.getItems().addAll(categories);
 
-        image = new Image("https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTqWGB5YLwdAKCrHNiw9_I5jXeWHDlGHh83anl58WuJ4WwhzslJ&usqp=CAU");
-        imageView.setImage(image);
 
         imageEdit = new Image("https://3aoh9sn3um-flywheel.netdna-ssl.com/wp-content/uploads/2017/01/edit-1-06-17-300x300.png");
         insertImage(imageEdit, imageEditView, buttonEdit, 25, 25);
@@ -340,8 +342,6 @@ public class ReservationController extends ApplicationController {
             Period period = Period.between(checkIN.getValue(), checkOUT.getValue());
             int lengthOfStay = (int) (period.getDays());
 
-            setGuestInformation();
-
             Reservation newReservation = new Reservation(guest, Integer.parseInt(numberOfGuests.getText()), status);
             Room room = this.getHotel().getRooms().get(1);
             newReservation.make(room, checkIN.getValue(), lengthOfStay);
@@ -350,6 +350,7 @@ public class ReservationController extends ApplicationController {
                     newReservation.setCheckOutTime(checkOUT.getValue()) && setGuestInformation()) {
                 newReservation.setCharges(charges);
                 newReservation.setRoom(availableRooms.get(roomSelection.getValue()));
+                newReservation.setMainGuest(guest);
                 System.out.println("RESERVATION WAS CREATED\n" + newReservation);
                 System.out.println(newReservation);
                 System.out.println(guest);
@@ -394,6 +395,7 @@ public class ReservationController extends ApplicationController {
      * @param reservation
      */
     public void editReservation(Reservation reservation) {
+        imageView.setImage(reservation.getMainGuest().getPhoto());
         guestName.setText(reservation.getMainGuest().getName());
         guestID.setText(String.valueOf(reservation.getMainGuest().getIdNumber()));
         guestAge.setText(reservation.getMainGuest().getAge());
@@ -405,7 +407,6 @@ public class ReservationController extends ApplicationController {
         checkOUT.setValue(reservation.getEndDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
         numberOfGuests.setText(String.valueOf(reservation.getNumberOfGuest()));
         roomSelection.setValue(reservation.getRoom().getRoomNumber());
-
         if (reservation.getStatus() == 1) {
             confirmed.isFocused();
             confirmed.setStyle("-fx-border-color: #20e2aa; -fx-border-width: 3px;");
@@ -487,11 +488,13 @@ public class ReservationController extends ApplicationController {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            String url =  "file:///" + target.toString();
+            String url =  "file:///" + target.toAbsolutePath();
             Image imageOfGuest = new Image(url, 112, 112, true, false);
             return imageOfGuest;
+        } else {
+            return imageView.getImage();
         }
-        return imageView.getImage();
+
     }
 
 
