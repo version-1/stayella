@@ -4,12 +4,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.function.Function;
 
 import group1.stayella.Model.Room;
 import group1.stayella.Model.Vacancy;
-import javafx.event.ActionEvent;
-import javafx.scene.control.Button;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -18,7 +15,7 @@ import javafx.util.Callback;
 
 public class Calendar {
     public final static int DATE_SPAN = 7;
-    public final static int HOUR_SPAN = 12;
+    public final static int HOUR_SPAN = Vacancy.HOUR_SPAN;
     private Date currentDate;
     private List<Date> dateList;
     private List<Date> hourList;
