@@ -190,6 +190,7 @@ public class ReservationController extends ApplicationController {
                     LocalDate dateCheckIn = LocalDate.now();
                     reservation.setCheckInTime(dateCheckIn);
                     closeAction(e);
+                    System.out.println(reservation);
                 }
             } else {
                 alertMessage("Unconfirmed", "Empty reservation",
