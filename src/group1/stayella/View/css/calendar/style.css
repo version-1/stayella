@@ -1,6 +1,23 @@
+.root {
+    -fx-font-size: 13px;
+    -fx-font-family: "Arial";
+    -fx-text-fill: #859195;
+    -fx-background-color: #fbfbfb;
+    -fx-padding: 20px;
+
+    text-fill: #525252;
+    turquoise-dark-blule: #34727D;
+    turquoise-blule: #40B5C9;
+    light-blue: #69BBC9;
+    light-brown: #C9732C;
+    brown: #7D5534;
+    deep-blue:  #1D5162;
+    white-color: white;
+}
+
 .sidebar {
   -fx-padding: 8px;
-  -fx-background-color: #1D5162;
+  -fx-background-color: deep-blue;
 }
 
 .search-form-label {
@@ -11,33 +28,52 @@
   -fx-padding: 16px;
 }
 
+.footer {
+  -fx-padding: 16px 8px;
+}
+
 .group {
-  -fx-padding: 8px;
+  -fx-padding: 8px ;
 }
 
 .main {
   -fx-padding: 16px;
-  -fx-background-color: white;
 }
 
 .border-box {
+  -fx-padding: 8px 16px;
   -fx-border-style: solid;
-  -fx-border-width: 1px;
-  -fx-border-color: #666666;
+  -fx-border-width: 2px;
+  -fx-border-color: text-fill;
   -fx-border-radius: 4px;
 }
 
 .arrow {
+  -fx-font-size: 18px;
   -fx-cursor: pointer;
-  -fx-padding: 8px;
-  -fx-text-fill: #666666;
+  -fx-padding: 8px 16px;
+  -fx-text-fill: text-fill;
   -fx-font-weight: 900;
 }
 
-.currentDate {
-  -fx-padding: 8px;
-  -fx-text-fill: #666666;
+.current-date {
+  -fx-font-size: 18px;
+  -fx-text-fill: text-fill;
   -fx-font-weight: 900;
+}
+
+.reload-image-text {
+  -fx-padding: 8px 16px;
+  -fx-text-fill: text-fill;
+  -fx-font-weight: 900;
+}
+
+.reload-image {
+  -fx-border-style: solid;
+  -fx-border-width: 2px;
+  -fx-border-color: text-fill;
+  -fx-border-radius: 4px;
+  -fx-padding: 8px 16px;
 }
 
 .button-search {
@@ -71,4 +107,19 @@
 
 .occupied-cell-3 {
   -fx-background-color: rgba(255, 242, 174, 0.8);
+}
+
+.button-3d {
+  -fx-padding: 4px 8px;
+  -fx-border-style: solid;
+  -fx-border-color: linear-gradient(#a7caca, #61a2b1,  deep-blue);
+  -fx-border-width: 3px;
+  -fx-border-radius: 30px;
+  -fx-background-color: linear-gradient(#ffffff, #a7caca, deep-blue);
+  -fx-background-radius: 30px;
+}
+
+.button-3d :hover {
+  -fx-background-color: linear-gradient(#2A5058, #69BBC9);
+  -fx-border-color: #3D7A85;
 }

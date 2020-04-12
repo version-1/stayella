@@ -94,7 +94,7 @@ public class Vacancy implements Comparable {
         Date end = c.getTime();
 
         return String.format(
-            "%s x %s\n %s - %s",
+            "%s + %s\n %s - %s",
             reservation.getMainGuest().getName(),
             reservation.getNumberOfGuest(),
             getDateString(reservation.getStartDate(), CALENDAR_DATE_FORMAT),
