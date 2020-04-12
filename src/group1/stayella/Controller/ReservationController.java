@@ -164,6 +164,22 @@ public class ReservationController extends ApplicationController {
                 showCCInfo(creditCardInfo.get(0));
             }
         });
+
+        cancel.setOnAction(e -> {
+            if (reservation != null) {
+                Alert a = alertMessageConfirmation("Canceled", "Cancel of Reservation",
+                        "Reservation number: " + reservation.getReservationNo() + " will canceled. Please note a guest");
+                Optional<ButtonType> result = a.showAndWait();
+                if (result.get() == ButtonType.OK) {
+                    reservation = null;
+                    closeAction(e);
+                }
+            }
+        });
+
+        checkIn.setOnAction(e -> {
+
+        });
     }
 
     public void setReservation(Reservation reservation) {
@@ -374,6 +390,14 @@ public class ReservationController extends ApplicationController {
         alert.setHeaderText(message);
         alert.setContentText(content);
         alert.showAndWait();
+    }
+
+    public Alert alertMessageConfirmation(String tittle, String message, String content) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle(tittle);
+        alert.setHeaderText(message);
+        alert.setContentText(content);
+        return alert;
     }
 
     /**
