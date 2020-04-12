@@ -1,14 +1,8 @@
 package group1.stayella.Model;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
-
-import javafx.scene.control.TableCell;
-import javafx.scene.layout.Border;
-import javafx.scene.layout.BorderStroke;
-import javafx.scene.layout.BorderStrokeStyle;
-import javafx.scene.layout.BorderWidths;
-import javafx.scene.paint.Color;
 
 public class Vacancy implements Comparable {
     public final static String CALENDAR_DATE_FORMAT = "yyyy.MM.dd";
@@ -49,7 +43,7 @@ public class Vacancy implements Comparable {
 
     public int getStatus() {
         if (reservation == null) {
-            return -100;
+            return VACANT;
         }
         return reservation.getStatus();
     }
@@ -79,6 +73,9 @@ public class Vacancy implements Comparable {
     }
 
     public boolean isFirstVacantForRervation() {
+        if (reservation == null || reservation.getVacancies().size() == 0) {
+            return false;
+        }
         return reservation.getVacancies().get(0).id == id;
     }
 
@@ -91,8 +88,18 @@ public class Vacancy implements Comparable {
             return null;
         }
 
-        return String.format("%s x %s\n - %s", reservation.getMainGuest().getName(), reservation.getNumberOfGuest(),
-                getDateString(reservation.getStartDate(), CALENDAR_DATETIME_FORMAT));
+        Calendar c = Calendar.getInstance();
+        c.setTime(reservation.getEndDate());
+        c.add(Calendar.DATE, -1);
+        Date end = c.getTime();
+
+        return String.format(
+            "%s x %s\n %s - %s",
+            reservation.getMainGuest().getName(),
+            reservation.getNumberOfGuest(),
+            getDateString(reservation.getStartDate(), CALENDAR_DATE_FORMAT),
+            getDateString(end, CALENDAR_DATE_FORMAT)
+            );
     }
 
     public String getFilledClass() {
@@ -132,29 +139,6 @@ public class Vacancy implements Comparable {
     public static String getDateString(Date date, String pattern) {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
         return simpleDateFormat.format(date);
-    }
-
-    public void decorate(TableCell cell) {
-        cell.getStyleClass().add(getFilledClass());
-        if (isFirstVacantForRervation()) {
-            BorderStroke stroke = new BorderStroke(
-                null,
-                null,
-                null,
-                Color.ORANGE,
-                null,
-                null,
-                null,
-                BorderStrokeStyle.SOLID,
-                null,
-                new BorderWidths(5),
-                null
-            );
-            cell.setBorder(new Border(stroke));
-        }
-        cell.getStyleClass().add(getFilledClass());
-        cell.setText(getReservationText());
-        cell.setId(getReservationNo());
     }
 
     @Override
