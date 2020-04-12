@@ -176,6 +176,9 @@ public class ReservationListController extends ApplicationController {
         });
     }
 
+    private void onTableButtonClick(ReservationList selected) {
+        System.out.println(selected.getRoomNumber());
+    }
 
     private Callback<TableColumn<ReservationList, ReservationList>, TableCell<ReservationList, ReservationList>> getCellFactory() {
         return col -> {
