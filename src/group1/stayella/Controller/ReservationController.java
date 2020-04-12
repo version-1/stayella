@@ -23,6 +23,8 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.Period;
 import java.time.ZoneId;
 import java.util.*;
@@ -444,13 +446,16 @@ public class ReservationController extends ApplicationController {
 
     private Image getAndSaveFile(Path fromPath) {
         if (IMAGE_UPLOADED) {
-            Path target = Paths.get("src/group1/stayella/Resources/Images/Guests/" + fromPath.getFileName());
+            DateFormat dateFormat = new SimpleDateFormat("yyyymmddhhmmss");
+            String timestamp = dateFormat.format(new Date());
+            Path target = Paths.get("src/group1/stayella/Resources/Images/Guests/" + timestamp + "-" + fromPath.getFileName());
             try {
                 Files.copy(fromPath, target, REPLACE_EXISTING);
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            String url = "group1/stayella/Resources/Images/Guests/" + fromPath.getFileName();
+            String url = "group1/stayella/Resources/Images/Guests/"+ timestamp + "-"  + fromPath.getFileName();
+            System.out.println(url);
             Image imageOfGuest = new Image(url, 112, 112, true, false);
             return imageOfGuest;
         }
