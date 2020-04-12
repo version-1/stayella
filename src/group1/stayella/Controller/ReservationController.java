@@ -27,6 +27,8 @@ import java.time.Period;
 import java.time.ZoneId;
 import java.util.*;
 
+import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
+
 public class ReservationController extends ApplicationController {
 
     @FXML
@@ -115,6 +117,7 @@ public class ReservationController extends ApplicationController {
     private Reservation reservation;
 
     private static boolean IMAGE_UPLOADED = false;
+    private static Path fromPath;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -192,7 +195,7 @@ public class ReservationController extends ApplicationController {
     }
 
     /**
-     **************** Room Methods ****************
+     * *************** Room Methods ****************
      **/
 
     public void listOfAvailability() {
@@ -241,7 +244,7 @@ public class ReservationController extends ApplicationController {
     }
 
     /**
-     **************** Payment Methods ****************
+     * *************** Payment Methods ****************
      **/
 
     public void showCCInfo(String text) {
@@ -257,10 +260,8 @@ public class ReservationController extends ApplicationController {
     }
 
     /**
-     *
-     **************** Reservation Methods ****************
-     *
-     * */
+     * *************** Reservation Methods ****************
+     */
 
     public boolean submit() {
         String message = "";
@@ -325,10 +326,11 @@ public class ReservationController extends ApplicationController {
 
     /**
      * If everything is filled properly and the data pass all the validations, the new Guest will be created.
+     *
      * @return
      */
     public boolean setGuestInformation() {
-        guest = new Guest(id, guestName.getText(), guestAge.getText(), imageView.getImage(), guestPhone.getText(),
+        guest = new Guest(id, guestName.getText(), guestAge.getText(), getAndSaveFile(fromPath), guestPhone.getText(),
                 guestEmail.getText(), guestID.getText(), creditCard, guestLanguage.getText());
         // guest's address should be added
         if (creditCard == null) {
@@ -346,10 +348,10 @@ public class ReservationController extends ApplicationController {
     }
 
     /**
-     *
      * Previous reservation can be displayed by setting all the text fields, controller is displayed based on
      * the reservation status is either confirmed or unconfirmed.
      * Data is passed from Calendar controller as an object.
+     *
      * @param reservation
      */
     public void editReservation(Reservation reservation) {
@@ -406,7 +408,7 @@ public class ReservationController extends ApplicationController {
     }
 
     /**
-     **************** Room Methods ****************
+     * *************** Room Methods ****************
      **/
 
     public void insertImage(Image image, ImageView imageView, Button button, int height, int width) {
@@ -424,14 +426,14 @@ public class ReservationController extends ApplicationController {
         Image imageOfGuest = new Image(url, 112, 112, true, false);
         imageView.setImage(imageOfGuest);
         IMAGE_UPLOADED = true;
-        saveFile(file);
+        fromPath = file.toPath();
     }
 
     public File getFileOfImage() throws IOException {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open the image");
         fileChooser.getExtensionFilters().add(
-                new FileChooser.ExtensionFilter("Image Files", "*.png","*.jpg","*.gif")
+                new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.gif")
         );
         fileChooser.setInitialDirectory(
                 new File(System.getProperty("user.home"))
@@ -440,22 +442,27 @@ public class ReservationController extends ApplicationController {
         return file;
     }
 
-    private void saveFile(File file) throws IOException {
-        if(IMAGE_UPLOADED) {
-            Path from = file.toPath();
-            System.out.println(from);
-            Path target = Paths.get("src/group1/stayella/Resources/Images/Guests/" + file.getName());
-            System.out.println(target);
-            Files.copy(from, target);
+    private Image getAndSaveFile(Path fromPath) {
+        if (IMAGE_UPLOADED) {
+            Path target = Paths.get("src/group1/stayella/Resources/Images/Guests/" + fromPath.getFileName());
+            try {
+                Files.copy(fromPath, target, REPLACE_EXISTING);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            String url = "group1/stayella/Resources/Images/Guests/" + fromPath.getFileName();
+            Image imageOfGuest = new Image(url, 112, 112, true, false);
+            return imageOfGuest;
         }
+        return imageView.getImage();
     }
 
 
     /**
-     ****************READ ROOM NUMBER, and ADD PRICE****************
+     * ***************READ ROOM NUMBER, and ADD PRICE****************
      **/
     @FXML
-    public void setCharges(List<Charge> charges){
+    public void setCharges(List<Charge> charges) {
         this.charges = charges;
     }
 
@@ -502,7 +509,7 @@ public class ReservationController extends ApplicationController {
 
         controller.setHotel(getHotel());
         ControllerCharges controllerCharges = (ControllerCharges) loader.getController();
-        if(!charges.isEmpty()) {
+        if (!charges.isEmpty()) {
             controllerCharges.setChargesForReservation(charges);
             controllerCharges.onResetAction();
         }
