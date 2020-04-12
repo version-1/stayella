@@ -10,7 +10,7 @@ import javafx.scene.layout.BorderStrokeStyle;
 import javafx.scene.layout.BorderWidths;
 import javafx.scene.paint.Color;
 
-public class Vacancy {
+public class Vacancy implements Comparable {
     public final static String CALENDAR_DATE_FORMAT = "yyyy.MM.dd";
     public final static String CALENDAR_TIME_FORMAT = "HH:mm";
     public final static String CALENDAR_DATETIME_FORMAT = "yyyy/MM/dd HH:mm";
@@ -153,4 +153,15 @@ public class Vacancy {
         cell.setText(getReservationText());
         cell.setId(getReservationNo());
     }
+
+    @Override
+    public int compareTo(Object o) {
+        Vacancy v = (Vacancy) o;
+
+        return startTime.compareTo(v.getStartTime());
+    }
+
+	public int compareTo(Vacancy b) {
+        return compareTo((Object)b);
+	}
 }

@@ -5,6 +5,7 @@ import java.time.ZoneId;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 
 
@@ -38,6 +39,10 @@ public class Reservation {
         this.status = status;
 
         index++;
+    }
+
+    public Room getRoom() {
+        return room;
     }
 
     public int getId() {
@@ -164,6 +169,7 @@ public class Reservation {
                 this.vacancies.add(vacancy);
             }
         }
+        this.vacancies.sort((a, b) -> { return a.compareTo(b); });
         assignReservationNo();
         return true;
     }
@@ -184,6 +190,7 @@ public class Reservation {
                 "id=" + id +
                 ", reservationNo='" + reservationNo + '\'' +
                 ", charges=" + charges +
+                ", room=" + room +
                 ", numberOfGuest=" + numberOfGuest +
                 ", checkInTime=" + checkInTime +
                 ", checkOutTime=" + checkOutTime +
