@@ -153,7 +153,7 @@ public class ReservationController extends ApplicationController {
 
         reserve.setOnAction(e -> {
             makeAReservation();
-            goBack(e);
+            close(e);
         });
     }
 
@@ -173,7 +173,6 @@ public class ReservationController extends ApplicationController {
             alertMessage("Not Allowed", "Important information is missing.", "Select number of guests");
         } else {
             List<Room> rooms = this.getHotel().getRooms();
-            List<Vacancy> vacancies = rooms.get(1).getVacancies();
             Date in = Date.from(checkIN.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant());
             Date out = Date.from(checkOUT.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant());
             for (int i = 0; i < rooms.size(); i++) {

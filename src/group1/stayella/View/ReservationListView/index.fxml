@@ -14,7 +14,7 @@
         <Label fx:id="title" text="Reservation List" styleClass="title"/>
     </HBox>
     <TableView fx:id="table" GridPane.rowIndex="1" GridPane.columnIndex="0" />
-        <Button fx:id="back" text="Back" styleClass="button-back" onAction="#transitToHome" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+    <Button fx:id="back" text="Back" styleClass="button-back" onAction="#goBack" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
     <columnConstraints>
         <ColumnConstraints percentWidth="400" />
     </columnConstraints>
