@@ -46,9 +46,4 @@ public class HomeController extends ApplicationController {
         scene.getStylesheets().add("group1/stayella/View/css/calendar/style.css");
     }
 
-    @FXML
-    public void transitToReservationList(ActionEvent actionEvent) throws IOException {
-        transitTo(actionEvent, "ReservationListView/index.fxml", 800, 600);
-    }
-
 }
