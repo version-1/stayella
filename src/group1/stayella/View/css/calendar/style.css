@@ -57,6 +57,10 @@
   -fx-border-color: transparent;
 }
 
+.closed-cell {
+  -fx-background-color: #dcdada;
+}
+
 .occupied-cell-1 {
   -fx-background-color: rgba(161, 204, 210, 0.8);
 }
