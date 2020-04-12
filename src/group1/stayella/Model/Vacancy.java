@@ -15,6 +15,9 @@ public class Vacancy implements Comparable {
     public final static String CALENDAR_TIME_FORMAT = "HH:mm";
     public final static String CALENDAR_DATETIME_FORMAT = "yyyy/MM/dd HH:mm";
 
+    public final static int HOUR_SPAN = 12;
+    public final static int NUMBER_OF_VACANCY_PER_DAY = 24 / HOUR_SPAN;
+
     public final static int VACANT = -100;
     private int id;
     private Room room;
@@ -89,7 +92,7 @@ public class Vacancy implements Comparable {
         }
 
         return String.format("%s x %s\n - %s", reservation.getMainGuest().getName(), reservation.getNumberOfGuest(),
-                getDateString(startTime, CALENDAR_DATETIME_FORMAT));
+                getDateString(reservation.getStartDate(), CALENDAR_DATETIME_FORMAT));
     }
 
     public String getFilledClass() {
