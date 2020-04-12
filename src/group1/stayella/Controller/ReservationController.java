@@ -160,10 +160,12 @@ public class ReservationController extends ApplicationController {
      **************** Room Methods ****************
      **/
 
-    public void listOfAvailability(){
+    public void listOfAvailability() {
         availableRooms.clear();
         if (checkIN.getValue() == null || checkOUT.getValue() == null) {
             alertMessage("Not Allowed", "Important information is missing.", "Select [Check in - Check out] dates");
+        } else if (numberOfGuests.getText().isEmpty()) {
+            alertMessage("Not Allowed", "Important information is missing.", "Select number of guests");
         } else {
             List<Room> rooms = this.getHotel().getRooms();
             List<Vacancy> vacancies = rooms.get(1).getVacancies();
@@ -217,7 +219,7 @@ public class ReservationController extends ApplicationController {
 
     // do need credit card ID, guest ID?
     public void setCreditCard(String cardNumber, String name, String cvv, String expirationDate) {
-        creditCard = new CreditCard(id, cardNumber, name, cvv, expirationDate); // -> null pointer exception error
+        creditCard = new CreditCard(id, cardNumber, name, cvv, expirationDate);
         System.out.println(creditCard);
     }
 
@@ -331,14 +333,16 @@ public class ReservationController extends ApplicationController {
         if (reservation.getStatus() == 1) {
                 confirmed.isFocused();
                 confirmed.setStyle("-fx-border-color: #20e2aa; -fx-border-width: 3px;");
-                unconfirmed.setStyle("-fx-border-color: #ee0000; -fx-border-width: 1px;");
+                unconfirmed.setStyle("-fx-border-color: #ffffff; -fx-border-width: 1px;");
         } else {
                 unconfirmed.isFocused();
                 unconfirmed.setStyle("-fx-border-color: #20e2aa; -fx-border-width: 3px;");
-                confirmed.setStyle("-fx-border-color: #ee0000; -fx-border-width: 1px;");
+                confirmed.setStyle("-fx-border-color: #ffffff; -fx-border-width: 1px;");
         }
         // Payment
         creditCard = reservation.getMainGuest().getPaymentMethod();
+        setTotalPriceToLabel();
+        // showCCInfo(reservation.getMainGuest().getPaymentMethod().getCardNumber());
         // Charges
         charges = reservation.getCharges();
         reserve.setText("APPLY");
@@ -396,7 +400,8 @@ public class ReservationController extends ApplicationController {
 
     public void setTotalPriceToLabel() {
         double total = 0;
-        if (roomSelection.getValue() != null && availableRooms.containsKey(roomSelection.getValue())) {
+        if (roomSelection.getValue() != null &&
+                availableRooms.containsKey(roomSelection.getValue()) && reservation == null) {
                 total += availableRooms.get(roomSelection.getValue()).getRoomPrice();
         }
         if (!charges.isEmpty()) {
@@ -404,7 +409,13 @@ public class ReservationController extends ApplicationController {
                 total += charge.getFacility().getPrice();
             }
         }
-
+        if (reservation != null) {
+            for (Room room : getHotel().getRooms()) {
+                if (room.getRoomNumber().equals(roomSelection.getValue())) {
+                    total += room.getRoomPrice();
+                }
+            }
+        }
         totalPrice.setText("[$] " + Double.toString(total));
     }
 

@@ -99,12 +99,12 @@
               GridPane.columnSpan="3" GridPane.rowIndex="8" GridPane.rowSpan="2"/>
 
     <HBox GridPane.columnIndex="1" GridPane.columnSpan="10" GridPane.rowIndex="19" GridPane.rowSpan="4" spacing="70">
-        <VBox>
+        <VBox spacing="6">
             <Label prefHeight="17.0" prefWidth="219.0" text="Comments and special requests:" styleClass="label-title"/>
             <TextArea maxHeight="1.7976931348623157E308" prefHeight="54.0" prefWidth="220.0" GridPane.columnIndex="1"
                       GridPane.columnSpan="4" GridPane.rowIndex="19" GridPane.rowSpan="4"/>
         </VBox>
-        <VBox>
+        <VBox spacing="6">
             <Label alignment="CENTER" prefHeight="17.0" prefWidth="181.0" text="Credit Card Number:" styleClass="label-title" textFill="darkgreen"/>
             <Label fx:id="cardNumberLabel" alignment="CENTER" prefHeight="17.0" prefWidth="181.0" text="XXXX-XXXX-XXXX" textFill="darkgreen"/>
         </VBox>
