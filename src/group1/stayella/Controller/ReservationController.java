@@ -70,6 +70,8 @@ public class ReservationController extends ApplicationController {
     @FXML
     Button reserve;
     @FXML
+    Button close;
+    @FXML
     NumberTextField guestID;
     @FXML
     NumberTextField guestPhone;
@@ -114,21 +116,18 @@ public class ReservationController extends ApplicationController {
         if (reservation != null) {
             editReservation(reservation);
             reserve.setOnAction(e -> {
-                if (makeAReservation()) {
-                    try {
-                        transitTo(e, "/CalendarView/index.fxml", 1200, 980);
-                    } catch (Exception exception) {
-                        System.out.println("Invalid Address.");
-                    }
+                if (makeAReservation() != null) {
+                    closeAction(e);
                 }
             });
         } else {
             reserve.setOnAction(e -> {
-                if (makeAReservation()) {
+                if (makeAReservation() != null) {
                     goBack(e);
                 }
             });
         }
+
         String[] categories = {"CategoryA", "CategoryB", "CategoryC", "CategoryD"};
         categorySelection.getItems().addAll(categories);
 
@@ -232,7 +231,6 @@ public class ReservationController extends ApplicationController {
         this.cardNumberLabel.setText("XXXX-XXXX-" + text.substring(8));
     }
 
-    // do need credit card ID, guest ID?
     public void setCreditCard(String cardNumber, String name, String cvv, String expirationDate) {
         creditCard = new CreditCard(id, cardNumber, name, cvv, expirationDate);
         System.out.println(creditCard);
@@ -280,7 +278,7 @@ public class ReservationController extends ApplicationController {
      * Most of a necessary fields have to be filled to be the action done.
      */
     @FXML
-    public boolean makeAReservation() {
+    public Reservation makeAReservation() {
         if (submit()) {
             Period period = Period.between(checkIN.getValue(), checkOUT.getValue());
             int lengthOfStay = (int) (period.getDays());
@@ -295,14 +293,14 @@ public class ReservationController extends ApplicationController {
                 System.out.println("RESERVATION WAS CREATED\n" + newReservation);
                 System.out.println(newReservation);
                 System.out.println(guest);
-                return true;
+                return reservation;
             } else {
                 alertMessage("Unconfirmed", "Important information is missing",
                         "Reservation was not created, please check the dates and the payment method");
-                return false;
+                return null;
             }
         }
-        return false;
+        return null;
     }
 
     /**
@@ -336,7 +334,7 @@ public class ReservationController extends ApplicationController {
      */
     public void editReservation(Reservation reservation) {
         guestName.setText(reservation.getMainGuest().getName());
-        guestID.setText(String.valueOf(reservation.getMainGuest().getId()));
+        guestID.setText(String.valueOf(reservation.getMainGuest().getIdNumber()));
         guestAge.setText(reservation.getMainGuest().getAge());
         guestLanguage.setText(reservation.getMainGuest().getLanguage());
         guestEmail.setText(reservation.getMainGuest().getEmailAddress());
@@ -362,6 +360,12 @@ public class ReservationController extends ApplicationController {
         // Charges
         charges = reservation.getCharges();
         reserve.setText("APPLY");
+        System.out.println(roomSelection.getValue());
+        for (Room room : getHotel().getRooms()) {
+            if (room.getRoomNumber().equals(roomSelection.getValue())) {
+                reservation.setRoom(room);
+            }
+        }
     }
 
 
