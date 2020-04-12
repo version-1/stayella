@@ -65,8 +65,8 @@
 
     <HBox GridPane.columnIndex="1" GridPane.columnSpan="10" GridPane.rowIndex="13" spacing="15">
         <Label text="[Check In] - [Check Out]:" />
-        <DatePicker fx:id="checkOUT" prefHeight="27.0" prefWidth="120.0" />
         <DatePicker fx:id="checkIN" prefHeight="27.0" prefWidth="120.0" />
+        <DatePicker fx:id="checkOUT" prefHeight="27.0" prefWidth="120.0" />
     </HBox>
 
     <HBox GridPane.columnIndex="1" GridPane.columnSpan="10" GridPane.rowIndex="14" spacing="15" prefHeight="27.0">

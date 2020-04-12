@@ -342,8 +342,8 @@ public class ReservationController extends ApplicationController {
         guestEmail.setText(reservation.getMainGuest().getEmailAddress());
         guestPhone.setText(reservation.getMainGuest().getPhoneNumber());
         reservationNumber.setText(reservation.getReservationNo());
-        checkIN.setValue(reservation.getCheckInTime());
-        checkOUT.setValue(reservation.getCheckOutTime());
+        checkIN.setValue(reservation.getStartDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+        checkOUT.setValue(reservation.getEndDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
         numberOfGuests.setText(String.valueOf(reservation.getNumberOfGuest()));
         roomSelection.setValue(reservation.getRoom().getRoomNumber());
         if (reservation.getStatus() == 1) {
