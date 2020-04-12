@@ -83,8 +83,8 @@
 .reservation-footer {
     -fx-margin: 0px;
     -fx-background-color: deep-blue;
-    -fx-padding: 8px 32px;
-    -fx-spacing: 8px;
+    -fx-padding: 9px 20px;
+    -fx-spacing: 4px;
 }
 
 .reservation-sec-status {
