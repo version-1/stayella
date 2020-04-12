@@ -164,7 +164,7 @@ public class ReservationController extends ApplicationController {
                         "Reservation number: " + reservation.getReservationNo() + " will canceled. Please note a guest");
                 Optional<ButtonType> result = a.showAndWait();
                 if (result.get() == ButtonType.OK) {
-                    reservation = null;
+                    reservation.setStatus(0);
                     System.out.println(reservation);
                     closeAction(e);
                 }
@@ -182,7 +182,7 @@ public class ReservationController extends ApplicationController {
         });
 
         checkIn.setOnAction(e -> {
-            if (reservation != null && reservation.getCheckInTime() == null) {
+            if (reservation != null && (reservation.getStatus() == 1 || reservation.getStatus() == 2)) {
                 Alert a = alertMessageConfirmation("Check in", reservation.getMainGuest().getName() + " will be checked in",
                         "Make sure the room is ready");
                 Optional<ButtonType> result = a.showAndWait();
@@ -192,9 +192,12 @@ public class ReservationController extends ApplicationController {
                     closeAction(e);
                     System.out.println(reservation);
                 }
-            } else {
+            } else if (reservation == null) {
                 alertMessage("Unconfirmed", "Empty reservation",
                         "Cannot Check IN an empty reservation");
+            } else if (reservation.getStatus() == 3) {
+                alertMessage("Unconfirmed", "Already checked in",
+                        "Guest is already in house");
             }
         });
 
@@ -207,6 +210,7 @@ public class ReservationController extends ApplicationController {
                     LocalDate dateCheckOUT = LocalDate.now();
                     reservation.setCheckOutTime(dateCheckOUT);
                     closeAction(e);
+                    System.out.println(reservation);
                 }
             } else {
                 alertMessage("Unconfirmed", "Empty reservation",
