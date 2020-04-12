@@ -165,6 +165,7 @@ public class ReservationController extends ApplicationController {
                 Optional<ButtonType> result = a.showAndWait();
                 if (result.get() == ButtonType.OK) {
                     reservation = null;
+                    System.out.println(reservation);
                     closeAction(e);
                 }
             } else {
@@ -181,8 +182,8 @@ public class ReservationController extends ApplicationController {
         });
 
         checkIn.setOnAction(e -> {
-            if (reservation != null) {
-                Alert a = alertMessageConfirmation("Check in", reservation.getMainGuest().getName() + "will be checked in",
+            if (reservation != null && reservation.getCheckInTime() == null) {
+                Alert a = alertMessageConfirmation("Check in", reservation.getMainGuest().getName() + " will be checked in",
                         "Make sure the room is ready");
                 Optional<ButtonType> result = a.showAndWait();
                 if (result.get() == ButtonType.OK) {
@@ -191,14 +192,15 @@ public class ReservationController extends ApplicationController {
                     closeAction(e);
                 }
             } else {
-                alertMessage("Unconfirmed", "Empty reservation", "Cannot Check IN");
+                alertMessage("Unconfirmed", "Empty reservation",
+                        "Cannot Check IN an empty reservation");
             }
         });
 
         checkOut.setOnAction(e -> {
             if (reservation != null && reservation.getCheckInTime() != null) {
-                Alert a = alertMessageConfirmation("Check out", reservation.getMainGuest().getName() + "will be checked out",
-                        "Make sure there is no damage on the room");
+                Alert a = alertMessageConfirmation("Check out", reservation.getMainGuest().getName() +
+                                " will be checked out", "Make sure there is no damage on the room");
                 Optional<ButtonType> result = a.showAndWait();
                 if (result.get() == ButtonType.OK) {
                     LocalDate dateCheckOUT = LocalDate.now();
@@ -206,7 +208,8 @@ public class ReservationController extends ApplicationController {
                     closeAction(e);
                 }
             } else {
-                alertMessage("Unconfirmed", "Empty reservation", "Cannot Check OUT");
+                alertMessage("Unconfirmed", "Empty reservation",
+                        "Cannot Check OUT, this reservation was not checked in");
             }
         });
     }
@@ -222,9 +225,11 @@ public class ReservationController extends ApplicationController {
     public void listOfAvailability() {
         availableRooms.clear();
         if (checkIN.getValue() == null || checkOUT.getValue() == null) {
-            alertMessage("Not Allowed", "Important information is missing.", "Select [Check in - Check out] dates");
+            alertMessage("Not Allowed", "Important information is missing.",
+                    "Select [Check in - Check out] dates");
         } else if (numberOfGuests.getText().isEmpty()) {
-            alertMessage("Not Allowed", "Important information is missing.", "Select number of guests");
+            alertMessage("Not Allowed", "Important information is missing.",
+                    "Select number of guests");
         } else {
             List<Room> rooms = this.getHotel().getRooms();
             Date in = Date.from(checkIN.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant());
