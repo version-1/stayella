@@ -153,7 +153,7 @@ public class ReservationController extends ApplicationController {
 
         reserve.setOnAction(e -> {
             makeAReservation();
-            close(e);
+            closeAction(e);
         });
     }
 

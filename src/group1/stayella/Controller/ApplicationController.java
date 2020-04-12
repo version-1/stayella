@@ -72,13 +72,6 @@ public class ApplicationController implements Initializable {
         stage.setScene(previousStack);
     }
 
-    @FXML
-    public void close(ActionEvent event) {
-        Node node = (Node) event.getSource();
-        Stage stage = (Stage) node.getScene().getWindow();
-        stage.close();
-    }
-
     public Stage transitTo(ActionEvent event, String fxml, Integer width, Integer height) throws IOException {
         return transit(event, null, fxml, width, height);
     }
