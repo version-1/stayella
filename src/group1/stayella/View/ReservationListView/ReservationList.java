@@ -51,7 +51,6 @@ public class ReservationList {
         this.roomNumber = new SimpleStringProperty(roomNumber);
         this.roomAddition = new SimpleIntegerProperty(roomAddition);
         this.reservation = reservation;
-
     }
 
     public int getReservationId() {
@@ -142,7 +141,7 @@ public class ReservationList {
     //
 
     //method
-    static String convertStatus(int status) {
+    public static String convertStatus(int status) {
         String answer;
         switch (status) {
             case CANCEL:
