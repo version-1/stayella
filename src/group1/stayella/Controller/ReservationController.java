@@ -20,10 +20,17 @@ import javafx.stage.Stage;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.ZoneId;
 import java.util.*;
+
+import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 
 public class ReservationController extends ApplicationController {
 
@@ -112,6 +119,9 @@ public class ReservationController extends ApplicationController {
 
     private Reservation reservation;
 
+    private static boolean IMAGE_UPLOADED = false;
+    private static Path fromPath;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         if (reservation != null) {
@@ -122,7 +132,11 @@ public class ReservationController extends ApplicationController {
                 System.out.println(reservation);
                     closeAction(e);
             });
-        } else {
+        }
+        else {
+            image = new Image("https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTqWGB5YLwdAKCrHNiw9_I5jXeWHDlGHh83anl58WuJ4WwhzslJ&usqp=CAU");
+            imageView.setImage(image);
+
             reserve.setOnAction(e -> {
                 if (makeAReservation() != null) {
                     closeAction(e);
@@ -134,8 +148,6 @@ public class ReservationController extends ApplicationController {
         String[] categories = {"CategoryA", "CategoryB", "CategoryC", "CategoryD"};
         categorySelection.getItems().addAll(categories);
 
-        image = new Image("https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTqWGB5YLwdAKCrHNiw9_I5jXeWHDlGHh83anl58WuJ4WwhzslJ&usqp=CAU");
-        imageView.setImage(image);
 
         imageEdit = new Image("https://3aoh9sn3um-flywheel.netdna-ssl.com/wp-content/uploads/2017/01/edit-1-06-17-300x300.png");
         insertImage(imageEdit, imageEditView, buttonEdit, 25, 25);
@@ -232,7 +244,7 @@ public class ReservationController extends ApplicationController {
     }
 
     /**
-     **************** Room Methods ****************
+     * *************** Room Methods ****************
      **/
 
     public void listOfAvailability() {
@@ -283,7 +295,7 @@ public class ReservationController extends ApplicationController {
     }
 
     /**
-     **************** Payment Methods ****************
+     * *************** Payment Methods ****************
      **/
 
     public void showCCInfo(String text) {
@@ -299,10 +311,8 @@ public class ReservationController extends ApplicationController {
     }
 
     /**
-     *
-     **************** Reservation Methods ****************
-     *
-     * */
+     * *************** Reservation Methods ****************
+     */
 
     public boolean submit() {
         String message = "";
@@ -344,12 +354,15 @@ public class ReservationController extends ApplicationController {
         if (submit()) {
             Period period = Period.between(checkIN.getValue(), checkOUT.getValue());
             int lengthOfStay = (int) (period.getDays());
+
             Reservation newReservation = new Reservation(guest, Integer.parseInt(numberOfGuests.getText()), status);
             Room room = availableRooms.get(roomSelection.getValue());
             newReservation.make(room, checkIN.getValue(), lengthOfStay);
+
             if (newReservation.setCheckInTime(checkIN.getValue()) &&
                     newReservation.setCheckOutTime(checkOUT.getValue()) && setGuestInformation()) {
                 newReservation.setCharges(charges);
+                newReservation.setMainGuest(guest);
                 System.out.println("RESERVATION WAS CREATED\n" + newReservation);
                 System.out.println(guest);
                 return newReservation;
@@ -364,10 +377,11 @@ public class ReservationController extends ApplicationController {
 
     /**
      * If everything is filled properly and the data pass all the validations, the new Guest will be created.
+     *
      * @return
      */
     public boolean setGuestInformation() {
-        guest = new Guest(id, guestName.getText(), guestAge.getText(), imageView.getImage(), guestPhone.getText(),
+        guest = new Guest(id, guestName.getText(), guestAge.getText(), getAndSaveFile(fromPath), guestPhone.getText(),
                 guestEmail.getText(), guestID.getText(), creditCard, guestLanguage.getText());
         // guest's address should be added
         if (creditCard == null) {
@@ -385,13 +399,14 @@ public class ReservationController extends ApplicationController {
     }
 
     /**
-     *
      * Previous reservation can be displayed by setting all the text fields, controller is displayed based on
      * the reservation status is either confirmed or unconfirmed.
      * Data is passed from Calendar controller as an object.
+     *
      * @param reservation
      */
     public void editReservation(Reservation reservation) {
+        imageView.setImage(reservation.getMainGuest().getPhoto());
         guestName.setText(reservation.getMainGuest().getName());
         guestID.setText(String.valueOf(reservation.getMainGuest().getIdNumber()));
         guestAge.setText(reservation.getMainGuest().getAge());
@@ -408,9 +423,9 @@ public class ReservationController extends ApplicationController {
                 confirmed.setStyle("-fx-border-color: #20e2aa; -fx-border-width: 3px;");
                 unconfirmed.setStyle("-fx-border-color: #ffffff; -fx-border-width: 1px;");
         } else {
-                unconfirmed.isFocused();
-                unconfirmed.setStyle("-fx-border-color: #20e2aa; -fx-border-width: 3px;");
-                confirmed.setStyle("-fx-border-color: #ffffff; -fx-border-width: 1px;");
+            unconfirmed.isFocused();
+            unconfirmed.setStyle("-fx-border-color: #20e2aa; -fx-border-width: 3px;");
+            confirmed.setStyle("-fx-border-color: #ffffff; -fx-border-width: 1px;");
         }
         // Payment
         creditCard = reservation.getMainGuest().getPaymentMethod();
@@ -439,7 +454,7 @@ public class ReservationController extends ApplicationController {
     }
 
     /**
-     **************** Room Methods ****************
+     * *************** Room Methods ****************
      **/
 
     public void insertImage(Image image, ImageView imageView, Button button, int height, int width) {
@@ -452,30 +467,52 @@ public class ReservationController extends ApplicationController {
 
     @FXML
     public void onUploadImage(ActionEvent actionEvent) throws IOException {
-        String url = getFileOfImage();
+        File file = getFileOfImage();
+        String url = "file:///" + file.getPath();
         Image imageOfGuest = new Image(url, 112, 112, true, false);
         imageView.setImage(imageOfGuest);
+        IMAGE_UPLOADED = true;
+        fromPath = file.toPath();
     }
 
-    public String getFileOfImage() throws IOException {
+    public File getFileOfImage() throws IOException {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open the image");
         fileChooser.getExtensionFilters().add(
-                new FileChooser.ExtensionFilter("Image Files", "*.png","*.jpg","*.gif")
+                new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.gif")
         );
         fileChooser.setInitialDirectory(
                 new File(System.getProperty("user.home"))
         );
         File file = fileChooser.showOpenDialog(null);
-        String url = "file:///" + file.getPath();
-        return url;
+        return file;
     }
 
+    private Image getAndSaveFile(Path fromPath) {
+        if (IMAGE_UPLOADED) {
+            DateFormat dateFormat = new SimpleDateFormat("yyyymmddhhmmss");
+            String timestamp = dateFormat.format(new Date());
+            Path target = Paths.get("src/group1/stayella/Resources/Images/Guests/" + timestamp + "-" + fromPath.getFileName());
+            try {
+                Files.copy(fromPath, target, REPLACE_EXISTING);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            String url =  "file:///" + target.toAbsolutePath();
+            Image imageOfGuest = new Image(url, 112, 112, true, false);
+            return imageOfGuest;
+        } else {
+            return imageView.getImage();
+        }
+
+    }
+
+
     /**
-    ****************READ ROOM NUMBER, and ADD PRICE****************
+     * ***************READ ROOM NUMBER, and ADD PRICE****************
      **/
     @FXML
-    public void setCharges(List<Charge> charges){
+    public void setCharges(List<Charge> charges) {
         this.charges = charges;
     }
 
@@ -483,7 +520,7 @@ public class ReservationController extends ApplicationController {
         double total = 0;
         if (roomSelection.getValue() != null &&
                 availableRooms.containsKey(roomSelection.getValue()) && reservation == null) {
-                total += availableRooms.get(roomSelection.getValue()).getRoomPrice();
+            total += availableRooms.get(roomSelection.getValue()).getRoomPrice();
         }
         if (!charges.isEmpty()) {
             for (Charge charge : charges) {
@@ -522,7 +559,7 @@ public class ReservationController extends ApplicationController {
 
         controller.setHotel(getHotel());
         ControllerCharges controllerCharges = (ControllerCharges) loader.getController();
-        if(!charges.isEmpty()) {
+        if (!charges.isEmpty()) {
             controllerCharges.setChargesForReservation(charges);
             controllerCharges.onResetAction();
         }
@@ -537,5 +574,5 @@ public class ReservationController extends ApplicationController {
 
         setTotalPriceToLabel();
     }
-}
 
+}

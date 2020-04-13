@@ -199,7 +199,6 @@ public class Reservation {
         this.vacancies = reservingVacancies;
         setRoom(this.vacancies.get(0).getRoom());
         assignReservationNo();
-        System.out.println("DONE");
         return true;
     }
 
