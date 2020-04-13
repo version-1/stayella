@@ -125,8 +125,9 @@ public class ReservationController extends ApplicationController {
         } else {
             reserve.setOnAction(e -> {
                 if (makeAReservation() != null) {
-                    goBack(e);
+                    closeAction(e);
                 }
+
             });
         }
 
@@ -344,16 +345,14 @@ public class ReservationController extends ApplicationController {
             Period period = Period.between(checkIN.getValue(), checkOUT.getValue());
             int lengthOfStay = (int) (period.getDays());
             Reservation newReservation = new Reservation(guest, Integer.parseInt(numberOfGuests.getText()), status);
-            Room room = this.getHotel().getRooms().get(1);
+            Room room = availableRooms.get(roomSelection.getValue());
             newReservation.make(room, checkIN.getValue(), lengthOfStay);
             if (newReservation.setCheckInTime(checkIN.getValue()) &&
                     newReservation.setCheckOutTime(checkOUT.getValue()) && setGuestInformation()) {
                 newReservation.setCharges(charges);
-                newReservation.setRoom(availableRooms.get(roomSelection.getValue()));
                 System.out.println("RESERVATION WAS CREATED\n" + newReservation);
-                System.out.println(newReservation);
                 System.out.println(guest);
-                return reservation;
+                return newReservation;
             } else {
                 alertMessage("Unconfirmed", "Important information is missing",
                         "Reservation was not created, please check the dates and the payment method");
