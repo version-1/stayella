@@ -139,7 +139,24 @@ public class CalendarController extends ApplicationController {
 
     @FXML
     public void onClickNewRervation(ActionEvent event) throws IOException {
-        popUpAs(event, "/ReservationView/index.fxml", 650, 790);
+        Callback<Class<?>, Object> factory = c -> {
+            try {
+                ReservationController controller = (ReservationController) c.newInstance();
+                controller.setHotel(getHotel());
+                controller.setSceneStack(getSceneStack());
+                controller.setOnClose(e -> {
+                    refreshCalendar();
+                    return null;
+                });
+                return controller;
+            } catch (InstantiationException e) {
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+            return null;
+        };
+        popUpAs(event, factory, "/ReservationView/index.fxml", 650, 790);
     }
 
     public void onClickCell(ActionEvent event, Vacancy vacancy) throws IOException {
