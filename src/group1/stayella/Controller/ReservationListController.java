@@ -5,6 +5,7 @@ import group1.stayella.Model.Guest;
 import group1.stayella.Model.Reservation;
 import group1.stayella.Model.Room;
 import group1.stayella.Model.Vacancy;
+import group1.stayella.Resources.Images.Icon;
 import group1.stayella.View.ReservationListView.ReservationList;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -12,11 +13,14 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.ImageView;
 import javafx.util.Callback;
 
 import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.function.Consumer;
@@ -43,37 +47,60 @@ public class ReservationListController extends ApplicationController {
     }
 
     public void setTable() {
-        this.table.setEditable(false);
-        this.table.setItems(data);
+        table.setEditable(false);
+        table.setItems(data);
 
         onMouseSetReservation(table);
 
         TableColumn<ReservationList, ReservationList> editCol = new TableColumn("Edit");
-        TableColumn<Reservation, String> reservationNoCol = new TableColumn<>("Reservation No.");
-        TableColumn<Guest, String> guestNameCol = new TableColumn<>("Guest Name");
-        TableColumn<Reservation, Integer> numberOfGuestsCol = new TableColumn<>("Number of Guests");
-        TableColumn<Reservation, String> statusCol = new TableColumn<>("Status");
-        TableColumn<Reservation, String> checkInCol = new TableColumn<>("Check In");
-        TableColumn<Reservation, String> checkOutCol = new TableColumn<>("Check Out");
-        TableColumn<Reservation, String> roomNumberCol = new TableColumn<>("Room Number");
-        TableColumn<Reservation, Integer> roomAdditionCol = new TableColumn<>("Room Addition");
+        editCol.setStyle("-fx-alignment: center;");
+
+        TableColumn<ReservationList, ReservationList> reservationNoCol = new TableColumn<>("Reservation No.");
+        reservationNoCol.setStyle("-fx-alignment: center;");
+
+        TableColumn<ReservationList, ReservationList> guestNameCol = new TableColumn<>("Guest Name");
+        guestNameCol.setStyle("-fx-alignment: center;");
+
+        TableColumn<ReservationList, ReservationList> numberOfGuestsCol = new TableColumn<>("");
+        numberOfGuestsCol.setPrefWidth(30);
+        ImageView people = Icon.getWithLayout(Icon.PEOPLE, 18, 12);
+        numberOfGuestsCol.setGraphic(people);
+        numberOfGuestsCol.setStyle("-fx-alignment: center;");
+
+        TableColumn<ReservationList, ReservationList> statusCol = new TableColumn<>("Status");
+        statusCol.setStyle("-fx-alignment: center;");
+
+        TableColumn<ReservationList, ReservationList> checkInCol = new TableColumn<>("Check In");
+        checkInCol.setStyle("-fx-alignment: center;");
+
+        TableColumn<ReservationList, ReservationList> checkOutCol = new TableColumn<>("Check Out");
+        checkOutCol.setStyle("-fx-alignment: center;");
+
+        TableColumn<ReservationList, ReservationList> roomNumberCol = new TableColumn<>("Room\nNumber");
+        roomNumberCol.setStyle("-fx-alignment: center;");
+
+        TableColumn<ReservationList, ReservationList> roomAdditionCol = new TableColumn<>("Room\nAddition");
+        roomAdditionCol.setStyle("-fx-alignment: center;");
 
         table.getColumns().addAll(editCol, reservationNoCol, guestNameCol, numberOfGuestsCol, statusCol, checkInCol, checkOutCol, roomNumberCol, roomAdditionCol);
 
         this.table.itemsProperty().setValue(data);
 
         reservationNoCol.setCellValueFactory(new PropertyValueFactory<>("reservationNo"));
+        guestNameCol.setCellValueFactory(new PropertyValueFactory<>("guestName"));
+        numberOfGuestsCol.setCellValueFactory(new PropertyValueFactory<>("numberOfGuests"));
         statusCol.setCellValueFactory(new PropertyValueFactory<>("status"));
         checkInCol.setCellValueFactory(new PropertyValueFactory<>("checkIn"));
         checkOutCol.setCellValueFactory(new PropertyValueFactory<>("checkOut"));
         roomNumberCol.setCellValueFactory(new PropertyValueFactory<>("roomNumber"));
+        roomNumberCol.setStyle("-fx-alignment: center;");
         roomAdditionCol.setCellValueFactory(new PropertyValueFactory<>("roomAddition"));
-        guestNameCol.setCellValueFactory(new PropertyValueFactory<>("guestName"));
-        numberOfGuestsCol.setCellValueFactory(new PropertyValueFactory<>("numberOfGuests"));
+        roomAdditionCol.setStyle("-fx-alignment: center;");
 
 
         editCol.setCellValueFactory(new PropertyValueFactory<>("reservationList"));
         editCol.setCellFactory(getCellFactory());
+        editCol.setStyle("-fx-alignment: center;");
 
     }
 
@@ -95,8 +122,9 @@ public class ReservationListController extends ApplicationController {
                     int status = reservation.getStatus();
 
                     List<Vacancy> vacancies = reservation.getVacancies();
-                    String checkIn = vacancies.get(0).getStartTime().toString();
-                    String checkOut = vacancies.get(vacancies.size() - 1).getEndTime().toString();
+                    SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MMM/dd EEE h:mm a");
+                    String checkIn = formatter.format(vacancies.get(0).getStartTime());
+                    String checkOut = formatter.format(vacancies.get(vacancies.size() - 1).getEndTime());
 
                     String roomNumber = room.getRoomNumber();
                     int roomAddition = reservation.getCharges().size();
@@ -152,7 +180,7 @@ public class ReservationListController extends ApplicationController {
             return null;
         };
         popUpAs(event, factory, "/ReservationView/index.fxml", 650, 790);
-        setDataList();
+
     }
 
 
@@ -180,7 +208,10 @@ public class ReservationListController extends ApplicationController {
                     if (empty) {
                         setGraphic(null);
                     } else {
-                        Button button = new Button("Edit");
+                        Button button = new Button();
+                        ImageView edit = Icon.getWithLayout(Icon.EDIT, 12, 12);
+                        button.setGraphic(edit);
+                        button.setText("Edit");
                         setText(null);
                         button.getStyleClass().add("button-edit");
                         button.setOnAction(event -> {

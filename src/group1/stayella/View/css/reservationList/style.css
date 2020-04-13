@@ -1,5 +1,5 @@
 .root {
-    -fx-font-size: 13px;
+    -fx-font-size: 12px;
     -fx-font-family: "Arial";
     -fx-text-fill: #666666;
     -fx-background-color: #fbfbfb;
@@ -42,11 +42,8 @@
 
 
 .button-edit {
-    -fx-background-image: url("../../../Resources/Images/Icons/edit-dark.png");
-    -fx-background-size: 20 20;
-    -fx-background-repeat: no-repeat;
-    -fx-padding: 4px 5px 4px 20px;
-
+    -fx-padding: 4px ;
+    -fx-font-size: 11px;
 }
 
 .title {
