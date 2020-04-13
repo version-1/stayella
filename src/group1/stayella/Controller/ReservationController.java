@@ -141,8 +141,8 @@ public class ReservationController extends ApplicationController {
                     reservation.setNumberOfGuest(Integer.parseInt(numberOfGuests.getText()));
                     reservation.setMainGuest(guest);
                     System.out.println("RESERVATION WAS UPDATED\n" + reservation);
+                    closeAction(e);
                 }
-                closeAction(e);
             });
         } else {
             image = new Image("https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTqWGB5YLwdAKCrHNiw9_I5jXeWHDlGHh83anl58WuJ4WwhzslJ&usqp=CAU");
@@ -451,6 +451,7 @@ public class ReservationController extends ApplicationController {
         // Charges
         charges = reservation.getCharges();
         reserve.setText("APPLY");
+        setTotalPriceToLabel();
     }
 
 

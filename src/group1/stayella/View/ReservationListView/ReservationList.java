@@ -145,7 +145,7 @@ public class ReservationList {
         String answer;
         switch (status) {
             case CANCEL:
-                answer = "Cancel";
+                answer = "Canceled";
                 break;
             case UNCONFIRMED:
                 answer = "Unconfirmed";

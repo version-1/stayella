@@ -230,6 +230,7 @@ public class Reservation {
                 ", reservationNo='" + reservationNo + '\'' +
                 ", charges=" + charges +
                 ", room=" + room +
+                ", guest=" + mainGuest +
                 ", numberOfGuest=" + numberOfGuest +
                 ", checkInTime=" + checkInTime +
                 ", checkOutTime=" + checkOutTime +
