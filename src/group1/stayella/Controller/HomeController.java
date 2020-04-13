@@ -54,7 +54,7 @@ public class HomeController extends ApplicationController {
     @FXML
     private void putImagesOnButton() {
         javafx.scene.image.ImageView book = Icon.getWithLayout(Icon.CALENDAR_WHITE, 82, 94);
-        calendar.setText("Booking List");
+        calendar.setText("Calendar");
         calendar.setGraphic(book);
         calendar.setContentDisplay(ContentDisplay.TOP);
         calendar.setTextAlignment(TextAlignment.CENTER);
@@ -82,7 +82,7 @@ public class HomeController extends ApplicationController {
 
     @FXML
     public void transitToReservationList(ActionEvent actionEvent) throws IOException {
-        transitTo(actionEvent, "ReservationListView/index.fxml", 800, 600);
+        transitTo(actionEvent, "ReservationListView/index.fxml", 850, 600);
     }
 
 
