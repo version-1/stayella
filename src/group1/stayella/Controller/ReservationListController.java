@@ -113,8 +113,10 @@ public class ReservationListController extends ApplicationController {
                             roomAddition,
                             reservation
                     );
-
-                    if (!haveSameReservation(reservationId, list.getStatus(), data)) {
+                    if (haveSameReservation(reservationId, list.getStatus(), data) >= 0) {
+                        data.remove((haveSameReservation(reservationId, list.getStatus(), data)));
+                        data.add(list);
+                    } else if (haveSameReservation(reservationId, list.getStatus(), data) == -1) {
                         data.add(list);
                     }
                 }
@@ -123,12 +125,13 @@ public class ReservationListController extends ApplicationController {
         }
     }
 
-    private boolean haveSameReservation(int reservationId, String status,  ObservableList<ReservationList> data) {
-        boolean answer = false;
+    private int haveSameReservation(int reservationId, String status,  ObservableList<ReservationList> data) {
+        int answer = -1;
         for (int i = 0; i < data.size(); i++) {
             if (data.get(i).getReservationId() == reservationId && data.get(i).getStatus() == status) {
-                answer = true;
-                break;
+                return answer = -2;
+            } else if (data.get(i).getReservationId() == reservationId && data.get(i).getStatus() != status) {
+                return answer = i;
             }
         }
         return answer;
