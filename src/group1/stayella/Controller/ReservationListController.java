@@ -180,6 +180,7 @@ public class ReservationListController extends ApplicationController {
             return null;
         };
         popUpAs(event, factory, "/ReservationView/index.fxml", 650, 790);
+
     }
 
 
