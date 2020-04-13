@@ -108,7 +108,6 @@ public class Reservation {
         LocalDate today = LocalDate.now();
         if (checkTheDate(today, checkInTime)) {
              this.checkInTime = checkInTime;
-             status = CHECKIN;
              return true;
         }
         return false;
@@ -117,7 +116,6 @@ public class Reservation {
     public boolean setCheckOutTime(LocalDate checkOutTime) {
         if (checkTheDate(checkInTime, checkOutTime)) {
             this.checkOutTime = checkOutTime;
-            status = CHECKOUT;
             return true;
         }
         return false;

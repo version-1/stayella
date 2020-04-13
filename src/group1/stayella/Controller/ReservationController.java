@@ -117,9 +117,10 @@ public class ReservationController extends ApplicationController {
         if (reservation != null) {
             editReservation(reservation);
             reserve.setOnAction(e -> {
-                if (makeAReservation() != null) {
+                reservation.setCheckInTime(checkIN.getValue());
+                reservation.setCheckOutTime(checkOUT.getValue());
+                System.out.println(reservation);
                     closeAction(e);
-                }
             });
         } else {
             reserve.setOnAction(e -> {
@@ -165,6 +166,8 @@ public class ReservationController extends ApplicationController {
                 Optional<ButtonType> result = a.showAndWait();
                 if (result.get() == ButtonType.OK) {
                     reservation.setStatus(0);
+                    reservation.setCheckInTime(checkIN.getValue());
+                    reservation.setCheckOutTime(checkOUT.getValue());
                     System.out.println(reservation);
                     closeAction(e);
                 }
@@ -189,8 +192,10 @@ public class ReservationController extends ApplicationController {
                 if (result.get() == ButtonType.OK) {
                     LocalDate dateCheckIn = LocalDate.now();
                     reservation.setCheckInTime(dateCheckIn);
-                    closeAction(e);
+                    reservation.setCheckOutTime(checkOUT.getValue());
+                    reservation.setStatus(3);
                     System.out.println(reservation);
+                    closeAction(e);
                 }
             } else if (reservation == null) {
                 alertMessage("Unconfirmed", "Empty reservation",
@@ -208,9 +213,11 @@ public class ReservationController extends ApplicationController {
                 Optional<ButtonType> result = a.showAndWait();
                 if (result.get() == ButtonType.OK) {
                     LocalDate dateCheckOUT = LocalDate.now();
+                    reservation.setCheckInTime(checkIN.getValue());
                     reservation.setCheckOutTime(dateCheckOUT);
-                    closeAction(e);
+                    reservation.setStatus(4);
                     System.out.println(reservation);
+                    closeAction(e);
                 }
             } else {
                 alertMessage("Unconfirmed", "Empty reservation",
@@ -397,7 +404,7 @@ public class ReservationController extends ApplicationController {
         checkOUT.setValue(reservation.getEndDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
         numberOfGuests.setText(String.valueOf(reservation.getNumberOfGuest()));
         roomSelection.setValue(reservation.getRoom().getRoomNumber());
-        if (reservation.getStatus() == 1) {
+        if (reservation.getStatus() == 2) {
                 confirmed.isFocused();
                 confirmed.setStyle("-fx-border-color: #20e2aa; -fx-border-width: 3px;");
                 unconfirmed.setStyle("-fx-border-color: #ffffff; -fx-border-width: 1px;");
@@ -413,7 +420,6 @@ public class ReservationController extends ApplicationController {
         // Charges
         charges = reservation.getCharges();
         reserve.setText("APPLY");
-        System.out.println(roomSelection.getValue());
     }
 
 
