@@ -135,7 +135,13 @@ public class ReservationController extends ApplicationController {
             reserve.setOnAction(e -> {
                 reservation.setCheckInTime(checkIN.getValue());
                 reservation.setCheckOutTime(checkOUT.getValue());
-                System.out.println(reservation);
+                if (reservation.setCheckInTime(checkIN.getValue()) &&
+                        reservation.setCheckOutTime(checkOUT.getValue()) && setGuestInformation()) {
+                    reservation.setCharges(charges);
+                    reservation.setNumberOfGuest(Integer.parseInt(numberOfGuests.getText()));
+                    reservation.setMainGuest(guest);
+                    System.out.println("RESERVATION WAS UPDATED\n" + reservation);
+                }
                 closeAction(e);
             });
         } else {
@@ -442,8 +448,6 @@ public class ReservationController extends ApplicationController {
         }
         // Payment
         creditCard = reservation.getMainGuest().getPaymentMethod();
-        setTotalPriceToLabel();
-        // showCCInfo(reservation.getMainGuest().getPaymentMethod().getCardNumber());
         // Charges
         charges = reservation.getCharges();
         reserve.setText("APPLY");
