@@ -114,7 +114,7 @@ public class ReservationListController extends ApplicationController {
                             reservation
                     );
 
-                    if (!haveSameReservation(reservationId, data)) {
+                    if (!haveSameReservation(reservationId, list.getStatus(), data)) {
                         data.add(list);
                     }
                 }
@@ -123,10 +123,10 @@ public class ReservationListController extends ApplicationController {
         }
     }
 
-    private boolean haveSameReservation(int reservationId, ObservableList<ReservationList> data) {
+    private boolean haveSameReservation(int reservationId, String status,  ObservableList<ReservationList> data) {
         boolean answer = false;
         for (int i = 0; i < data.size(); i++) {
-            if (data.get(i).getReservationId() == reservationId) {
+            if (data.get(i).getReservationId() == reservationId && data.get(i).getStatus() == status) {
                 answer = true;
                 break;
             }
