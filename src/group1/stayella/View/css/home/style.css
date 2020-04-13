@@ -28,6 +28,7 @@
 }
 
 .button:hover {
+    -fx-background-color: linear-gradient(  #A7CACA, #adcece, #A7CACA);
 }
 
 

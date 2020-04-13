@@ -39,6 +39,9 @@ public class ReservationController extends ApplicationController {
     public Button imageUpload;
 
     @FXML
+    public Label deposit;
+
+    @FXML
     Image image;
     @FXML
     ImageView imageView = new ImageView();
@@ -133,10 +136,9 @@ public class ReservationController extends ApplicationController {
                 reservation.setCheckInTime(checkIN.getValue());
                 reservation.setCheckOutTime(checkOUT.getValue());
                 System.out.println(reservation);
-                    closeAction(e);
+                closeAction(e);
             });
-        }
-        else {
+        } else {
             image = new Image("https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTqWGB5YLwdAKCrHNiw9_I5jXeWHDlGHh83anl58WuJ4WwhzslJ&usqp=CAU");
             imageView.setImage(image);
 
@@ -151,6 +153,7 @@ public class ReservationController extends ApplicationController {
         String[] categories = {"CategoryA", "CategoryB", "CategoryC", "CategoryD"};
         categorySelection.getItems().addAll(categories);
 
+        deposit.setText("[$] " + Integer.toString(getHotel().getDeposit()) + ".00");
 
         imageEdit = new Image("https://3aoh9sn3um-flywheel.netdna-ssl.com/wp-content/uploads/2017/01/edit-1-06-17-300x300.png");
         insertImage(imageEdit, imageEditView, buttonEdit, 25, 25);
@@ -225,7 +228,7 @@ public class ReservationController extends ApplicationController {
         checkOut.setOnAction(e -> {
             if (reservation != null && reservation.getCheckInTime() != null) {
                 Alert a = alertMessageConfirmation("Check out", reservation.getMainGuest().getName() +
-                                " will be checked out", "Make sure there is no damage on the room");
+                        " will be checked out", "Make sure there is no damage on the room");
                 Optional<ButtonType> result = a.showAndWait();
                 if (result.get() == ButtonType.OK) {
                     LocalDate dateCheckOUT = LocalDate.now();
@@ -426,9 +429,9 @@ public class ReservationController extends ApplicationController {
         numberOfGuests.setText(String.valueOf(reservation.getNumberOfGuest()));
         roomSelection.setValue(reservation.getRoom().getRoomNumber());
         if (reservation.getStatus() == 2) {
-                confirmed.isFocused();
-                confirmed.setStyle("-fx-border-color: #20e2aa; -fx-border-width: 3px;");
-                unconfirmed.setStyle("-fx-border-color: #ffffff; -fx-border-width: 1px;");
+            confirmed.isFocused();
+            confirmed.setStyle("-fx-border-color: #20e2aa; -fx-border-width: 3px;");
+            unconfirmed.setStyle("-fx-border-color: #ffffff; -fx-border-width: 1px;");
         } else {
             unconfirmed.isFocused();
             unconfirmed.setStyle("-fx-border-color: #20e2aa; -fx-border-width: 3px;");
@@ -505,7 +508,7 @@ public class ReservationController extends ApplicationController {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            String url =  "file:///" + target.toAbsolutePath();
+            String url = "file:///" + target.toAbsolutePath();
             Image imageOfGuest = new Image(url, 112, 112, true, false);
             return imageOfGuest;
         } else {
@@ -591,3 +594,4 @@ public class ReservationController extends ApplicationController {
     }
 
 }
+
