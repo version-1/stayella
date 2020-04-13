@@ -146,12 +146,17 @@ public class CalendarController extends ApplicationController {
         if (vacancy.isAvailable()) {
             return;
         }
+
         Callback<Class<?>, Object> factory = c -> {
             try {
                 ReservationController controller = (ReservationController) c.newInstance();
                 controller.setHotel(getHotel());
                 controller.setReservation(vacancy.getReservation());
                 controller.setSceneStack(getSceneStack());
+                controller.setOnClose(e -> {
+                    refreshCalendar();
+                    return null;
+                });
                 return controller;
             } catch (InstantiationException e) {
                 e.printStackTrace();
