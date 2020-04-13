@@ -139,7 +139,7 @@ public class ReservationController extends ApplicationController {
 
             reserve.setOnAction(e -> {
                 if (makeAReservation() != null) {
-                    goBack(e);
+                    closeAction(e);
                 }
             });
         }

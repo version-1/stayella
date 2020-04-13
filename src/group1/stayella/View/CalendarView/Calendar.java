@@ -119,21 +119,22 @@ public class Calendar {
         }
 
         int id = vacancy.getRoom().getID();
+        int index = (id % 3) + 1;
 
-        if (vacancy.isOccupied()) {
-            return "occupied-cell-" + Integer.toString(id);
+        if (vacancy.isOccupied() || vacancy.isCheckIn()) {
+            return "occupied-cell-" + Integer.toString(index);
         }
 
-        if (vacancy.isCancelled()) {
-            return "cancelled-cell-" + Integer.toString(id);
-        }
+        // if (vacancy.isCancelled()) {
+        //     return "cancelled-cell-" + Integer.toString(index);
+        // }
 
-        if (vacancy.isCheckIn()) {
-            return "checkin-cell-" + Integer.toString(id);
-        }
+        // if (vacancy.isCheckIn()) {
+        //     return "checkin-cell-" + Integer.toString(index);
+        // }
 
         if (vacancy.isCheckOut()) {
-            return "checkout-cell-" + Integer.toString(id);
+            return "checkout-cell-" + Integer.toString(index);
         }
         return null;
     }

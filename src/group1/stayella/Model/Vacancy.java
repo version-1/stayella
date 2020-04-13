@@ -30,6 +30,10 @@ public class Vacancy implements Comparable {
         this.endTime = endTime;
     }
 
+    public boolean isAvailable() {
+       return reservation == null || reservation.isCancelled();
+    }
+
     public boolean isOccupied() {
         if (reservation == null) {
             return false;
