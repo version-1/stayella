@@ -168,7 +168,6 @@ public class CalendarController extends ApplicationController {
             return;
         }
 
-        cell.getStyleClass().add(v.getFilledClass());
         String buttonText = "";
         if (v.isFirstVacantForRervation()) {
             BorderStroke stroke = new BorderStroke(
@@ -187,7 +186,7 @@ public class CalendarController extends ApplicationController {
             cell.setBorder(new Border(stroke));
             buttonText = v.getReservationText();
         }
-        cell.getStyleClass().add(v.getFilledClass());
+        cell.getStyleClass().add(Calendar.getCellStyleClass(v));
         cell.setId(v.getReservationNo());
         Button btn = new Button(buttonText);
         btn.getStyleClass().add("button-cell");
