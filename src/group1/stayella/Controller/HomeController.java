@@ -62,17 +62,17 @@ public class HomeController extends ApplicationController {
 
     @FXML
     public void transitToReservation(ActionEvent actionEvent) throws IOException {
-        popUpAs(actionEvent, "ReservationView/index.fxml", 650, 790);
+        popUpAs(actionEvent, "ReservationView/index.fxml", 650, 770);
     }
 
     @FXML
     public void transitToCalendar(ActionEvent actionEvent) throws IOException {
-        transitTo(actionEvent, "CalendarView/index.fxml", 1200, 980);
+        transitTo(actionEvent, "CalendarView/index.fxml", 1200, 850);
     }
 
     @FXML
     public void transitToReservationList(ActionEvent actionEvent) throws IOException {
-        transitTo(actionEvent, "ReservationListView/index.fxml", 850, 600);
+        transitTo(actionEvent, "ReservationListView/index.fxml", 880, 600);
     }
 
 

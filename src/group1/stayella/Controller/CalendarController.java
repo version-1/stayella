@@ -156,7 +156,7 @@ public class CalendarController extends ApplicationController {
             }
             return null;
         };
-        popUpAs(event, factory, "/ReservationView/index.fxml", 650, 790);
+        popUpAs(event, factory, "/ReservationView/index.fxml", 650, 770);
     }
 
     public void onClickCell(ActionEvent event, Vacancy vacancy) throws IOException {

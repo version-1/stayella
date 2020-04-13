@@ -176,6 +176,7 @@ public class Reservation {
 
     private boolean reserve(List<Vacancy> vacancies, LocalDate start, int lengthOfStay) {
         if (vacancies.size() == 0) {
+            System.out.println("vacancy size");
             return false;
         }
         ZoneId defaultZoneId = ZoneId.systemDefault();
@@ -193,6 +194,7 @@ public class Reservation {
             if (isInclude) {
                 if (vacancy.isOccupied()) {
                     // reservation fail
+                    System.out.println("is occupied");
                     return false;
                 }
                 reservingVacancies.add(vacancy);
@@ -202,6 +204,7 @@ public class Reservation {
         // check if vacancies are enough to reserve
         reservingVacancies.sort((a, b) -> { return a.compareTo(b); });
         if (reservingVacancies.size() != lengthOfStay * Vacancy.NUMBER_OF_VACANCY_PER_DAY ) {
+            System.out.println("num of vacancy per day");
             return false;
         }
 
@@ -211,6 +214,7 @@ public class Reservation {
         this.vacancies = reservingVacancies;
         setRoom(this.vacancies.get(0).getRoom());
         assignReservationNo();
+        System.out.println("DONE");
         return true;
     }
 

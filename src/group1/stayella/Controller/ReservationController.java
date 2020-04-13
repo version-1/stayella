@@ -272,8 +272,11 @@ public class ReservationController extends ApplicationController {
             for (int i = 0; i < rooms.size(); i++) {
                 boolean occupied = false;
                 for (int j = 0; j < rooms.get(i).getVacancies().size(); j++)
-                    if (rooms.get(i).getVacancies().get(j).getEndTime().compareTo(in) < 0 ||
-                            rooms.get(i).getVacancies().get(j).getStartTime().compareTo(out) > 0) {
+                    if (rooms.get(i).getVacancies().get(j).getEndTime().compareTo(in) > 0 ||
+                            rooms.get(i).getVacancies().get(j).getStartTime().compareTo(out) < 0) {
+                        if (rooms.get(i).getVacancies().get(j).isOccupied()) {
+                            occupied = true;
+                        }
                     } else {
                         occupied = true;
                     }
