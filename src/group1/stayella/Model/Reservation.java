@@ -153,6 +153,18 @@ public class Reservation {
         return status != CANCEL;
     }
 
+    public boolean isCancelled() {
+        return status == CANCEL;
+    }
+
+    public boolean isCheckIn() {
+        return status == CHECKIN;
+    }
+
+    public boolean isCheckOut() {
+        return status == CHECKIN;
+    }
+
     // make the reservation
     public boolean make(List<Vacancy> vacancies, LocalDate start, int lengthOfStay) {
        return reserve(vacancies, start, lengthOfStay);

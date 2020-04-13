@@ -166,7 +166,7 @@ public class Factory { private final static String CSV_DATA_PATH = "src/group1/s
 
   public static void makeReservations(Guest guest, Room room) {
     Calendar cal = Calendar.getInstance();
-    cal.add(Calendar.DATE, getRandomInt(0, 7));
+    cal.add(Calendar.DATE, getRandomInt(0, 7) - 2);
     Date start = cal.getTime();
 
     Reservation reservation = new Reservation(

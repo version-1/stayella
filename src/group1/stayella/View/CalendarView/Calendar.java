@@ -7,10 +7,17 @@ import java.util.List;
 
 import group1.stayella.Model.Room;
 import group1.stayella.Model.Vacancy;
+import javafx.event.ActionEvent;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.Border;
+import javafx.scene.layout.BorderStroke;
+import javafx.scene.layout.BorderStrokeStyle;
+import javafx.scene.layout.BorderWidths;
+import javafx.scene.paint.Color;
 import javafx.util.Callback;
 
 public class Calendar {
@@ -111,5 +118,30 @@ public class Calendar {
 
     public String getDateTimeString(Date date) {
         return Vacancy.getDateString(date, Vacancy.CALENDAR_DATETIME_FORMAT);
+    }
+
+    public static String getCellStyleClass(Vacancy vacancy) {
+        if (vacancy.getRoom() == null) {
+            return null;
+        }
+
+        int id = vacancy.getRoom().getID();
+
+        if (vacancy.isOccupied()) {
+            return "occupied-cell-" + Integer.toString(id);
+        }
+
+        if (vacancy.isCancelled()) {
+            return "cancelled-cell-" + Integer.toString(id);
+        }
+
+        if (vacancy.isCheckIn()) {
+            return "checkin-cell-" + Integer.toString(id);
+        }
+
+        if (vacancy.isCheckOut()) {
+            return "checkout-cell-" + Integer.toString(id);
+        }
+        return null;
     }
 }
