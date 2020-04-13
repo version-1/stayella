@@ -13,7 +13,6 @@ public class ReservationList {
     private final static int CONFIRMED = 2;
     private final static int CHECKIN = 3;
     private final static int CHECKOUT = 4;
-    private static int statusInt;
 
     private final SimpleIntegerProperty reservationId;
     private final SimpleStringProperty reservationNo;
@@ -139,9 +138,6 @@ public class ReservationList {
         this.reservation = reservation;
     }
 
-    public int getStatusInt() {
-        return statusInt;
-    }
     //
 
     //method
@@ -150,23 +146,18 @@ public class ReservationList {
         switch (status) {
             case CANCEL:
                 answer = "Cancel";
-                statusInt = status;
                 break;
             case UNCONFIRMED:
                 answer = "Unconfirmed";
-                statusInt = status;
                 break;
             case CONFIRMED:
                 answer = "Confirmed";
-                statusInt = status;
                 break;
             case CHECKIN:
                 answer = "Checked In";
-                statusInt = status;
                 break;
             case CHECKOUT:
                 answer = "Check Out";
-                statusInt = status;
                 break;
             default:
                 throw new IllegalStateException("Unexpected value: " + status);
