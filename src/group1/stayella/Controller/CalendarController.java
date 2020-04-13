@@ -139,19 +139,41 @@ public class CalendarController extends ApplicationController {
 
     @FXML
     public void onClickNewRervation(ActionEvent event) throws IOException {
-        popUpAs(event, "/ReservationView/index.fxml", 650, 790);
+        Callback<Class<?>, Object> factory = c -> {
+            try {
+                ReservationController controller = (ReservationController) c.newInstance();
+                controller.setHotel(getHotel());
+                controller.setSceneStack(getSceneStack());
+                controller.setOnClose(e -> {
+                    refreshCalendar();
+                    return null;
+                });
+                return controller;
+            } catch (InstantiationException e) {
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+            return null;
+        };
+        popUpAs(event, factory, "/ReservationView/index.fxml", 650, 790);
     }
 
     public void onClickCell(ActionEvent event, Vacancy vacancy) throws IOException {
-        if (!vacancy.isOccupied()) {
+        if (vacancy.isAvailable()) {
             return;
         }
+
         Callback<Class<?>, Object> factory = c -> {
             try {
                 ReservationController controller = (ReservationController) c.newInstance();
                 controller.setHotel(getHotel());
                 controller.setReservation(vacancy.getReservation());
                 controller.setSceneStack(getSceneStack());
+                controller.setOnClose(e -> {
+                    refreshCalendar();
+                    return null;
+                });
                 return controller;
             } catch (InstantiationException e) {
                 e.printStackTrace();
@@ -164,18 +186,30 @@ public class CalendarController extends ApplicationController {
     }
 
     private void decorateCell(TableCell cell, Vacancy v) {
-        if (!v.isOccupied()) {
+        cell.getStyleClass().add(Calendar.getCellStyleClass(v));
+        if (v.isAvailable()) {
             return;
         }
 
-        cell.getStyleClass().add(v.getFilledClass());
         String buttonText = "";
         if (v.isFirstVacantForRervation()) {
+            Color labelColor = Color.WHITE;
+            if (v.isOccupied()) {
+               labelColor = Color.web("#FFB800");
+            }
+
+            if (v.isCheckIn()) {
+               labelColor = Color.web("#3AC72E");
+            }
+
+            if (v.isCheckOut()) {
+               labelColor = Color.web("#404E4D");
+            }
             BorderStroke stroke = new BorderStroke(
                 null,
                 null,
                 null,
-                Color.ORANGE,
+                labelColor,
                 null,
                 null,
                 null,
@@ -187,7 +221,6 @@ public class CalendarController extends ApplicationController {
             cell.setBorder(new Border(stroke));
             buttonText = v.getReservationText();
         }
-        cell.getStyleClass().add(v.getFilledClass());
         cell.setId(v.getReservationNo());
         Button btn = new Button(buttonText);
         btn.getStyleClass().add("button-cell");

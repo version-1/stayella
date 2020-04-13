@@ -30,11 +30,36 @@ public class Vacancy implements Comparable {
         this.endTime = endTime;
     }
 
+    public boolean isAvailable() {
+       return reservation == null || reservation.isCancelled();
+    }
+
     public boolean isOccupied() {
         if (reservation == null) {
             return false;
         }
         return reservation.isLocked();
+    }
+
+    public boolean isCancelled() {
+        if (reservation == null) {
+            return false;
+        }
+        return reservation.isLocked();
+    }
+
+    public boolean isCheckIn() {
+        if (reservation == null) {
+            return false;
+        }
+        return reservation.isCheckIn();
+    }
+
+    public boolean isCheckOut() {
+        if (reservation == null) {
+            return false;
+        }
+        return reservation.isCheckOut();
     }
 
     public int getId() {
@@ -100,20 +125,6 @@ public class Vacancy implements Comparable {
             getDateString(reservation.getStartDate(), CALENDAR_DATE_FORMAT),
             getDateString(end, CALENDAR_DATE_FORMAT)
             );
-    }
-
-    public String getFilledClass() {
-        if (room == null) {
-            return null;
-        }
-
-        int divider = 3;
-        if (room.getID() % divider == 1) {
-            return "occupied-cell-1";
-        } else if (room.getID() % divider == 2) {
-            return "occupied-cell-2";
-        }
-        return "occupied-cell-3";
     }
 
     public void setId(int id) {

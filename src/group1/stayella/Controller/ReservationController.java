@@ -16,6 +16,7 @@ import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 
 import java.io.File;
 import java.io.IOException;
@@ -118,9 +119,11 @@ public class ReservationController extends ApplicationController {
     private int status = 0;
 
     private Reservation reservation;
+    private Callback<ActionEvent, ?> onClose;
 
     private static boolean IMAGE_UPLOADED = false;
     private static Path fromPath;
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -139,7 +142,7 @@ public class ReservationController extends ApplicationController {
 
             reserve.setOnAction(e -> {
                 if (makeAReservation() != null) {
-                    goBack(e);
+                    closeAction(e);
                 }
             });
         }
@@ -240,6 +243,10 @@ public class ReservationController extends ApplicationController {
 
     public void setReservation(Reservation reservation) {
         this.reservation = reservation;
+    }
+
+    public void setOnClose(Callback<ActionEvent, ?> onClose) {
+        this.onClose = onClose;
     }
 
     /**
@@ -574,6 +581,14 @@ public class ReservationController extends ApplicationController {
         this.charges = controllerCharges.getChargesForReservation();
 
         setTotalPriceToLabel();
+    }
+
+    @Override
+    public void closeAction(ActionEvent event) {
+        super.closeAction(event);
+        if (onClose != null) {
+            onClose.call(event);
+        }
     }
 
 }

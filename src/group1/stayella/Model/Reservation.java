@@ -150,7 +150,19 @@ public class Reservation {
     }
 
     public boolean isLocked() {
-        return status != CANCEL;
+        return status == CONFIRMED || status == UNCONFIRMED;
+    }
+
+    public boolean isCancelled() {
+        return status == CANCEL;
+    }
+
+    public boolean isCheckIn() {
+        return status == CHECKIN;
+    }
+
+    public boolean isCheckOut() {
+        return status == CHECKOUT;
     }
 
     // make the reservation

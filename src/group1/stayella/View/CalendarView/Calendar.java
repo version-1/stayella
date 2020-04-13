@@ -112,4 +112,30 @@ public class Calendar {
     public String getDateTimeString(Date date) {
         return Vacancy.getDateString(date, Vacancy.CALENDAR_DATETIME_FORMAT);
     }
+
+    public static String getCellStyleClass(Vacancy vacancy) {
+        if (vacancy.getRoom() == null) {
+            return null;
+        }
+
+        int id = vacancy.getRoom().getID();
+        int index = (id % 3) + 1;
+
+        if (vacancy.isOccupied() || vacancy.isCheckIn()) {
+            return "occupied-cell-" + Integer.toString(index);
+        }
+
+        // if (vacancy.isCancelled()) {
+        //     return "cancelled-cell-" + Integer.toString(index);
+        // }
+
+        // if (vacancy.isCheckIn()) {
+        //     return "checkin-cell-" + Integer.toString(index);
+        // }
+
+        if (vacancy.isCheckOut()) {
+            return "checkout-cell-" + Integer.toString(index);
+        }
+        return null;
+    }
 }
