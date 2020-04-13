@@ -127,9 +127,10 @@ public class ReservationController extends ApplicationController {
         if (reservation != null) {
             editReservation(reservation);
             reserve.setOnAction(e -> {
-                if (makeAReservation() != null) {
+                reservation.setCheckInTime(checkIN.getValue());
+                reservation.setCheckOutTime(checkOUT.getValue());
+                System.out.println(reservation);
                     closeAction(e);
-                }
             });
         }
         else {
@@ -176,7 +177,9 @@ public class ReservationController extends ApplicationController {
                         "Reservation number: " + reservation.getReservationNo() + " will canceled. Please note a guest");
                 Optional<ButtonType> result = a.showAndWait();
                 if (result.get() == ButtonType.OK) {
-                    reservation = null;
+                    reservation.setStatus(0);
+                    reservation.setCheckInTime(checkIN.getValue());
+                    reservation.setCheckOutTime(checkOUT.getValue());
                     System.out.println(reservation);
                     closeAction(e);
                 }
@@ -194,18 +197,24 @@ public class ReservationController extends ApplicationController {
         });
 
         checkIn.setOnAction(e -> {
-            if (reservation != null && reservation.getCheckInTime() == null) {
+            if (reservation != null && (reservation.getStatus() == 1 || reservation.getStatus() == 2)) {
                 Alert a = alertMessageConfirmation("Check in", reservation.getMainGuest().getName() + " will be checked in",
                         "Make sure the room is ready");
                 Optional<ButtonType> result = a.showAndWait();
                 if (result.get() == ButtonType.OK) {
                     LocalDate dateCheckIn = LocalDate.now();
                     reservation.setCheckInTime(dateCheckIn);
+                    reservation.setCheckOutTime(checkOUT.getValue());
+                    reservation.setStatus(3);
+                    System.out.println(reservation);
                     closeAction(e);
                 }
-            } else {
+            } else if (reservation == null) {
                 alertMessage("Unconfirmed", "Empty reservation",
                         "Cannot Check IN an empty reservation");
+            } else if (reservation.getStatus() == 3) {
+                alertMessage("Unconfirmed", "Already checked in",
+                        "Guest is already in house");
             }
         });
 
@@ -216,7 +225,10 @@ public class ReservationController extends ApplicationController {
                 Optional<ButtonType> result = a.showAndWait();
                 if (result.get() == ButtonType.OK) {
                     LocalDate dateCheckOUT = LocalDate.now();
+                    reservation.setCheckInTime(checkIN.getValue());
                     reservation.setCheckOutTime(dateCheckOUT);
+                    reservation.setStatus(4);
+                    System.out.println(reservation);
                     closeAction(e);
                 }
             } else {
@@ -407,10 +419,10 @@ public class ReservationController extends ApplicationController {
         checkOUT.setValue(reservation.getEndDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
         numberOfGuests.setText(String.valueOf(reservation.getNumberOfGuest()));
         roomSelection.setValue(reservation.getRoom().getRoomNumber());
-        if (reservation.getStatus() == 1) {
-            confirmed.isFocused();
-            confirmed.setStyle("-fx-border-color: #20e2aa; -fx-border-width: 3px;");
-            unconfirmed.setStyle("-fx-border-color: #ffffff; -fx-border-width: 1px;");
+        if (reservation.getStatus() == 2) {
+                confirmed.isFocused();
+                confirmed.setStyle("-fx-border-color: #20e2aa; -fx-border-width: 3px;");
+                unconfirmed.setStyle("-fx-border-color: #ffffff; -fx-border-width: 1px;");
         } else {
             unconfirmed.isFocused();
             unconfirmed.setStyle("-fx-border-color: #20e2aa; -fx-border-width: 3px;");
@@ -423,7 +435,6 @@ public class ReservationController extends ApplicationController {
         // Charges
         charges = reservation.getCharges();
         reserve.setText("APPLY");
-        System.out.println(roomSelection.getValue());
     }
 
 

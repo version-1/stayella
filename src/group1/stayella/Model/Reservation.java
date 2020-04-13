@@ -13,6 +13,8 @@ public class Reservation {
     private final static int CANCEL = 0;
     private final static int UNCONFIRMED = 1;
     private final static int CONFIRMED = 2;
+    private final static int CHECKIN = 3;
+    private final static int CHECKOUT = 4;
 
     private static int index = 1;
     private int id;
@@ -37,8 +39,11 @@ public class Reservation {
         this.mainGuest = guest;
         this.numberOfGuest = numberOfGuest;
         this.status = status;
-
         index++;
+    }
+
+    public void setVacancies(List<Vacancy> vacancies) {
+        this.vacancies = vacancies;
     }
 
     public Room getRoom() {

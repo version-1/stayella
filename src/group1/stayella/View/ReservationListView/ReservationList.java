@@ -11,6 +11,8 @@ public class ReservationList {
     private final static int CANCEL = 0;
     private final static int UNCONFIRMED = 1;
     private final static int CONFIRMED = 2;
+    private final static int CHECKIN = 3;
+    private final static int CHECKOUT = 4;
 
     private final SimpleIntegerProperty reservationId;
     private final SimpleStringProperty reservationNo;
@@ -151,6 +153,12 @@ public class ReservationList {
                 break;
             case CONFIRMED:
                 answer = "Confirmed";
+                break;
+            case CHECKIN:
+                answer = "Checked In";
+                break;
+            case CHECKOUT:
+                answer = "Check Out";
                 break;
             default:
                 throw new IllegalStateException("Unexpected value: " + status);
